@@ -1,0 +1,171 @@
+@media only screen and (min-width:512px){ 
+/*
+^^^^ this is supposed to allow for responsive design
+absolutely zero clue how it works since the last time ive done it
+will figure out eventually
+*/
+	/*this adds these attributes to the entire webpage*/
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	
+	/*This sets attributes for the body*/
+	body {
+		font-family: Arial, sans-serif; 		/*Sets the fonts, will probably change and add backup fonts*/
+		background-color: white; 				/*sets the background color of the body*/
+	}
+
+	/*this sets attributes for the header*/
+	/*header includes: navbar, subheader*/
+	header{
+		width: 100%; 
+	}
+	
+	/*this sets attributes for the navbar*/
+	nav {
+		background-color: #333; 				/*sets background color to a grey*/
+		width: 100%; 							/*makes the navbar the length of the page*/
+		position: absolute; 					/*sets the position of the nav bar so that it doesnt move*/
+		/*not even gonna lie no idea what top and left do*/
+		top: 0;
+		left: 0;
+		height: 65px; 							/*sets the height of the navbar to 65 pixels*/
+		display: flex; 							/*sets the display as flex, this allows everything in the navbar to align side by side*/
+		z-index: 1000;							/*completely forgotten what this does*/
+		align-items: center;					/*This centers everything on the navbar*/
+		justify-content: space-between;			/*This adds appropriate spaces between everything in the navbar*/
+	}
+
+	/*This edits the unordered list that stores the home, explore, and about links in the navbar*/
+	nav ul {
+		list-style-type: none;					/*doesnt add a list style*/
+		display: flex; 							/*sets the links next to each other*/
+		align-items: center;					/*centers the links*/
+		
+	}
+
+	/*edits the unordered list items*/
+	nav ul li {
+		margin: 0 20px;							/*creates spaces on the side of each link*/
+	}
+
+	/*This is what edits the actual links of the unordered list*/
+	nav ul li a {
+		color: white;							/*sets the text to white as to no blend into background*/
+		text-decoration: none;
+		font-size: 18px;						/*sets the font size*/
+		padding: 20px;							/*creates padding around each link*/
+		display: block;							/*sets the dislay to block*/
+	}
+	
+	/*edits the attributes of the navbar links when the cursor hovers over it*/
+	nav a:hover {
+			background-color: #575757;			/*edits the background color*/	
+			transition: 0.3s;					/*changes how long it takes to change color */
+		}	
+	
+	/*This is for the login/signup button*/
+	#login_signup{
+		color: white;							/*makes the text white*/
+		text-decoration: none;					/*no idea*/
+		font-size: 18px;						/*changes the font size*/
+		padding: 20px;							/*adds 20 pixels of padding to the button*/
+		display: block;							/*makes the display block*/
+	}
+
+	/*this is for the div that contains the searchbar*/
+	#searcharea{
+		background-color: white;				/*changes the background color to white*/
+		width: 40%;								/*makes it only 40% of the entire page length*/
+		padding: 5px;							/*adds 5 pixels of padding to the searchbar*/
+		border-radius: 15px;					/*this curves the corners on the searchbar*/
+		display: flex;							/*sets the display to flex*/
+	}
+	
+	/*edits the part of the searchbar you type into*/
+	#searchbar{
+		background-color: white;				/*makes the background color of the searchbar white*/
+		width: 50%;								/*makes the searchbar width only 50% of the navbar length*/
+		padding: 10px;							/*gives the searchbar 10 pixels of padding*/
+		border-radius: 15px;					/*rounds the corners of the searchbar*/
+		outline: none;							/*gets rid of the outline that comes with textfield inputs*/
+		
+	}
+	
+	/*This edits the attributes for the subheader that currently contains just the name of the page*/
+	.subheader{
+		display:flex; 							/*gives the subheader a flex display*/
+		margin-top: 65px;						/*adds a margin to the top of the subheader to stop it from touching the navbar*/
+		width: 100%;							/*makes the subheader the length of the page*/
+		justify-content: center;				/*centers the content in the subheader*/
+		align-items:center;						/*aligns items in the subheader to center*/
+		background: #333;						/*makes the subheader background a grey color*/
+	} 
+	
+	/*this is to edit the attributes of the header inside the subheader, this is the text that currently just displays the name of the page*/
+	.subheader h1{
+		color: white;							/*changes text color to white*/
+		background: #333;						/*makes the background color grey*/
+		padding: 50px;							/*adds 50 pixels of padding to the text*/
+				
+	}
+	
+	/*this edits the attributes of the content div*/
+	.content {
+		margin-top: 80px; 						/* To avoid content overlapping with the navbar */
+		/adding: 20px;							/*adds some padding to the content COULD DELETE*/
+		text-align: center;						/*Centers the text in the content*/
+		display: flex;							/*gives it a flex display*/
+		width:100%;								/*makes it the length of the page*/
+		height: 75vh;							/*makes it the height of the monitor*/
+		align-content: center;					/*centers content*/
+	}
+	
+	/*This edits the two divs of userSets and viewedSets inside of the content div*/
+	.content #userSets, #viewedSets{
+		width: 50%;								/*This edit the width of both divs so that they are 50% the size of the content*/
+		padding: 10px;							/*this gives the divs 10 pixels of padding*/
+		margin: 25px;							/*this gives them 25 pixels of margin */
+		background: #333;						/*changes the background color to grey*/
+		border-radius: 15px;					/*rounds the corners*/
+		color: white;							/*makes the text white*/
+		
+	}
+	
+	/*this edits the login div*/
+	#login{
+		color: white;							/*changes the text to white*/
+		margin: auto;							/*sets the margins to auto, centered it*/
+		width: 25%;								/*sets the with to only 25% of the page*/
+		background-color: #333;					/*set the background color to grey*/
+		padding: 30px;							/*gives it 30 pixels of padding*/
+		border-radius: 15px;					/*rounds the corners*/		
+	}
+
+	/*edits the inputs inside of the login div*/
+	/*We can probably make these clearner will work on at some point*/
+	#login input{
+		padding:10px;							/*gives the inputs 10 pixels of padding*/
+		border-radius: 15px;					/*rounds the corners*/
+	}
+	
+	/*edits the username and password inputs specifically*/
+	#login #username, #password{
+		width: 60%								/*sets their width at 60%*/
+	}
+
+	/*edits links inside of the login div*/
+	#login a{
+		color: white;							/*sets their text to white*/
+	}
+
+	/*edits the footer div*/
+	footer {
+		background-color: #333;					/*sets the background color to grey*/
+		width: 100%;							/*stretches it to the length of the page*/
+		position: flex;							/*puts the footer at the bottom of the page*/
+		height: 150px;							/*sets the height of the footer to 150 pixels*/
+	}
+}
