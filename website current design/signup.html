@@ -25,17 +25,17 @@
 		<br>
 		<br>
 		<br>
-		<div id="login">
-			<form>
-				<label>Username:</label>
+		<div id="signup">
+			<form id= "signupForm" action="signup.php" method="post">
+				<label for="UserName">Username:</label>
 				<br><br>
 				<input type="text" id="username" name="username">
 				<br><br>
-				<label>Password:</label>
+				<label for= "Password">Password:</label>
 				<br><br>
-				<input type="text" id="password" name="password">
+				<input type="text" id="password" name="password" required>
 				<br><br>
-				<input type="submit" id="submit" name="submit" onclick=getInformation()>
+				<button type="submit" id="submit" name="submit">Submit</button>
 			</form>
 			<br>
 			<p>

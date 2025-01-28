@@ -16,21 +16,80 @@ and to see if the user exists in the database
 //still getting used to javascript
 function checkforaccount(){
 	var userName;
-	var passWord;
+	if (userName) {
+		document.getElementById("login_signup").innerText = "Welcome " + userName;
+		document.getElementById("login_signup").herf = "#"; // disable link if logged in
+	}
 }
 
-function getInformation(){
-	var userName = document.getElementById("username").value;
-	var passWord = document.getElementById("password").value;
-	alert(userName);
+async function getInformation(event){
+	event.preventDefault();
+	const userName = document.getElementById("username").value;
+	const passWord = document.getElementById("password").value;
+	
+	const response = await fetch("http://localhost:3000/users"{
+	method: 'POST',
+	headers: {
+		content-type: 'application/json'
+	},
+	body: JSON.stringify({username: userName, password: passWord
+	});
+	const data = await response.json();
+	if (response.ok){
+		sessionStorage.setItem('loggedInUser', userName);
+		window.location.herf = "dashboard.html";
+}
+else{
+	alert("Invalid username or password");
+	}
+}	
+
+
+
+async function createAccount(event){
+	event.preventDefault();
+	const userName = document.getElementById("username").value;
+	const passWord = document.getElementById("password").value;
+
+	const response = await fetch("http://localhost:3000/users"{
+	method: 'POST',
+	headers: {
+		content-type: 'application/json'
+	},
+	body: JSON.stringify({username: userName, password: passWord
+	});
+	const data = await response.json();
+	if (response.ok){
+		alert(data.message);
+		window.location.herf = "login.html"; // redirect to login page
+	}
+	else {
+		alert(data.message);
+	}
 }
 
 
+// event listeners for the search bar
+document.addEventListener("DOMContentLoaded", function(event){
+	const searchbar = document.getElementById("searchbar");
+	if (searchbar){
+		searchbar.addEventListener("keypress", function(event){
+			if (event.keyCode == 13){
+			event.preventDefault();
+			this.value = "";
+			}
+		});
+	}
+	
+	const loginForm = document.getElementById("loginForm");
+	if (loginForm){
+		loginForm.addEventListener("submit", getInformation);
+	}
 
-function createAccount(){
-	var userName = document.getElementById("username").value;
-	var passWord = document.getElementById("password").value;
-	
-	
-	
-}
+	const signupForm = document.getElementById("signupForm");
+	if (signupForm){
+		signupForm.addEventListener("submit", createAccount);
+	}
+
+});
+
