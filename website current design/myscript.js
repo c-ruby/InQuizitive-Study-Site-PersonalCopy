@@ -5,6 +5,8 @@ function clickPress(event){
 	}
 }
 
+// simulates a simple user database
+let users = [];
 /*
 will use the following function for testing
 and to see if the user exists in the database
@@ -27,17 +29,17 @@ async function getInformation(event){
 	const userName = document.getElementById("username").value;
 	const passWord = document.getElementById("password").value;
 	
-	const response = await fetch("http://localhost:3000/users"{
+	const response = await fetch("login.php",{
 	method: 'POST',
 	headers: {
-		content-type: 'application/json'
+		'content-type': 'application/json'
 	},
-	body: JSON.stringify({username: userName, password: passWord
+	body: JSON.stringify({username: userName, password: passWord})
 	});
 	const data = await response.json();
 	if (response.ok){
 		sessionStorage.setItem('loggedInUser', userName);
-		window.location.herf = "dashboard.html";
+		window.location.href = "dashboard.html";
 }
 else{
 	alert("Invalid username or password");
@@ -51,12 +53,12 @@ async function createAccount(event){
 	const userName = document.getElementById("username").value;
 	const passWord = document.getElementById("password").value;
 
-	const response = await fetch("http://localhost:3000/users"{
+	const response = await fetch("login.php", {
 	method: 'POST',
 	headers: {
-		content-type: 'application/json'
+		'content-type': 'application/json'
 	},
-	body: JSON.stringify({username: userName, password: passWord
+	body: JSON.stringify({username: userName, password: passWord})
 	});
 	const data = await response.json();
 	if (response.ok){
