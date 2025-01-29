@@ -28,11 +28,10 @@ function checkforaccount(){
 	const user = sessionStorage.getItem('loggedInUser');
 	if (user) {
 		document.getElementById("login_signup").innerText = "Welcome " + user;
-		document.getElementById("login_signup").herf = "dashboard.html"; // disable link if logged in
-		document.getElementById("welcome").innerText = "Welcome " + user + "!";
+		document.getElementById("login_signup").href= "dashboard.html"; // disable link if logged in
 	}
 	else {
-		window.location.href = "login.html";
+		window.location.href = "signup.html";
 	}
 }
 // to handle the login submission
@@ -41,49 +40,36 @@ async function getInformation(event){
 	const userName = document.getElementById("username").value;
 	const passWord = document.getElementById("password").value;
 	
-	const response = await fetch("login.php",{
-	method: 'POST',
-	headers: {
-		'content-type': 'application/json'
-	},
-	body: JSON.stringify({username: userName, password: passWord})
-	});
-	const data = await response.json();
-	if (response.ok){
-		alert(data.message);
+	const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+	const user = storedUsers.find(user => user.username === userName && user.password === passWord);
+
+	if (user && passWord){
 		sessionStorage.setItem('loggedInUser', userName);
+		sessionStorage.setItem('loggedInPassword', passWord);
 		window.location.href = "dashboard.html";
-}
-else{
-	alert(data.message);
 	}
-}	
-
-
+	else{
+		alert("Invalid username or password");
+	}
+}
 // to handle the signup submission
-async function createAccount(event){
+function createAccount(event){
 	event.preventDefault();
 	const userName = document.getElementById("username").value;
 	const passWord = document.getElementById("password").value;
 
-	const response = await fetch("signup.php", {
-	method: 'POST',
-	headers: {
-		'content-type': 'application/json'
-	},
-	body: JSON.stringify({username: userName, password: passWord})
-	});
-	const data = await response.json();
-	if (response.ok){
-		alert(data.message);
-		sessionStorage.setItem('loggedInUser', userName);
-		window.location.herf = "login.html"; // redirect to login page
+	const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+	const userExists = storedUsers.some(user => user.username === userName);
+	if (userExists){
+		alert("Username already exists");
 	}
-	else {
-		alert(data.message);
+	else{
+		storedUsers.push({username: userName, password: passWord});
+		localStorage.setItem('users', JSON.stringify(storedUsers));
+		alert("Account created successfully");
+		window.location.href = "login.html";
 	}
 }
-
 
 // event listeners for the search bar
 document.addEventListener("DOMContentLoaded", function(){

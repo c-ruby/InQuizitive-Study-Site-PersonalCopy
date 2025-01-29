@@ -23,7 +23,10 @@
         <div class="content">
             <h1>User Profile</h1>
             <p id="welcome"></p>
-            <a href=""logout.php">Logout</a>
+            <p><strong>Username:</strong> <span id="username"></span></p>
+            <h2>Study Sets</h2>
+            <ul id="studySets">
+            <a href="logout.php">Logout</a>
         </div>
         <footer>
 
@@ -31,8 +34,18 @@
         <script>
             document.addEventListener("DOMContentLoaded", function(){
                 const user = sessionStorage.getItem("loggedInUser");
-                if(user){
+                const password = sessionStorage.getItem("loggedInPassword");
+                const studySets = JSON.parse(sessionStorage.getItem("studySets")) || [];
+                if(user && password){
                     document.getElementById("welcome").innerText = "Welcome, " + user;
+                    document.getElementById("username").innerText = user;
+    
+                    const studySetsList = document.getElementById("studySets");
+                    studySets.forEach(set => {
+                        const li = document.createElement("li");
+                        li.innerText = set;
+                        studySetsList.appendChild(li);
+                    });
                 }
                 else{
                     window.location.href = "login.html";

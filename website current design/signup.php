@@ -6,24 +6,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $username = $_POST['username'];
     $password = $_POST['password'];
-
-    $users = [
-        ['username' => 'user1', 'password' => 'pass1'],
-        ['username' => 'user2', 'password' => 'pass2']
-    ];
-
+    // simulate a user database 
+    $users = json_decode(file_get_contents('users.json'), true) ?? [];
     foreach ($users as $user) {
         if ($user['username'] == $username) {
-            $_SESSION['username'] = $username;
             $error = "Your Login Name or Password is invalid";
             break;
         }
     }
 
     if (!isset($error)) {
-        $error = "Your Login Name or Password is invalid";
+        $users = ['username' => $username, 'password' => $password];
+        file_put_contents('users.json', json_encode($users));
         $_SESSION['username'] = $username;
-        header("location: dashboard.php.");
+        header("location: login.html");
         exit;
         }
 }
