@@ -17,10 +17,10 @@ and to see if the user exists in the database
 //and display a Welcome "username" or something along those lines
 //still getting used to javascript
 function checkforaccount(){
-	var userName;
-	if (userName) {
-		document.getElementById("login_signup").innerText = "Welcome " + userName;
-		document.getElementById("login_signup").herf = "#"; // disable link if logged in
+	const user = sessionStorage.getItem('loggedInUser');
+	if (user) {
+		document.getElementById("login_signup").innerText = "Welcome " + user;
+		document.getElementById("login_signup").herf = "dashboard.html"; // disable link if logged in
 	}
 }
 
@@ -38,6 +38,7 @@ async function getInformation(event){
 	});
 	const data = await response.json();
 	if (response.ok){
+		alert(data.message);
 		sessionStorage.setItem('loggedInUser', userName);
 		window.location.href = "dashboard.html";
 }
@@ -53,7 +54,7 @@ async function createAccount(event){
 	const userName = document.getElementById("username").value;
 	const passWord = document.getElementById("password").value;
 
-	const response = await fetch("login.php", {
+	const response = await fetch("signup.php", {
 	method: 'POST',
 	headers: {
 		'content-type': 'application/json'
@@ -63,6 +64,7 @@ async function createAccount(event){
 	const data = await response.json();
 	if (response.ok){
 		alert(data.message);
+		sessionStorage.setItem('loggedInUser', userName);
 		window.location.herf = "login.html"; // redirect to login page
 	}
 	else {

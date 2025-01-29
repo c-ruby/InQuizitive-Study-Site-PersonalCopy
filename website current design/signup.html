@@ -14,6 +14,7 @@
 				<li><a href="index.html">Home</a></li>
 				<li><a href="explore.html">Explore</a></li>
 				<li><a href="about.html">About</a></li>
+				<li><a href="weeklyUpdate.html">Weekly Updates</a></li>
 			</ul>
 			<input type="text" placeholder="search.." id="searchbar" onkeypress = clickPress(event)>
 			<a id="login_signup" href="login.html">Login/Sign Up</a>
@@ -29,7 +30,7 @@
 			<form id= "signupForm" action="signup.php" method="post">
 				<label for="UserName">Username:</label>
 				<br><br>
-				<input type="text" id="username" name="username">
+				<input type="text" id="username" name="username" required>
 				<br><br>
 				<label for= "Password">Password:</label>
 				<br><br>
@@ -39,7 +40,7 @@
 			</form>
 			<br>
 			<p>
-				Don't have an account? <a href="#signup">Sign Up</a> 
+				Already have an account? <a href="login.html">login</a>
 			</p>
 		</div>
 		

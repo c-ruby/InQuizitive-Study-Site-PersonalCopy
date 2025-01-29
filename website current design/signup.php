@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <h1>Sign Up</h1>
     <?php if (isset($error)) { ?>
         <p style="color: red;"><?php echo $error; ?></p>
-    <?php endif; ?>
+    <?php } ?>
     <form action="signup.php" method="POST">
         <label for="username">Username</label>
         <input type="text" name="username" id="username" required>

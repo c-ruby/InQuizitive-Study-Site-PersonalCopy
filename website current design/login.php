@@ -15,11 +15,12 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     foreach ($users as $user) {
         if ($user['username'] == $username && $user['password'] == $password) {
             $_SESSION['username'] = $username;
-            header("location: dashboard.php.");
+            echo json_encode(['message' => 'Login successful']);
             exit;
         }
     }
-    $error = "Your Login Name or Password is invalid";
+    echo json_encode(['message' => 'Login failed']);
+    http_response_code(401);
 }
 ?>
 
@@ -34,7 +35,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     <h1>Login</h1>
     <?php if (isset($error)) { ?>
         <p style="color: red;"><?php echo $error; ?></p>
-    <?php endif; ?>
+    <?php } ?>
     <form action="login.php" method="POST">
         <label for="username">Username</label>
         <input type="text" name="username" id="username" required>
