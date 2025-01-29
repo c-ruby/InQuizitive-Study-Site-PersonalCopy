@@ -148,7 +148,7 @@ will figure out eventually
 	#weeklyupdatedoc {
 		width: 80%; 
 		height: 3000px;;
-		frameborder: 0;
+		border: 0;
 		overflow: hidden;
 		display: absolute;
 		margin : auto;
@@ -157,7 +157,7 @@ will figure out eventually
 	#weeklyupdatepp {
 		width: 80%; 
 		height: 100%;
-		frameborder: 0;
+		border: 0;
 		overflow: hidden;
 		display: absolute;
 		margin : auto;
