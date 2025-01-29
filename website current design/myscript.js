@@ -18,6 +18,7 @@ function cloneRow() {
 	row.innerHTML= html;
 
 	document.getElementById("myTable").appendChild(row);
+}
 
 // simulates a simple user database
 let users = [];
