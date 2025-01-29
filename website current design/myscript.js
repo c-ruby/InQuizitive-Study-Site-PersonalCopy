@@ -1,10 +1,3 @@
-function clickPress(event){
-	if(event.keyCode == 13){
-		var searchBar = document.getElementById("searchbar");
-		searchBar.value = "";
-	}
-}
-
 /*
 This is simply to clone the rows on the study set template page
 Will update when DB is set up to auto set rows for how many questions are in the set
@@ -36,9 +29,13 @@ function checkforaccount(){
 	if (user) {
 		document.getElementById("login_signup").innerText = "Welcome " + user;
 		document.getElementById("login_signup").herf = "dashboard.html"; // disable link if logged in
+		document.getElementById("welcome").innerText = "Welcome " + user + "!";
+	}
+	else {
+		window.location.href = "login.html";
 	}
 }
-
+// to handle the login submission
 async function getInformation(event){
 	event.preventDefault();
 	const userName = document.getElementById("username").value;
@@ -58,12 +55,12 @@ async function getInformation(event){
 		window.location.href = "dashboard.html";
 }
 else{
-	alert("Invalid username or password");
+	alert(data.message);
 	}
 }	
 
 
-
+// to handle the signup submission
 async function createAccount(event){
 	event.preventDefault();
 	const userName = document.getElementById("username").value;
@@ -89,15 +86,10 @@ async function createAccount(event){
 
 
 // event listeners for the search bar
-document.addEventListener("DOMContentLoaded", function(event){
+document.addEventListener("DOMContentLoaded", function(){
 	const searchbar = document.getElementById("searchbar");
 	if (searchbar){
-		searchbar.addEventListener("keypress", function(event){
-			if (event.keyCode == 13){
-			event.preventDefault();
-			this.value = "";
-			}
-		});
+		searchbar.addEventListener("keypress", clickPress);
 	}
 	
 	const loginForm = document.getElementById("loginForm");
@@ -111,4 +103,9 @@ document.addEventListener("DOMContentLoaded", function(event){
 	}
 
 });
-
+function clickPress(event){
+	if(event.keyCode == 13){
+		var searchBar = document.getElementById("searchbar");
+		searchBar.value = "";
+	}
+}
