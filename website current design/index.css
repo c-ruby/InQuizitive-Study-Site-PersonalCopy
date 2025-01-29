@@ -14,6 +14,8 @@ will figure out eventually
 	body {
 		font-family: Arial, sans-serif; 		/*Sets the fonts, will probably change and add backup fonts*/
 		background-color: white; 				/*sets the background color of the body*/
+		display: flex;
+		flex-direction: column;
 	}
 
 	/*this sets attributes for the header*/
@@ -117,8 +119,10 @@ will figure out eventually
 		text-align: center;						/*Centers the text in the content*/
 		display: flex;							/*gives it a flex display*/
 		width:100%;								/*makes it the length of the page*/
-		height: 75vh;							/*makes it the height of the monitor*/
 		align-content: center;					/*centers content*/
+		min-height: 100vh;
+		margin-bottom: 80px;
+		flex: 1;
 	}
 	
 	/*This edits all paragraph attributes if they are in the content class*/
@@ -127,42 +131,23 @@ will figure out eventually
 		text-align: center;						/*This will align the text inside the paragraph to center*/
 	}
 	
-	.weeklyUpdates{
-		width: 100%; /* Adjust the width as needed */
-		display: absolute;
-		flex-direction: column;
-		gap: 10px; /* Space between the iframes */
-		height: 100%;
+	.content a{
+		margin:auto;
+	}
+	
+	/*This edits the two divs of userSets and viewedSets inside of the content div*/
+	#userSets, #viewedSets{
+		width: 50%;								/*This edit the width of both divs so that they are 50% the size of the content*/
+		padding: 10px;							/*this gives the divs 10 pixels of padding*/
+		margin: 25px;							/*this gives them 25 pixels of margin */
+		background: #333;						/*changes the background color to grey*/
+		border-radius: 15px;					/*rounds the corners*/
+		color: white;							/*makes the text white*/
 		
 	}
 	
-	.weeklyUpdates .content{
-		width: 100%; /* Adjust the width as needed */
-		display: absolute;
-		flex-direction: column;
-		gap: 10px; /* Space between the iframes */
-		height: 2000px;
-		
-	}
 	
-	#weeklyupdatedoc {
-		width: 80%; 
-		height: 3000px;;
-		border: 0;
-		overflow: hidden;
-		display: absolute;
-		margin : auto;
-	}
-	
-	#weeklyupdatepp {
-		width: 80%; 
-		height: 100%;
-		border: 0;
-		overflow: hidden;
-		display: absolute;
-		margin : auto;
-	}
-	
+	/*Start of About CSS*/
 	/*This edits all of the attributes of the about class*/
 	.about{
 		width: 80%;								/*This will make the width 80% of the content div*/
@@ -178,18 +163,10 @@ will figure out eventually
 	.about h2, p{
 		padding: 20px;
 	}
+	/*End of About CSS*/
 	
-	/*This edits the two divs of userSets and viewedSets inside of the content div*/
-	#userSets, #viewedSets{
-		width: 50%;								/*This edit the width of both divs so that they are 50% the size of the content*/
-		padding: 10px;							/*this gives the divs 10 pixels of padding*/
-		margin: 25px;							/*this gives them 25 pixels of margin */
-		background: #333;						/*changes the background color to grey*/
-		border-radius: 15px;					/*rounds the corners*/
-		color: white;							/*makes the text white*/
-		
-	}
 	
+	/*Start of Login CSS*/
 	/*this edits the login div*/
 	#login{
 		color: white;							/*changes the text to white*/
@@ -222,6 +199,43 @@ will figure out eventually
 		padding: 10px;							/*gives the button 10 pixels of padding*/
 		border-radius: 15px;					/*rounds the corners of the button*/
 	}	
+	/*End of Login CSS*/
+	
+	/*Start of Template Page CSS*/
+	
+	.StudySetOptions{
+		width:10%;
+		background: grey;
+		padding: 10px;
+	}
+	.StudySetOptions button{
+		width: 80%;
+		padding: 15px;
+		margin-top: 10px;
+	}
+	
+	.StudySet-Container{
+		background: grey;
+		width: 80%;
+		margin: auto;
+		border: 5px solid black;
+	}
+	
+	td{
+		border: 1px solid black;
+	}
+	
+	.StudySet-Question{
+		width:20%;
+	}
+	
+	.StudySet-Answers{
+		width:80%;
+	}
+	
+	/*End of Template Page CSS*/
+	
+	
 	
 	/*edits the footer div*/
 	footer {

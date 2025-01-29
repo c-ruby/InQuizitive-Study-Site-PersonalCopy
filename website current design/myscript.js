@@ -5,6 +5,21 @@ function clickPress(event){
 	}
 }
 
+/*
+This is simply to clone the rows on the study set template page
+Will update when DB is set up to auto set rows for how many questions are in the set
+for now just clones the table row
+*/
+function cloneRow() {
+	var html = document.getElementById("therow").innerHTML;
+
+	var row = document.createElement('tr');
+
+	row.innerHTML= html;
+
+	document.getElementById("myTable").appendChild(row);
+}
+
 // simulates a simple user database
 let users = [];
 /*
