@@ -95,3 +95,15 @@ function clickPress(event){
 		searchBar.value = "";
 	}
 }
+
+function generate_quiz(table){
+	
+}
+
+function flashcards(table){
+	
+}
+
+function createtag(input){
+	
+}
