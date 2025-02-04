@@ -24,6 +24,7 @@ and to see if the user exists in the database
 //will eventually have it get rid of the login/signup button 
 //and display a Welcome "username" or something along those lines
 //still getting used to javascript
+
 function checkforaccount(){
 	const user = sessionStorage.getItem('loggedInUser');
 	if (user) {
@@ -34,6 +35,8 @@ function checkforaccount(){
 		window.location.href = "signup.html";
 	}
 }
+
+
 // to handle the login submission
 async function getInformation(event){
 	event.preventDefault();
@@ -89,9 +92,33 @@ document.addEventListener("DOMContentLoaded", function(){
 	}
 
 });
+
 function clickPress(event){
 	if(event.keyCode == 13){
 		var searchBar = document.getElementById("searchbar");
 		searchBar.value = "";
 	}
+}
+
+function generate_quiz(){
+	
+	document.getElementById('SSheader').style.opacity = '.2';
+	document.getElementById('SScontent').style.opacity = '.2';
+	document.getElementById('SSfooter').style.opacity = '.2';
+
+	
+	var quiz = document.createElement("div");
+	quiz.id = "Quiz";
+	quiz.innerHTML = "TEST";
+	document.body.appendChild(quiz);
+	
+	quiz.style.opacity = '1';
+}
+
+function flashcards(table){
+	
+}
+
+function createtag(input){
+	
 }

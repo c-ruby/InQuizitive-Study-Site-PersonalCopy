@@ -18,6 +18,7 @@ will figure out eventually
 		flex-direction: column;
 	}
 
+	
 	/*this sets attributes for the header*/
 	/*header includes: navbar, subheader*/
 	header{
@@ -145,7 +146,64 @@ will figure out eventually
 		color: white;							/*makes the text white*/
 		
 	}
+
+	#studySetCreation{
+		margin: 25px;
+		padding: 15px;
+		border-radius: 15px;
+		color:white;
+		background:grey;
+	}
 	
+	
+	/*The start of the study set editor CSS*/
+	.studySetEditor{
+		margin:auto;
+		background:#333;
+		padding:25px;
+		width: 80%;
+		height: 100vh;
+		border-radius:15px;
+	}
+	
+	#name{
+		color: black;
+		margin: 10px;
+		padding: 5px;
+	}
+	
+	#tags{
+		margin: auto;
+		padding: 15px;
+		width: 25%;
+		height: 25%;
+		background: grey;
+		border-radius: 15px;
+		color: black;
+	}
+	
+	#tags button{
+		color: black;
+		border-radius: 15px;
+		padding: 5px;
+		border: none;
+	}
+	
+	#tags button:hover{
+		background: grey;
+	}
+	
+	.studySetEditor table{
+		margin: auto;
+		background: grey;	
+		width: 80%;
+	}
+	
+	#addQA{
+		margin:auto;
+		width: 100%;
+	}
+	/*The end of the study set editor CSS*/
 	
 	/*Start of About CSS*/
 	/*This edits all of the attributes of the about class*/
@@ -203,10 +261,15 @@ will figure out eventually
 	
 	/*Start of Template Page CSS*/
 	
+	#templink{
+		color:black;
+	}
+	
 	.StudySetOptions{
 		width:10%;
-		background: grey;
+		background: #333;
 		padding: 10px;
+		height: 100%;
 	}
 	.StudySetOptions button{
 		width: 80%;
@@ -215,14 +278,16 @@ will figure out eventually
 	}
 	
 	.StudySet-Container{
+		
 		background: grey;
 		width: 80%;
 		margin: auto;
-		border: 5px solid black;
+		border: 5px;
+		border-radius: 5px;
 	}
 	
 	td{
-		border: 1px solid black;
+		padding: 10px;
 	}
 	
 	.StudySet-Question{
@@ -233,8 +298,26 @@ will figure out eventually
 		width:80%;
 	}
 	
-	/*End of Template Page CSS*/
+	#Quiz{
+		width:50%;
+		height: 80%;
+		background: #333;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 30%;
+		
+		margin-inline: auto;
+		opacity: 0;
+		transition: opacity 2s;
+	}
 	
+	#SSheader, #SScontent, #SSfooter{
+		opacity: 1;
+        transition: opacity 2s;
+	}
+	
+	/*End of Template Page CSS*/
 	
 	
 	/*edits the footer div*/

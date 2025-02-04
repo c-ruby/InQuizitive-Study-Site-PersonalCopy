@@ -7,12 +7,9 @@
     <link rel="stylesheet" href="index.css">
 	<link rel="icon" type="image/jpeg" href="images/beanz.jpg">
 </head>
-<body onload = checkforaccount()>
-
-	
-	
+<body id="body">
 	<script src="myscript.js"></script>
-		<header>
+		<header id="SSheader">
 			<nav>
 				<ul>
 					<li><a href="index.html">Home</a></li>
@@ -27,11 +24,14 @@
 			</div>
 			
 		</header>
-		<div class="content">
+		<div class="content" id="SScontent">
 			<ul class="StudySetOptions">
 				<li><button>Flash Cards</button></li>
-				<li><button>Test</button></li>
+				<li><button onclick=generate_quiz()>Quiz</button></li>
+				<li><button>Settings</button></li>
+				<li><button>edit</button></li>
 				<li><button onclick=cloneRow()>add row</button></li>
+				
 			</ul>
 			<table class="StudySet-Container" id="myTable">
 				<th>Questions</th><th>Answers</th>
@@ -42,7 +42,7 @@
 			</table>
 			
 		</div>
-	<footer>
+	<footer id="SSfooter">
 		
 	</footer>
 </body>
