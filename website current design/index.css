@@ -18,6 +18,7 @@ will figure out eventually
 		flex-direction: column;
 	}
 
+	
 	/*this sets attributes for the header*/
 	/*header includes: navbar, subheader*/
 	header{
@@ -277,14 +278,16 @@ will figure out eventually
 	}
 	
 	.StudySet-Container{
+		
 		background: grey;
 		width: 80%;
 		margin: auto;
-		border: 5px solid black;
+		border: 5px;
+		border-radius: 5px;
 	}
 	
 	td{
-		border: 1px solid black;
+		padding: 10px;
 	}
 	
 	.StudySet-Question{
@@ -293,6 +296,25 @@ will figure out eventually
 	
 	.StudySet-Answers{
 		width:80%;
+	}
+	
+	#Quiz{
+		width:50%;
+		height: 80%;
+		background: #333;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 30%;
+		
+		margin-inline: auto;
+		opacity: 0;
+		transition: opacity 2s;
+	}
+	
+	#SSheader, #SScontent, #SSfooter{
+		opacity: 1;
+        transition: opacity 2s;
 	}
 	
 	/*End of Template Page CSS*/
