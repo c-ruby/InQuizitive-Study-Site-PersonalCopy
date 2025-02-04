@@ -27,18 +27,22 @@ and to see if the user exists in the database
 
 function checkforaccount(){
 	const user = sessionStorage.getItem('loggedInUser');
+	const loginSignupLink = document.getElementById("login_signup");
 	if (user) {
 		document.getElementById("login_signup").innerText = "Welcome " + user;
 		document.getElementById("login_signup").href= "dashboard.html"; // disable link if logged in
+		loginSignupLink.style.innerText = "Welcome " + user;
+		loginSignupLink.herf = "dashboard.html";
 	}
 	else {
+		loginSignupLink.style.display = "block";
 		window.location.href = "signup.html";
 	}
 }
 
 
 // to handle the login submission
-async function getInformation(event){
+function getInformation(event){
 	event.preventDefault();
 	const userName = document.getElementById("username").value;
 	const passWord = document.getElementById("password").value;
