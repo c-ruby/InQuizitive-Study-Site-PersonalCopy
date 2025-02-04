@@ -17,7 +17,7 @@
                     <li><a href="about.html">About</a></li>
                 </ul>
                 <input type="text" placeholder="search.." id="searchbar" onkeypress = clickPress(event)>
-                <a id="login_signup" href="login.html">Login/Sign Up</a>
+                <a id="login_signup" href="login.html" style="display: none">Login/Sign Up</a>
             </nav>
         </header>
         <div class="content">
@@ -39,6 +39,9 @@
                 if(user && password){
                     document.getElementById("welcome").innerText = "Welcome, " + user;
                     document.getElementById("username").innerText = user;
+                    document.getElementById("password").innerText = password;
+                    document.getElementById("login_signup").innerText = "Logout";
+                    document.getElementById("login_signup").href = "logout.php";
     
                     const studySetsList = document.getElementById("studySets");
                     studySets.forEach(set => {
