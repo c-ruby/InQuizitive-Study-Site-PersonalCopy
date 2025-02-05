@@ -26,17 +26,24 @@ and to see if the user exists in the database
 //still getting used to javascript
 
 function checkforaccount(){
+	
 	const user = sessionStorage.getItem('loggedInUser');
 	const loginSignupLink = document.getElementById("login_signup");
+	const dashboardLink = document.getElementById("dashboard");
 	if (user) {
-		document.getElementById("login_signup").innerText = "Welcome " + user;
-		document.getElementById("login_signup").href= "dashboard.html"; // disable link if logged in
+		 // disable link if logged in
 		loginSignupLink.style.innerText = "Welcome " + user;
 		loginSignupLink.herf = "dashboard.html";
+		dashboardLink.style.display = "block";
+		if (dashboardLink){
+			dashboardLink.display = "block";
+		}
 	}
 	else {
 		loginSignupLink.style.display = "block";
-		window.location.href = "signup.html";
+		if (dashboardLink){
+		dashboardLink.style.display = "none";
+		}
 	}
 }
 
@@ -95,6 +102,8 @@ document.addEventListener("DOMContentLoaded", function(){
 		signupForm.addEventListener("submit", createAccount);
 	}
 
+	checkforaccount();
+
 });
 
 function clickPress(event){
@@ -125,4 +134,10 @@ function flashcards(table){
 
 function createtag(input){
 	
+}
+
+function logout(){
+	sessionStorage.removeItem('loggedInUser');
+	sessionStorage.removeItem('loggedInPassword');
+	window.location.href = "login.html";
 }
