@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inquisitive</title>
+    <title>Inquisitive - Dashboard</title>
     <link rel="stylesheet" href="index.css">
     <link rel="icon" type="image/jpeg" href="images/beanz.jpg">
 </head>
-<body on load="checkforaccount()">
+<body onload ="checkforaccount()">
     <script src="myscript.js"></script>
     <header>
             <nav>
@@ -15,6 +15,8 @@
                     <li><a href="index.html">Home</a></li>
                     <li><a href="explore.html">Explore</a></li>
                     <li><a href="about.html">About</a></li>
+                    <li><a href="weeklyUpdate.html">Weekly Updates</a></li>
+                    <li><a href="dashboard.html" id="dashboard_link" style="display: none">Dashboard</a>
                 </ul>
                 <input type="text" placeholder="search.." id="searchbar" onkeypress = clickPress(event)>
                 <a id="login_signup" href="login.html" style="display: none">Login/Sign Up</a>
@@ -26,7 +28,7 @@
             <p><strong>Username:</strong> <span id="username"></span></p>
             <h2>Study Sets</h2>
             <ul id="studySets">
-            <a href="logout.php">Logout</a>
+            <button onclick ="logout()">Logout</button>
         </div>
         <footer>
 
@@ -40,8 +42,6 @@
                     document.getElementById("welcome").innerText = "Welcome, " + user;
                     document.getElementById("username").innerText = user;
                     document.getElementById("password").innerText = password;
-                    document.getElementById("login_signup").innerText = "Logout";
-                    document.getElementById("login_signup").href = "logout.php";
     
                     const studySetsList = document.getElementById("studySets");
                     studySets.forEach(set => {
