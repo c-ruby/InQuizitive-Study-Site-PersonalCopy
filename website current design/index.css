@@ -300,7 +300,7 @@ will figure out eventually
 	
 	#Quiz{
 		width:50%;
-		height: 80%;
+		height: auto;
 		background: #333;
 		position: absolute;
 		left: 0;
@@ -314,13 +314,56 @@ will figure out eventually
 		border-radius: 15px;
 	}
 	
+	#quiz-QA-selector{
+		padding: 15px;
+		
+	}
+	
 	#submitbtn{
 		position: absolute;
 		bottom: 10px;
 		left: 50%;
 		transform: translateX(-50%);
+		margin: 5px;
 		padding: 15px;
 	}
+	
+	#Flashcards{
+		width:50%;
+		height: 50%;
+		background: #333;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 30%;
+		margin-inline: auto;
+		opacity: 0;
+		color: white;
+		transition: opacity 2s;
+		text-align: center;
+		border-radius: 15px;
+	}
+	
+	#exitButton{
+		position: absolute;
+        top: 0px;
+        right: 0px;
+		padding: 5px;
+		border-radius: 0px 15px 0px 0px;
+		color: white;
+		background: #333;
+		border: none;
+	}
+	
+	
+	#nextButton, #backButton{
+		padding: 5px;
+		margin: 5px;
+		background: #333;
+		color: white;
+		
+	}
+		
 	
 	#SSheader, #SScontent, #SSfooter{
 		opacity: 1;

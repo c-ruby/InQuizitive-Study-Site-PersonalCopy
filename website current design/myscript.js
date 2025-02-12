@@ -3,15 +3,6 @@ This is simply to clone the rows on the study set template page
 Will update when DB is set up to auto set rows for how many questions are in the set
 for now just clones the table row
 */
-
-
-function getRowCount(){
-	const table = document.getElementById('myTable');
-    return table.rows.length-1;
-}
-
-let count=1;
-
 function cloneRow() {
 	const table = document.getElementById("myTable");
     const row = table.insertRow();
@@ -29,6 +20,12 @@ function cloneRow() {
 	
 	count++;
 }
+
+//allows for random numbers within a certain range
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 
 // simulates a simple user database
 let users = [];
@@ -130,7 +127,19 @@ function clickPress(event){
 	}
 }
 
+//used for setting row id's
+let count=1;
+
+//used to get the amount of rows in the quiz table
+function getRowCount(){
+	const table = document.getElementById('myTable');
+    return table.rows.length-1;
+}
+
+//generates the quiz
 function generate_quiz(){
+	var questionCount = getRowCount();
+	
 	//These set the opacity of the elements on the page to low
 	document.getElementById('SSheader').style.opacity = '.1';
 	document.getElementById('SScontent').style.opacity = '.1';
@@ -150,7 +159,7 @@ function generate_quiz(){
     submitbtn.id = "submitbtn";
     submitbtn.innerHTML = "Submit";
 	submitbtn.onclick = disablequiz;
-    quiz.appendChild(submitbtn);
+    
 	
 	//These disable all of the buttons on the side when the quiz is generated
 	document.getElementById('flashcardbtn').disabled = true;
@@ -162,10 +171,45 @@ function generate_quiz(){
 	//This code is what generates the quiz questions and answers	
 	var formforquiz = document.createElement("form");
 	var questionLbl = document.createElement("label");
-	var questionAnswer = document.createElement("")
+	var questionAnswer = document.createElement("input");
+	//gives the form an id
+	formforquiz.id ="quiz-QA-selector"
 	
+	//adds the form to the div
+	quiz.appendChild(formforquiz);
+	
+	//this for loop will create n question answer combos for n questions in table
+	for(var qcount = 1; qcount <= questionCount; qcount++){
+		//adds question label and answer buttons
+		questionLbl = document.createElement("label");
+		questionLbl.innerHTML = qcount;
+		formforquiz.appendChild(questionLbl);
+		formforquiz.appendChild(document.createElement("br"));
+		formforquiz.appendChild(document.createElement("br"));
+		//selects correct answer and which answer selection it is randomly
+		var correctAnswer = getRandomNumber(1, 4);
+		
+		//double for loops to place two buttons next to each other, and two bellow
+		for (var i = 0; i<2; i++){
+			for (var j=0; j<2; j++){
+				
+				questionAnswer = document.createElement("input");
+				questionAnswer.type = 'radio';
+				questionAnswer.name = 'Answer' + qcount;
+				formforquiz.appendChild(questionAnswer);
+			}
+			formforquiz.appendChild(document.createElement("br"));
+		}
+		formforquiz.appendChild(document.createElement("br"));
+	}
+	formforquiz.appendChild(document.createElement("br"));
+	formforquiz.appendChild(document.createElement("br"));
+	
+	
+	quiz.appendChild(submitbtn);
 }
 
+//this function is what submits the quiz
 function disablequiz() {
     document.getElementById('SSheader').style.opacity = '1';
     document.getElementById('SScontent').style.opacity = '1';
@@ -184,8 +228,71 @@ function disablequiz() {
     document.getElementById('addrowbtn').disabled = false;
 }
 
-function flashcards(table){
+function flashCards(){
+	var questionCount = getRowCount();
+	var currentQuestion = 0;
+	var question;
+	var answer;
+	//this creates the exit button for the flashcards
+	var exitbtn = document.createElement("button");
+	exitbtn.id = "exitButton";
+	exitbtn.innerHTML = "Close Flashcards";
+	exitbtn.onclick = disableFlashcards;
 	
+	//this creates the exit button for the flashcards
+	var nextbtn = document.createElement("button");
+	var backbtn = document.createElement("button");
+	nextbtn.id = "nextButton";
+	backbtn.id = "backButton";
+	nextbtn.innerHTML = "Next";
+	backbtn.innerHTML = "Back";
+	
+	//These set the opacity of the elements on the page to low
+	document.getElementById('SSheader').style.opacity = '.1';
+	document.getElementById('SScontent').style.opacity = '.1';
+	document.getElementById('SSfooter').style.opacity = '.1';
+
+	//creates the flashcard div and adds the buttons to it
+	var flashcard = document.createElement("div");
+	flashcard.id = "Flashcards";
+	flashcard.appendChild(exitbtn);
+	flashcard.appendChild(backbtn);
+	flashcard.appendChild(nextbtn);
+	flashcard.style.opacity = '1';
+	
+	//These disable all of the buttons on the side when the quiz is generated
+	document.getElementById('flashcardbtn').disabled = true;
+	document.getElementById('quizbtn').disabled = true;
+	document.getElementById('settingsbtn').disabled = true;
+	document.getElementById('editbtn').disabled = true;
+	document.getElementById('addrowbtn').disabled = true;
+	
+	
+	if(questionCount > 0){
+		currentQuestion = 1;
+		document.body.appendChild(flashcard);   
+	} else{
+		alert("No StudySet questions");
+		disableFlashcards();
+	}	
+}
+
+function disableFlashcards(){
+	document.getElementById('SSheader').style.opacity = '1';
+    document.getElementById('SScontent').style.opacity = '1';
+    document.getElementById('SSfooter').style.opacity = '1';
+
+    var flashcard = document.getElementById("Flashcards");
+    if (flashcard) {
+        flashcard.parentNode.removeChild(flashcard);
+    }
+
+    // Enable buttons
+    document.getElementById('flashcardbtn').disabled = false;
+    document.getElementById('quizbtn').disabled = false;
+    document.getElementById('settingsbtn').disabled = false;
+    document.getElementById('editbtn').disabled = false;
+    document.getElementById('addrowbtn').disabled = false;
 }
 
 function createtag(input){
