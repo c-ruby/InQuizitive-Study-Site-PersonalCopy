@@ -19,29 +19,27 @@
 				<input type="text" placeholder="search.." id="searchbar" onkeypress = clickPress(event)>
 				<a id="login_signup" href="login.html">Login/Sign Up</a>
 			</nav>
-			<div class="subheader">
+			<div class="subheader" id="studySetName">
 				<h1>Study Set Title</h1>
 			</div>
 			
 		</header>
 		<div class="content" id="SScontent">
 			<ul class="StudySetOptions">
-				<li><button>Flash Cards</button></li>
-				<li><button onclick=generate_quiz()>Quiz</button></li>
-				<li><button>Settings</button></li>
-				<li><button>edit</button></li>
-				<li><button onclick=cloneRow()>add row</button></li>
+				<li><button id="flashcardbtn" class="studysetbutton">Flash Cards</button></li>
+				<li><button onclick=generate_quiz() id="quizbtn" class="studysetbutton">Quiz</button></li>
+				<li><button id="settingsbtn" class="studysetbutton">Settings</button></li>
+				<li><button id="editbtn" class="studysetbutton">edit</button></li>
+				<li><button onclick=cloneRow() id="addrowbtn" class="studysetbutton">add row</button></li>
 				
 			</ul>
+			
 			<table class="StudySet-Container" id="myTable">
 				<th>Questions</th><th>Answers</th>
-				<tr class="StudySet-Q&A" id="therow">
-					<td class="StudySet-Question">Question</td>
-					<td class="StudySet-Answer">Answer</td>
-				</tr>
 			</table>
 			
 		</div>
+		
 	<footer id="SSfooter">
 		
 	</footer>
