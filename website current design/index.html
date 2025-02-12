@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="index.css">
 	<link rel="icon" type="image/jpeg" href="images/beanz.jpg">
 </head>
-<body>
+<body onload = "checkforaccount()">
 	<script src="myscript.js"></script>
 	<header>
 		<nav>
@@ -15,6 +15,7 @@
 				<li><a href="index.html">Home</a></li>
 				<li><a href="explore.html">Explore</a></li>
 				<li><a href="about.html">About</a></li>
+				<li><a herf="dashboard.html" id= "dashboard_Link" style="display: none;"> Dashboard</a></li>
 			</ul>
 			<input type="text" placeholder="search.." id="searchbar" onkeypress = clickPress(event)>
 			<a id="login_signup" href="login.html">Login/Sign Up</a>
@@ -28,8 +29,6 @@
     <div class="content">
 		<div id="userSets">
 			<h2>View/Edits Your Sets</h2>
-			<br>
-			<a id="studySetCreation" href="createASet.html">Create New Study Set</a>
 		</div>
 		<div id="viewedSets">
 			<h2>Reciently Viewed Sets</h2>
