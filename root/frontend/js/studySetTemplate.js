@@ -29,6 +29,7 @@ function cloneRow() {
 	count++;
 }
 
+
 //allows for random numbers within a certain range
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -213,4 +214,176 @@ function disableFlashcards(){
     document.getElementById('settingsbtn').disabled = false;
     document.getElementById('editbtn').disabled = false;
     document.getElementById('addrowbtn').disabled = false;
+}
+
+
+
+//------------Datbase Operations------------
+//Caleb Ruby's additions
+/*
+	This segment of code populates the table with the terms in the study set 
+*/
+    // Function to fetch and display terms
+	const studySetId = new URLSearchParams(window.location.search).get('id');
+    const tableBody = document.getElementById('myTable').querySelector('tbody');
+    function fetchTerms() {
+        fetch(`/study-sets/${studySetId}/terms`)
+        .then(response => response.json())
+        .then(data => {
+            tableBody.innerHTML = '';
+            data.forEach(term => {
+                addTermToTable(term.term, term.definition, term.term_id);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching terms:', error);
+        });
+    }
+
+    // Function to add a term to the table
+    function addTermToTable(term, definition, termId) {
+		const row = tableBody.insertRow();
+		row.dataset.termId = termId; // Assign termId to the row for future reference
+	
+		const questionCell = row.insertCell();
+		questionCell.classList.add('question-cell');
+		questionCell.textContent = term;
+	
+		const answerCell = row.insertCell();
+		answerCell.classList.add('answer-cell');
+		answerCell.textContent = definition;
+	
+		const actionCell = row.insertCell();
+		
+		// Add edit button
+		const editBtn = document.createElement('button');
+		editBtn.textContent = 'Edit';
+		editBtn.onclick = () => makeRowEditable(row);
+		actionCell.appendChild(editBtn);
+	
+		// Add delete button
+		const deleteBtn = document.createElement('button');
+		deleteBtn.textContent = 'Delete';
+		deleteBtn.onclick = () => deleteTerm(row, termId);
+		actionCell.appendChild(deleteBtn);
+	
+		row.appendChild(actionCell);
+	
+    }
+fetchTerms();
+
+
+
+/* 
+	script to handle form submission and save term to database 
+*/
+//grabs values from form 
+document.querySelector('#termForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const termInput = document.querySelector('#term');
+    const definitionInput = document.querySelector('#definition');
+    
+    const term = termInput.value;
+    const definition = definitionInput.value;
+
+    saveTerm(term, definition);
+    
+    // Clear the form inputs
+    termInput.value = '';
+    definitionInput.value = '';
+});
+//fetches the route 
+function saveTerm(term, definition) {
+    fetch(`/study-sets/${studySetId}/terms`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ term, definition })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Term added successfully');
+    })
+    .catch(error => {
+        console.error('Error adding term:', error);
+    });
+
+	fetchTerms();	//just make sure table updates after adding a term 
+}
+
+
+
+/**
+	hanldes deletion 
+ */
+// Function to handle deleting term from database
+function deleteTerm(row, termId) {
+	fetch(`/terms/${termId}`, {
+		method: 'DELETE'
+	})
+	.then(response => response.json())
+	.then(data => {
+		alert('Term deleted successfully');
+		// Remove the row from the table
+		row.remove();
+		fetchTerms();
+	})
+	.catch(error => {
+		console.error('Error deleting term:', error);
+	});
+}
+
+
+
+/**
+ * Script to handle term editing 
+ */
+function makeRowEditable(row) {
+    const questionCell = row.querySelector('.question-cell');
+    const answerCell = row.querySelector('.answer-cell');
+
+    if (!questionCell || !answerCell) {
+        console.error('Error: Unable to find questionCell or answerCell');
+        return;
+    }
+
+    // Enable content editing
+    questionCell.contentEditable = true;
+    answerCell.contentEditable = true;
+
+    // Change "Edit" button to "Save" button
+    const editBtn = row.querySelector('button');
+    editBtn.textContent = 'Save';
+    editBtn.onclick = () => saveRowEdits(row, questionCell, answerCell);
+}
+
+// Function to save row edits and update the database
+function saveRowEdits(row, questionCell, answerCell) {
+    const term = questionCell.textContent;
+    const definition = answerCell.textContent;
+    const termId = row.dataset.termId;
+
+    fetch(`/terms/${termId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ term, definition })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Term updated successfully');
+        // Disable content editing
+        questionCell.contentEditable = false;
+        answerCell.contentEditable = false;
+        // Change "Save" button back to "Edit" button
+        const saveBtn = row.querySelector('button');
+        saveBtn.textContent = 'Edit';
+        saveBtn.onclick = () => makeRowEditable(row);
+    })
+    .catch(error => {
+        console.error('Error updating term:', error);
+    });
 }

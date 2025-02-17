@@ -319,6 +319,21 @@ app.delete('/terms/:term_id', (req, res) => {
       res.status(200).json({ message: 'Term deleted successfully' });
   });
 });
+//edit terms 
+// Update term
+app.put('/terms/:term_id', (req, res) => {
+  const { term_id } = req.params;
+  const { term, definition } = req.body;
+  const query = 'UPDATE Terms SET term = ?, definition = ? WHERE term_id = ?';
+
+  db.query(query, [term, definition, term_id], (err, result) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.status(200).json({ message: 'Term updated successfully' });
+  });
+});
+
 
 
 
