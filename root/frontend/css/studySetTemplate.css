@@ -9,6 +9,7 @@
     background: #333;
     padding: 10px;
     height: 100%;
+    position:fixed left;
 }
 
 .StudySetOptions button {
@@ -26,7 +27,9 @@
     margin: auto;
     border: 5px;
     border-radius: 5px;
-   
+    box-sizing: border-box;
+    padding: 0;
+    margin-top: 0;
 }
 
 td {
@@ -105,6 +108,7 @@ td {
 #SSheader, #SScontent, #SSfooter{
     opacity: 1;
     transition: opacity 2s;
+    
 }
 
 

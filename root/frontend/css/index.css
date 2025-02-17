@@ -27,6 +27,7 @@ will figure out eventually
 	/*header includes: navbar, subheader*/
 	header{
 		width: 100%; 
+		margin-bottom: 1rem;
 	}
 	
 	/*this sets attributes for the navbar*/
