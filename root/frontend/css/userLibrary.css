@@ -1,0 +1,64 @@
+/* Flexbox container for the content */
+.content-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem; /* Add some space between sections */
+    padding: 2rem; /* Add padding around the entire container */
+}
+
+/* Flexbox container for the sections */
+.content-container section {
+    width: 100%;
+    max-width: 600px;
+    min-height: 200px; /* Ensures the section has a minimum height */
+    border: 1px solid #ccc;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align items at the top (start) */
+    justify-content: flex-start; /* Align items at the top (start) */
+    margin-bottom: 1rem; /* Add space below each section */
+}
+
+/* Style for the study sets list */
+#studySetsList ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+/* Style for individual study set items */
+#studySetsList ul li {
+    padding: 0.5rem;
+    border-bottom: 1px solid #ccc;
+    cursor: pointer;
+}
+
+/* Style for form elements */
+#createStudySetForm label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+#createStudySetForm input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#createStudySetForm button {
+    padding: 0.5rem 1rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#createStudySetForm button:hover {
+    background-color: #0056b3;
+}

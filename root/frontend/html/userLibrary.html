@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Study Sets</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/userLibrary.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <input type="text" placeholder="Search.." id="searchbar" onkeypress="clickPress(event)">
+            <a id="login_signup" href="login.html">Login/Sign Up</a>
+            <span id="user-info" href="profile.html" style="display: none;"></span> <!-- Invisible userInfo -->
+        </nav>
+        <h1>User Study Sets</h1>
+    </header>
+
+    <div class="content-container">
+        <!-- Study Sets List -->
+        <section id="studySetsList">
+            <h2>Your Study Sets</h2>
+            <ul id="studySets">
+                <!-- List items will be dynamically added here -->
+            </ul>
+        </section>
+    
+        <!-- Create New Study Set -->
+        <section id="createStudySet">
+            <h2>Create New Study Set</h2>
+            <form id="createStudySetForm">
+                <label for="setTitle">Set Title:</label>
+                <input type="text" id="setTitle" name="setTitle" required>
+                <button type="submit">Create Set</button>
+            </form>
+        </section>
+    </div>
+
+    <footer>
+        <!-- Footer content -->
+    </footer>
+
+    <script src="../js/studySetTemplate.js"></script>
+    <script src="../js/myscript.js"></script>
+    <script src="../js/searchBar.js"></script>
+    <script src="../js/userLibrary.js"></script>
+    
+</html>

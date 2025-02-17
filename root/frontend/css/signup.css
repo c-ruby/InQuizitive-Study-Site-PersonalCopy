@@ -1,0 +1,34 @@
+/*Start of Login CSS*/
+	/*this edits the login div*/
+	#signup{
+		color: white;							/*changes the text to white*/
+		margin: auto;							/*sets the margins to auto, centered it*/
+		width: 20%;								/*sets the with to only 25% of the page*/
+		background-color: #333;					/*set the background color to grey*/
+		padding: 30px;							/*gives it 30 pixels of padding*/
+		border-radius: 15px;					/*rounds the corners*/		
+	}
+
+	/*edits the inputs inside of the login div*/
+	/*We can probably make these clearner will work on at some point*/
+	#signup input{
+		padding:10px;							/*gives the inputs 10 pixels of padding*/
+		border-radius: 15px;					/*rounds the corners*/
+	}
+	
+	/*edits the username and password inputs specifically*/
+	#signup #signup_username, #signup_password{
+		width: 60%								/*sets their width at 60%*/
+	}
+
+	/*edits links inside of the login div*/
+	#signup a{
+		color: white;							/*sets their text to white*/
+	}
+	
+	/*edits the submit button on the login/signup page*/
+	#signup button{
+		padding: 10px;							/*gives the button 10 pixels of padding*/
+		border-radius: 15px;					/*rounds the corners of the button*/
+	}	
+	/*End of Login CSS*/

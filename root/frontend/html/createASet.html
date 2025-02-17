@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inquisitive</title>
+    <link rel="stylesheet" href="../css/index.css">
+	<link rel="icon" type="image/jpeg" href="images/beanz.jpg">
+	<style>
+        /* Hide the elements initially 
+        
+            the reason I hide both is to stop the website from flashing "login/signup" when switching tabs
+        */
+        #login_signup, #user-info {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+	<script src="../js/myscript.js"></script>
+	<header>
+		<nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="explore.html">Explore</a></li>
+                <li><a href="about.html">About</a></li>
+            </ul>
+            <input type="text" placeholder="search.." id="searchbar" onkeypress="clickPress(event)">
+            <a id="login_signup" href="login.html">Login/Sign Up</a>
+            <a id="user-info" href="profile.html" style="display: none;"></a> <!-- invisible userInfo -->
+        </nav>
+		
+		<div class="subheader">
+			<h1>Create A Study Set</h1>
+		</div>
+		
+	</header>
+    <div class="content">
+		<form class="studySetEditor">
+			<h2>Study Set Name:</h2>
+			<input type="text" id="name">
+			<h2>Study Set Tags:</h2>
+			<br>
+			<div id="tags">
+				<button onclick=createtag()>add a tag</button>
+			</div>
+			<br>
+			<h2>Add Terms:</h2>
+			<br>
+			<table>
+				<th>Questions</th><th>Answers</th>
+				<tr id="addQA">
+					<td>Add Q&A</td>
+				</tr>
+			</table>
+		</form>
+    </div>
+	<footer>
+		
+	</footer>
+	<script src="../js/myscript.js"></script>
+	<script src="../js/searchBar.js"></script>
+</body>
+</html>

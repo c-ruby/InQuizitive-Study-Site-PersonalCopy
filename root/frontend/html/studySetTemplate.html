@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inquisitive</title>
+    <link rel="stylesheet" href="../css/index.css">
+	<link rel="icon" type="image/jpeg" href="images/beanz.jpg">
+	<style>
+        /* Hide the elements initially 
+        
+            the reason I hide both is to stop the website from flashing "login/signup" when switching tabs
+        */
+        #login_signup, #user-info {
+            display: none;
+        }
+    </style>
+</head>
+<body id="body">
+		<header id="SSheader">
+			<nav>
+				<ul>
+					<li><a href="index.html">Home</a></li>
+					<li><a href="explore.html">Explore</a></li>
+					<li><a href="about.html">About</a></li>
+				</ul>
+				<input type="text" placeholder="search.." id="searchbar" onkeypress="clickPress(event)">
+				<a id="login_signup" href="login.html">Login/Sign Up</a>
+				<span id="user-info" href="profile.html" style="display: none;"></span> <!-- invisible userInfo -->
+			</nav>
+			<div class="subheader" id="studySetName">
+				<h1>Study Set Title</h1>
+			</div>
+			
+		</header>
+		<div class="content" id="SScontent">
+			<ul class="StudySetOptions">
+				<li><button id="flashcardbtn" class="studysetbutton" onclick=flashCards()>Flash Cards</button></li>
+				<li><button onclick=generate_quiz() id="quizbtn" class="studysetbutton">Quiz</button></li>
+				<li><button id="settingsbtn" class="studysetbutton">Settings</button></li>
+				<li><button id="editbtn" class="studysetbutton">edit</button></li>
+				<li><button onclick=cloneRow() id="addrowbtn" class="studysetbutton">add row</button></li>
+				
+			</ul>
+			
+			<table class="StudySet-Container" id="myTable">
+				<th>Questions</th><th>Answers</th>
+			</table>
+			
+		</div>
+		
+	<footer id="SSfooter">
+		
+	</footer>
+	<script src="../js/myscript.js"></script>
+	<script src="../js/studySetTemplate.js"></script>
+	<script src="../js/searchBar.js"></script>
+</body>
+</html>

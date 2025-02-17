@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inquisitive</title>
+    <link rel="stylesheet" href="../css/index.css">
+    <link rel="icon" type="image/jpeg" href="images/beanz.jpg">
+    <style>
+        .outer-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centers the content vertically */
+            align-items: center; /* Centers the content horizontally */
+            flex-grow: 1;
+            padding: 20px;
+        }
+    </style>
+    <style>
+        /* Hide the elements initially 
+        
+            the reason I hide both is to stop the website from flashing "login/signup" when switching tabs
+        */
+        #login_signup, #user-info {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="outer-container">
+        <header>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="explore.html">Explore</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+                <input type="text" placeholder="search.." id="searchbar" onkeypress="clickPress(event)">
+                <a id="login_signup" href="login.html">Login/Sign Up</a>
+                <a id="user-info" href="profile.html" style="display: none;"></a> <!-- invisible userInfo -->
+            </nav>
+            <div class="subheader">
+                <h1>Login</h1>
+            </div>
+        </header>
+        <div class="content-container">
+            <div id="login">
+                <form id="loginForm">
+                    <label>Username:</label>
+                    <br><br>
+                    <input type="text" id="username" name="username" required>
+                    <br><br>
+                    <label>Password:</label>
+                    <br><br>
+                    <input type="password" id="password" name="password" required>
+                    <br><br>
+                    <button type="submit" id="submit">Login</button>
+                </form>
+                <script src="../js/login.js"></script>
+                <br>
+                <p>
+                    Don't have an account? <a href="signup.html">Sign Up</a>
+                </p>              
+            </div>
+        </div>
+        <footer></footer>
+    </div>
+    <script src="../js/myscript.js"></script>
+    <script src="../js/searchBar.js"></script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+@media only screen and (min-width:600px){
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	
+	body {
+		font-family: Arial, sans-serif;
+		background-color: blue;
+	}
+
+	header{
+		width: 100%;
+	}
+
+	nav {
+		background-color: #333;
+		width: 100%;
+		position: fixed;
+		top: 0;
+		left: 0;
+		height: 65px;
+		display: flex;
+		z-index: 1000;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	nav ul {
+		list-style-type: none;
+		margin: 0 ;
+		padding: 0;
+		display: flex;
+		align-items: center;
+		
+	}
+
+	nav ul li {
+		margin: 0 20px;
+	}
+
+	nav ul li a {
+		color: white;
+		text-decoration: none;
+		font-size: 18px;
+		padding: 20px;
+		display: block;
+	}
+
+	#login_signup{
+		color: white;
+		text-decoration: none;
+		font-size: 18px;
+		padding: 20px;
+		display: block;
+	}
+
+	nav a:hover {
+		background-color: #575757;
+		transition: 0.3s;
+	}
+
+	#searcharea{
+		background-color: white;
+		width: 40%;
+		padding: 5px;
+		border-radius: 15px;
+		display: flex;
+	}
+
+	#searchbar{
+		background-color: white;
+		width: 50%;
+		padding: 10px;
+		border-radius: 15px;
+		outline: none;
+		
+	}
+
+	.content {
+		margin-top: 80px; /* To avoid content overlapping with the navbar */
+		padding: 20px;
+		text-align: center;
+	}
+
+	#login{
+		color: white;
+		margin: auto;
+		width: 25%;
+		background-color: #333;
+		padding: 30px;
+		border-radius: 15px;
+		
+	}
+
+	#login input{
+		padding:10px;
+		border-radius: 15px;
+	}
+	#login #username, #password{
+		width: 60%
+	}
+
+	#login a{
+		color: white;
+	}
+
+	footer {
+		background-color: #333;
+		width: 100%;
+		position: absolute;
+		bottom: 0px;
+		height: 65px;
+	}
+}
