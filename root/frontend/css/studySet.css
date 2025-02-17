@@ -1,0 +1,48 @@
+/*The start of the study set editor CSS*/
+.studySetEditor{
+    margin:auto;
+    background:#333;
+    padding:25px;
+    width: 80%;
+    height: 100vh;
+    border-radius:15px;
+}
+
+#name{
+    color: black;
+    margin: 10px;
+    padding: 5px;
+}
+
+#tags{
+    margin: auto;
+    padding: 15px;
+    width: 25%;
+    height: 25%;
+    background: grey;
+    border-radius: 15px;
+    color: black;
+}
+
+#tags button{
+    color: black;
+    border-radius: 15px;
+    padding: 5px;
+    border: none;
+}
+
+#tags button:hover{
+    background: grey;
+}
+
+.studySetEditor table{
+    margin: auto;
+    background: grey;	
+    width: 80%;
+}
+
+#addQA{
+    margin:auto;
+    width: 100%;
+}
+/*The end of the study set editor CSS*/

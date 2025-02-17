@@ -1,0 +1,17 @@
+/*Start of About CSS*/
+	/*This edits all of the attributes of the about class*/
+	.about{
+		width: 80%;								/*This will make the width 80% of the content div*/
+		text-align: center;						/*Aligns all text in the about div to center*/
+		margin: auto;							/*Centers the div*/
+		padding: 30px;							/*adds 30 px of padding to create a border around the dive*/
+		color: white;							/*Changes the text color to white*/
+		background: #333;						/*Changes the backgroud color to the grey we've been using*/
+		border-radius: 15px;					/*Rounds the corners of the div creating the pill design*/
+		height: 80%;							/*Sets the height to 80% of the content div;*/
+	}
+	
+	.about h2, p{
+		padding: 20px;
+	}
+	/*End of About CSS*/

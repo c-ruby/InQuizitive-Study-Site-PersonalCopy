@@ -1,0 +1,18 @@
+/* to reuse components like buttons, input, and modals*/
+button {
+    padding: 10px;
+    border-radius: 15px;
+    border: none;
+    background: #333;
+    color: white;
+}
+
+button:hover {
+    background-color: grey;
+}
+
+input {
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+}
