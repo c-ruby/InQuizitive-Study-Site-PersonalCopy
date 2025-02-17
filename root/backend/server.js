@@ -307,6 +307,23 @@ app.get('/study-sets/:set_id/terms', (req, res) => {
       res.status(200).json(results); // Ensure the response is JSON formatted
   });
 });
+// Get study set details by ID
+app.get('/study-sets/:studySetId', (req, res) => {
+  const { studySetId } = req.params;
+  const query = 'SELECT set_name FROM StudySets WHERE set_id = ?';
+
+  db.query(query, [studySetId], (err, result) => {
+      if (err) {
+          console.error('Database query error:', err); // Log the error details
+          return res.status(500).json({ error: err.message });
+      }
+      if (result.length === 0) {
+          return res.status(404).json({ message: 'Study set not found' });
+      }
+      res.status(200).json(result[0]);
+  });
+});
+
 //delete terms 
 app.delete('/terms/:term_id', (req, res) => {
   const { term_id } = req.params;

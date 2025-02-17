@@ -340,6 +340,7 @@ function deleteTerm(row, termId) {
 /**
  * Script to handle term editing 
  */
+//makes the table row editable 
 function makeRowEditable(row) {
     const questionCell = row.querySelector('.question-cell');
     const answerCell = row.querySelector('.answer-cell');
@@ -357,6 +358,7 @@ function makeRowEditable(row) {
     const editBtn = row.querySelector('button');
     editBtn.textContent = 'Save';
     editBtn.onclick = () => saveRowEdits(row, questionCell, answerCell);
+		//calls the saving function to save changes 
 }
 
 // Function to save row edits and update the database
@@ -387,3 +389,24 @@ function saveRowEdits(row, questionCell, answerCell) {
         console.error('Error updating term:', error);
     });
 }
+
+
+/**
+ * function to update the study set title header  
+ */
+// Function to fetch study set details and update the title
+function updateStudySetTitle() {
+    const studySetId = new URLSearchParams(window.location.search).get('id');
+    fetch(`/study-sets/${studySetId}`)
+    .then(response => response.json())
+    .then(data => {
+        const studySetNameElement = document.getElementById('studySetName').querySelector('h1');
+        studySetNameElement.textContent = data.set_name; // Assuming 'set_name' is the property for the study set title
+    })
+    .catch(error => {
+        console.error('Error fetching study set details:', error);
+    });
+}
+
+// Call the function to update the study set title when the page loads
+document.addEventListener('DOMContentLoaded', updateStudySetTitle);
