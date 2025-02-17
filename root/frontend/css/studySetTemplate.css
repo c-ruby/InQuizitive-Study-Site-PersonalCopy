@@ -124,6 +124,14 @@ td {
 #termForm {
     position: relative;
 }
+#termForm input {
+    flex: 1; /* Input will take up the available space */
+    padding: 5px;
+    border-radius: 5px;
+    width: 100%;
+    align-items: stretch;
+    box-sizing: border-box; /* Include padding and border in the element's total width and height */
+}
 
 #termForm, a {
     text-align: left;
