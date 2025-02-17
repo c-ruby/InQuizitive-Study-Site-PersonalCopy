@@ -93,8 +93,11 @@ will figure out eventually
 
     #user-info a /*makes it so the text doesn't go purple bc it treats it as link*/
 	{
-        color: white;
-        text-decoration: none;
+        color: white;							/*sets the text to white as to no blend into background*/
+		text-decoration: none;
+		font-size: 18px;						/*sets the font size*/
+							/*creates padding around each link*/
+		display: block;	
     }
 
 /*this is for the div that contains the searchbar*/
