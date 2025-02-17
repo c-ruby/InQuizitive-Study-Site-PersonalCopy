@@ -1,0 +1,132 @@
+/*Start of Template Page CSS*/
+
+#templink {
+    color: black;
+}
+
+.StudySetOptions {
+    width: 10%;
+    background: #333;
+    padding: 10px;
+    height: 100%;
+}
+
+.StudySetOptions button {
+    width: 80%;
+    padding: 15px;
+    margin-top: 10px;
+}
+
+.StudySet-Container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    width: 80%;
+    margin: auto;
+    border: 5px;
+    border-radius: 5px;
+   
+}
+
+td {
+    padding: 10px;
+}
+
+
+
+#Quiz{
+    width:50%;
+    height: auto;
+    background: #333;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 30%;
+    margin-inline: auto;
+    opacity: 0;
+    color: white;
+    transition: opacity 2s;
+    text-align: center;
+    border-radius: 15px;
+}
+
+#quiz-QA-selector{
+    padding: 15px;
+    
+}
+
+#submitbtn{
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 5px;
+    padding: 15px;
+}
+
+#Flashcards{
+    width:50%;
+    height: 50%;
+    background: #333;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 30%;
+    margin-inline: auto;
+    opacity: 0;
+    color: white;
+    transition: opacity 2s;
+    text-align: center;
+    border-radius: 15px;
+}
+
+#exitButton{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 5px;
+    border-radius: 0px 15px 0px 0px;
+    color: white;
+    background: #333;
+    border: none;
+}
+
+
+#nextButton, #backButton{
+    padding: 5px;
+    margin: 5px;
+    background: #333;
+    color: white;
+    
+}
+    
+
+#SSheader, #SScontent, #SSfooter{
+    opacity: 1;
+    transition: opacity 2s;
+}
+
+
+#termForm, #myTable {
+    
+    box-sizing:border-box ;
+    color: white; 
+    margin: auto;
+    max-width: 100%;
+    min-width: 100%;
+    background-color: #333; 
+    padding: 30px; 
+    border-radius: 15px;
+
+}
+
+#termForm {
+    position: relative;
+}
+
+#termForm, a {
+    text-align: left;
+}
+
+

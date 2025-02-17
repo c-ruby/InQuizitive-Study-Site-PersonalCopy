@@ -295,6 +295,31 @@ app.post('/study-sets/:set_id/terms', (req, res) => {
       res.status(201).json({ id: result.insertId, term, definition });
   });
 });
+//get terms from a set 
+app.get('/study-sets/:set_id/terms', (req, res) => {
+  const { set_id } = req.params;
+  const query = 'SELECT * FROM Terms WHERE set_id = ?';
+
+  db.query(query, [set_id], (err, results) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.status(200).json(results); // Ensure the response is JSON formatted
+  });
+});
+//delete terms 
+app.delete('/terms/:term_id', (req, res) => {
+  const { term_id } = req.params;
+  const query = 'DELETE FROM Terms WHERE term_id = ?';
+
+  db.query(query, [term_id], (err, result) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.status(200).json({ message: 'Term deleted successfully' });
+  });
+});
+
 
 
 
