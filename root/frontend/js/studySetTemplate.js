@@ -11,23 +11,106 @@ This is simply to clone the rows on the study set template page
 Will update when DB is set up to auto set rows for how many questions are in the set
 for now just clones the table row
 */
-function cloneRow() {
-	const table = document.getElementById("myTable");
-    const row = table.insertRow();
-    const question = row.insertCell();
-	const answer = row.insertCell();
-	
-	row.setAttribute('class', 'StudySet-Q&A');
-	row.setAttribute('id', 'row'+count);
-	
-    question.textContent = count;
-	answer.textContent = count;
-	
-	question.setAttribute('id', 'question' + count);
-    answer.setAttribute('id', 'answer' + count);
-	
-	count++;
-}
+// Function to add a term to the table
+document.addEventListener('DOMContentLoaded', function() {
+    const studySetId = new URLSearchParams(window.location.search).get('id');
+    const tableBody = document.getElementById('myTable').querySelector('tbody');
+    let count = 1;
+
+    // Function to fetch and display terms
+    function fetchTerms() {
+        fetch(`/study-sets/${studySetId}/terms`)
+        .then(response => response.json())
+        .then(data => {
+            tableBody.innerHTML = '';
+            data.forEach(term => {
+                addTermToTable(term.term, term.definition);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching terms:', error);
+        });
+    }
+
+    // Function to add a term to the table
+    function addTermToTable(term, definition) {
+        const row = tableBody.insertRow();
+        const questionCell = row.insertCell();
+        const answerCell = row.insertCell();
+        const actionCell = row.insertCell();
+        
+        questionCell.textContent = term;
+        answerCell.textContent = definition;
+        actionCell.innerHTML = '<button class="submit-btn">Submit</button>';
+
+        questionCell.contentEditable = true;
+        answerCell.contentEditable = true;
+
+        // Add event listener to the submit button
+        actionCell.querySelector('.submit-btn').addEventListener('click', function() {
+            const updatedTerm = questionCell.textContent;
+            const updatedDefinition = answerCell.textContent;
+
+            // Save the term to the database
+            fetch(`/study-sets/${studySetId}/terms`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ term: updatedTerm, definition: updatedDefinition })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Term added successfully');
+                fetchTerms(); // Refresh the list of terms
+            })
+            .catch(error => {
+                console.error('Error adding term:', error);
+            });
+        });
+    }
+
+    // Function to handle adding a new row
+    function addRow() {
+        const row = tableBody.insertRow();
+        const questionCell = row.insertCell();
+        const answerCell = row.insertCell();
+        const actionCell = row.insertCell();
+        
+        questionCell.contentEditable = true;
+        answerCell.contentEditable = true;
+        actionCell.innerHTML = '<button class="submit-btn">Submit</button>';
+
+        // Add event listener to the submit button
+        actionCell.querySelector('.submit-btn').addEventListener('click', function() {
+            const term = questionCell.textContent;
+            const definition = answerCell.textContent;
+
+            // Save the term to the database
+            fetch(`/study-sets/${studySetId}/terms`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ term, definition })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('Term added successfully');
+                fetchTerms(); // Refresh the list of terms
+            })
+            .catch(error => {
+                console.error('Error adding term:', error);
+            });
+        });
+    }
+
+    // Fetch and display terms on page load
+    fetchTerms();
+
+    // Bind addRow function to button
+    document.getElementById('addrowbtn').onclick = addRow;
+});
 
 //allows for random numbers within a certain range
 function getRandomNumber(min, max) {

@@ -247,6 +247,59 @@ app.post('/delete-account', (req, res) => {
 
 
 
+/*
+    creating and displaying study sets 
+*/
+//route to get studysets for current user
+app.get('/study-sets', (req, res) => {
+  const username = req.session.user.username; // Get the username from the session
+  if (!username) {
+      return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const query = 'SELECT * FROM StudySets WHERE username = ?';
+  db.query(query, [username], (err, results) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.status(200).json(results);
+  });
+});
+//route to add study set
+app.post('/study-sets', (req, res) => {
+  const username = req.session.user.username; // Get the username from the session
+  if (!username) {
+      return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const { set_name } = req.body;
+  const query = 'INSERT INTO StudySets (username, set_name) VALUES (?, ?)';
+  db.query(query, [username, set_name], (err, result) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.status(201).json({ id: result.insertId, set_name });
+  });
+});
+
+//add terms to a set 
+app.post('/study-sets/:set_id/terms', (req, res) => {
+  const { set_id } = req.params;
+  const { term, definition } = req.body;
+
+  const query = 'INSERT INTO Terms (set_id, term, definition) VALUES (?, ?, ?)';
+  db.query(query, [set_id, term, definition], (err, result) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.status(201).json({ id: result.insertId, term, definition });
+  });
+});
+
+
+
+
+
 
 
 

@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+
+
+
     // Function to fetch and display user's study sets
     function fetchStudySets() {
         fetch('/study-sets')
@@ -8,9 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
             studySetsList.innerHTML = '';
             data.forEach(set => {
                 const listItem = document.createElement('li');
-                listItem.textContent = set.title;
+                listItem.textContent = set.set_name;
                 listItem.onclick = () => {
-                    window.location.href = `study_set.html?id=${set.id}`;
+                    window.location.href = `studySetTemplate.html?id=${set.set_id}`;
                 };
                 studySetsList.appendChild(listItem);
             });
@@ -33,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ title: setTitle })
+            body: JSON.stringify({ set_name: setTitle })
         })
         .then(response => response.json())
         .then(data => {
