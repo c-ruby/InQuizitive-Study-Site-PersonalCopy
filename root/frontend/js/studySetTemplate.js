@@ -167,7 +167,7 @@ function flashCards(){
 	//used to keep track of the current question
 	var currentQuestion = 1;
 	var questionCount = getRowCount();
-	
+	fetchTerms();
 	//this div will check if there are any questions and generate the flashcard elements if there are.
 	if(questionCount > 0){
 		
@@ -260,8 +260,10 @@ function flashCards(){
         .then(response => response.json())
         .then(data => {
             tableBody.innerHTML = '';
+			count = 1;
             data.forEach(term => {
                 addTermToTable(term.term, term.definition, term.term_id);
+				count++;
             });
         })
         .catch(error => {
@@ -277,10 +279,12 @@ function flashCards(){
 		const questionCell = row.insertCell();
 		questionCell.classList.add('question-cell');
 		questionCell.textContent = term;
+		questionCell.setAttribute('id', 'question' + count);
 	
 		const answerCell = row.insertCell();
 		answerCell.classList.add('answer-cell');
 		answerCell.textContent = definition;
+		answerCell.setAttribute('id', 'answer' + count);
 	
 		const actionCell = row.insertCell();
 		
@@ -297,6 +301,7 @@ function flashCards(){
 		actionCell.appendChild(deleteBtn);
 	
 		row.appendChild(actionCell);
+		
 	
     }
 fetchTerms();
