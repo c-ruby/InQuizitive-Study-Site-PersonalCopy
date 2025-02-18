@@ -110,6 +110,7 @@ function generate_quiz(){
 	//This code is what generates the quiz questions and answers	
 	var formforquiz = document.createElement("form");
 	var questionLbl = document.createElement("label");
+	var answerLbl = document.createElement("label");
 	var questionAnswer = document.createElement("input");
 	//gives the form an id
 	formforquiz.id ="quiz-QA-selector"
@@ -129,12 +130,22 @@ function generate_quiz(){
 		var correctAnswer = getRandomNumber(1, 4);
 		
 		//double for loops to place two buttons next to each other, and two bellow
+		var answerTracker = 0;
 		for (var i = 0; i<2; i++){
 			for (var j=0; j<2; j++){
-				
+				answerTracker++;
+				//generates the actual radio input
 				questionAnswer = document.createElement("input");
 				questionAnswer.type = 'radio';
 				questionAnswer.name = 'Answer' + qcount;
+				questionAnswer.id = "Q"+qcount+"A"+answerTracker;
+				
+				//generates the label for each input
+				answerLbl = document.createElement("label");
+				answerLbl.for = "Q"+qcount+"A"+answerTracker;
+				answerLbl.innerHTML = document.getElementById("question"+answerTracker).innerText;
+				
+				formforquiz.appendChild(answerLbl);
 				formforquiz.appendChild(questionAnswer);
 			}
 			formforquiz.appendChild(document.createElement("br"));
