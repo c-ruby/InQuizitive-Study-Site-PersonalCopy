@@ -20,8 +20,8 @@ function cloneRow() {
 	row.setAttribute('class', 'StudySet-Q&A');
 	row.setAttribute('id', 'row'+count);
 	
-    question.textContent = count;
-	answer.textContent = count;
+    question.textContent = 'question '+count;
+	answer.textContent = 'answer '+count;
 	
 	question.setAttribute('id', 'question' + count);
     answer.setAttribute('id', 'answer' + count);
@@ -44,9 +44,42 @@ function getRowCount(){
     return table.rows.length-1;
 }
 
-// Unclear what this does atm.
-function createtag(input){
+//Streamlined the disabling and enabling of the buttons and opacity for when generating quizzes/flashcards
+function enableSSaction(){
+	document.getElementById('SSheader').style.opacity = '1';
+    document.getElementById('SScontent').style.opacity = '1';
+    document.getElementById('SSfooter').style.opacity = '1';
+
+    var quiz = document.getElementById("Quiz");
+    if (quiz) {
+        quiz.parentNode.removeChild(quiz);
+    }
 	
+	var flashcard = document.getElementById("Flashcards");
+    if (flashcard) {
+        flashcard.parentNode.removeChild(flashcard);
+    }
+
+    // Enable buttons
+    document.getElementById('flashcardbtn').disabled = false;
+    document.getElementById('quizbtn').disabled = false;
+    document.getElementById('settingsbtn').disabled = false;
+    document.getElementById('editbtn').disabled = false;
+    document.getElementById('addrowbtn').disabled = false;
+}
+
+function disableSSaction(){
+	//These set the opacity of the elements on the page to low
+	document.getElementById('SSheader').style.opacity = '.1';
+	document.getElementById('SScontent').style.opacity = '.1';
+	document.getElementById('SSfooter').style.opacity = '.1';
+	
+	//These disable all of the buttons on the side when the quiz is generated
+	document.getElementById('flashcardbtn').disabled = true;
+	document.getElementById('quizbtn').disabled = true;
+	document.getElementById('settingsbtn').disabled = true;
+	document.getElementById('editbtn').disabled = true;
+	document.getElementById('addrowbtn').disabled = true;
 }
 
 
@@ -57,11 +90,8 @@ function createtag(input){
 function generate_quiz(){
 	var questionCount = getRowCount();
 	
-	//These set the opacity of the elements on the page to low
-	document.getElementById('SSheader').style.opacity = '.1';
-	document.getElementById('SScontent').style.opacity = '.1';
-	document.getElementById('SSfooter').style.opacity = '.1';
-
+	disableSSaction();
+	
 	//this adds the name of the study set to the top of the test
 	var studySetName = document.getElementById("studySetName").innerHTML;
 	var quiz = document.createElement("div");
@@ -75,15 +105,7 @@ function generate_quiz(){
 	var submitbtn = document.createElement("button");
     submitbtn.id = "submitbtn";
     submitbtn.innerHTML = "Submit";
-	submitbtn.onclick = disablequiz;
-    
-	
-	//These disable all of the buttons on the side when the quiz is generated
-	document.getElementById('flashcardbtn').disabled = true;
-	document.getElementById('quizbtn').disabled = true;
-	document.getElementById('settingsbtn').disabled = true;
-	document.getElementById('editbtn').disabled = true;
-	document.getElementById('addrowbtn').disabled = true;
+	submitbtn.onclick = enableSSaction;
 		
 	//This code is what generates the quiz questions and answers	
 	var formforquiz = document.createElement("form");
@@ -126,98 +148,103 @@ function generate_quiz(){
 	quiz.appendChild(submitbtn);
 }
 
-//this function is what submits the quiz
-function disablequiz() {
-    document.getElementById('SSheader').style.opacity = '1';
-    document.getElementById('SScontent').style.opacity = '1';
-    document.getElementById('SSfooter').style.opacity = '1';
-
-    var quiz = document.getElementById("Quiz");
-    if (quiz) {
-        quiz.parentNode.removeChild(quiz);
-    }
-
-    // Enable buttons
-    document.getElementById('flashcardbtn').disabled = false;
-    document.getElementById('quizbtn').disabled = false;
-    document.getElementById('settingsbtn').disabled = false;
-    document.getElementById('editbtn').disabled = false;
-    document.getElementById('addrowbtn').disabled = false;
-}
-
-
-
-
 // ------------ FLASH CARDS ------------ //
+
+
+
+//This function is used to extract the text in the table via id's
+function extractTextById(elementId){
+	let element = document.getElementById(elementId);
+	return element ? element.innerText : NULL;
+}
+
+
 function flashCards(){
+	
+	disableSSaction();
+	//used to keep track of the current question
+	var currentQuestion = 1;
 	var questionCount = getRowCount();
-	var currentQuestion = 0;
-	var question;
-	var answer;
-	//this creates the exit button for the flashcards
-	var exitbtn = document.createElement("button");
-	exitbtn.id = "exitButton";
-	exitbtn.innerHTML = "Close Flashcards";
-	exitbtn.onclick = disableFlashcards;
 	
-	//this creates the exit button for the flashcards
-	var nextbtn = document.createElement("button");
-	var backbtn = document.createElement("button");
-	nextbtn.id = "nextButton";
-	backbtn.id = "backButton";
-	nextbtn.innerHTML = "Next";
-	backbtn.innerHTML = "Back";
-	
-	//These set the opacity of the elements on the page to low
-	document.getElementById('SSheader').style.opacity = '.1';
-	document.getElementById('SScontent').style.opacity = '.1';
-	document.getElementById('SSfooter').style.opacity = '.1';
-
-	//creates the flashcard div and adds the buttons to it
-	var flashcard = document.createElement("div");
-	flashcard.id = "Flashcards";
-	flashcard.appendChild(exitbtn);
-	flashcard.appendChild(backbtn);
-	flashcard.appendChild(nextbtn);
-	flashcard.style.opacity = '1';
-	
-	//These disable all of the buttons on the side when the quiz is generated
-	document.getElementById('flashcardbtn').disabled = true;
-	document.getElementById('quizbtn').disabled = true;
-	document.getElementById('settingsbtn').disabled = true;
-	document.getElementById('editbtn').disabled = true;
-	document.getElementById('addrowbtn').disabled = true;
-	
-	
+	//this div will check if there are any questions and generate the flashcard elements if there are.
 	if(questionCount > 0){
+		
+		//this creates the exit button for the flashcards
+		var exitbtn = document.createElement("button");
+		exitbtn.id = "exitButton";
+		exitbtn.innerHTML = "Close Flashcards";
+		exitbtn.onclick = enableSSaction;
+		
+		//this creates the exit button for the flashcards
+		var nextbtn = document.createElement("button");
+		var backbtn = document.createElement("button");
+		nextbtn.id = "nextButton";
+		backbtn.id = "backButton";
+		nextbtn.innerHTML = "Next";
+		backbtn.innerHTML = "Back";
+		
+		
+
+		//creates the flashcard div and adds the buttons to it
+		var flashcard = document.createElement("div");
+		flashcard.id = "Flashcards";
+		flashcard.appendChild(exitbtn);
+		flashcard.appendChild(backbtn);
+		flashcard.appendChild(nextbtn);
+		flashcard.style.opacity = '1';
+		
+		//creates the text div that will hold the questions and answers of the flashcards
+		var flashcardTextholder = document.createElement("div");
+		var flashCardtext = document.createElement("h3");
+		flashcardTextholder.id = "flashCardTextHolder";
+		flashCardtext.id = "flashcardText";
+		flashcard.appendChild(flashcardTextholder);
+		flashcardTextholder.appendChild(flashCardtext);
+		//This changes the text to the question text
+		flashCardtext.innerHTML = document.getElementById("question1").innerText;
+		
+		document.body.appendChild(flashcard);
+		
+		
+		document.getElementById("nextButton").onclick = function() {
+			currentQuestion++;
+			if(currentQuestion > questionCount){
+				currentQuestion = 1;
+				flashCardtext.innerHTML = document.getElementById("question1").innerText;
+			}
+			else{
+				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
+			}
+		};
+		
+		document.getElementById("backButton").onclick = function() {
+			currentQuestion--;
+			if(currentQuestion < 1){
+				currentQuestion = questionCount;
+				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
+			}
+			else{
+				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
+			}
+		};
+	}
+	else{
+		alert("no StudySet Questions");
+		enableSSaction();
+	}
+}
+/*
+function nextFC {
+	currentQuestion++;
+	if(currentQuestion > questionCount){
 		currentQuestion = 1;
-		document.body.appendChild(flashcard);   
-	} else{
-		alert("No StudySet questions");
-		disableFlashcards();
-	}	
+		flashCardtext.innerHTML = document.getElementById("question1").innerText;
+	}
+	else{
+		flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
+	}
 }
-
-function disableFlashcards(){
-	document.getElementById('SSheader').style.opacity = '1';
-    document.getElementById('SScontent').style.opacity = '1';
-    document.getElementById('SSfooter').style.opacity = '1';
-
-    var flashcard = document.getElementById("Flashcards");
-    if (flashcard) {
-        flashcard.parentNode.removeChild(flashcard);
-    }
-
-    // Enable buttons
-    document.getElementById('flashcardbtn').disabled = false;
-    document.getElementById('quizbtn').disabled = false;
-    document.getElementById('settingsbtn').disabled = false;
-    document.getElementById('editbtn').disabled = false;
-    document.getElementById('addrowbtn').disabled = false;
-}
-
-
-
+*/
 //------------Datbase Operations------------
 //Caleb Ruby's additions
 /*
