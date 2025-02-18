@@ -41,7 +41,7 @@ let count=1;
 //used to get the amount of rows in the quiz table
 function getRowCount(){
 	const table = document.getElementById('myTable');
-    return table.rows.length-1;
+    return table.rows.length;
 }
 
 //Streamlined the disabling and enabling of the buttons and opacity for when generating quizzes/flashcards
