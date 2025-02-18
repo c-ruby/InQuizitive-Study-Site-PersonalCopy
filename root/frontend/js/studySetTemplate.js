@@ -150,15 +150,6 @@ function generate_quiz(){
 
 // ------------ FLASH CARDS ------------ //
 
-
-
-//This function is used to extract the text in the table via id's
-function extractTextById(elementId){
-	let element = document.getElementById(elementId);
-	return element ? element.innerText : NULL;
-}
-
-
 function flashCards(){
 	
 	disableSSaction();
@@ -205,7 +196,7 @@ function flashCards(){
 		
 		document.body.appendChild(flashcard);
 		
-		
+		//adds the onclick function to the next button
 		document.getElementById("nextButton").onclick = function() {
 			currentQuestion++;
 			if(currentQuestion > questionCount){
@@ -215,8 +206,9 @@ function flashCards(){
 			else{
 				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
 			}
-		};
+		}
 		
+		//adds the onclick function to the back button
 		document.getElementById("backButton").onclick = function() {
 			currentQuestion--;
 			if(currentQuestion < 1){
@@ -226,25 +218,24 @@ function flashCards(){
 			else{
 				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
 			}
-		};
+		}
+		
+		//this does the "flipping" of the flashcards
+		document.getElementById("flashCardTextHolder").onclick = function() {
+			if(flashCardtext.innerHTML == document.getElementById("question"+currentQuestion).innerText){
+				flashCardtext.innerHTML = document.getElementById("answer"+currentQuestion).innerText;
+			}
+			else{
+				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
+			}
+		}
 	}
 	else{
 		alert("no StudySet Questions");
 		enableSSaction();
 	}
 }
-/*
-function nextFC {
-	currentQuestion++;
-	if(currentQuestion > questionCount){
-		currentQuestion = 1;
-		flashCardtext.innerHTML = document.getElementById("question1").innerText;
-	}
-	else{
-		flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
-	}
-}
-*/
+
 //------------Datbase Operations------------
 //Caleb Ruby's additions
 /*
