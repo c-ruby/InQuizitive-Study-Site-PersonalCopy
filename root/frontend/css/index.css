@@ -27,6 +27,7 @@ will figure out eventually
 	/*header includes: navbar, subheader*/
 	header{
 		width: 100%; 
+		margin-bottom: 1rem;
 	}
 	
 	/*this sets attributes for the navbar*/
@@ -92,8 +93,11 @@ will figure out eventually
 
     #user-info a /*makes it so the text doesn't go purple bc it treats it as link*/
 	{
-        color: white;
-        text-decoration: none;
+        color: white;							/*sets the text to white as to no blend into background*/
+		text-decoration: none;
+		font-size: 18px;						/*sets the font size*/
+							/*creates padding around each link*/
+		display: block;	
     }
 
 /*this is for the div that contains the searchbar*/
@@ -173,12 +177,13 @@ will figure out eventually
 		color:white;
 		background:grey;
 	}
+
 	/*edits the footer div*/
 	footer {
 		background-color: #333;					/*sets the background color to grey*/
 		width: 100%;							/*stretches it to the length of the page*/
-		position: bottom;							/*puts the footer at the bottom of the page*/
-		height: 150px;							/*sets the height of the footer to 150 pixels*/
+		position: fixed;							/*puts the footer at the bottom of the page*/
+		height: auto;							/*sets the height of the footer to 150 pixels*/
 	}
 }
 

@@ -11,106 +11,24 @@ This is simply to clone the rows on the study set template page
 Will update when DB is set up to auto set rows for how many questions are in the set
 for now just clones the table row
 */
-// Function to add a term to the table
-document.addEventListener('DOMContentLoaded', function() {
-    const studySetId = new URLSearchParams(window.location.search).get('id');
-    const tableBody = document.getElementById('myTable').querySelector('tbody');
-    let count = 1;
+function cloneRow() {
+	const table = document.getElementById("myTable");
+    const row = table.insertRow();
+    const question = row.insertCell();
+	const answer = row.insertCell();
+	
+	row.setAttribute('class', 'StudySet-Q&A');
+	row.setAttribute('id', 'row'+count);
+	
+    question.textContent = count;
+	answer.textContent = count;
+	
+	question.setAttribute('id', 'question' + count);
+    answer.setAttribute('id', 'answer' + count);
+	
+	count++;
+}
 
-    // Function to fetch and display terms
-    function fetchTerms() {
-        fetch(`/study-sets/${studySetId}/terms`)
-        .then(response => response.json())
-        .then(data => {
-            tableBody.innerHTML = '';
-            data.forEach(term => {
-                addTermToTable(term.term, term.definition);
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching terms:', error);
-        });
-    }
-
-    // Function to add a term to the table
-    function addTermToTable(term, definition) {
-        const row = tableBody.insertRow();
-        const questionCell = row.insertCell();
-        const answerCell = row.insertCell();
-        const actionCell = row.insertCell();
-        
-        questionCell.textContent = term;
-        answerCell.textContent = definition;
-        actionCell.innerHTML = '<button class="submit-btn">Submit</button>';
-
-        questionCell.contentEditable = true;
-        answerCell.contentEditable = true;
-
-        // Add event listener to the submit button
-        actionCell.querySelector('.submit-btn').addEventListener('click', function() {
-            const updatedTerm = questionCell.textContent;
-            const updatedDefinition = answerCell.textContent;
-
-            // Save the term to the database
-            fetch(`/study-sets/${studySetId}/terms`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ term: updatedTerm, definition: updatedDefinition })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Term added successfully');
-                fetchTerms(); // Refresh the list of terms
-            })
-            .catch(error => {
-                console.error('Error adding term:', error);
-            });
-        });
-    }
-
-    // Function to handle adding a new row
-    function addRow() {
-        const row = tableBody.insertRow();
-        const questionCell = row.insertCell();
-        const answerCell = row.insertCell();
-        const actionCell = row.insertCell();
-        
-        questionCell.contentEditable = true;
-        answerCell.contentEditable = true;
-        actionCell.innerHTML = '<button class="submit-btn">Submit</button>';
-
-        // Add event listener to the submit button
-        actionCell.querySelector('.submit-btn').addEventListener('click', function() {
-            const term = questionCell.textContent;
-            const definition = answerCell.textContent;
-
-            // Save the term to the database
-            fetch(`/study-sets/${studySetId}/terms`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ term, definition })
-            })
-            .then(response => response.json())
-            .then(data => {
-                alert('Term added successfully');
-                fetchTerms(); // Refresh the list of terms
-            })
-            .catch(error => {
-                console.error('Error adding term:', error);
-            });
-        });
-    }
-
-    // Fetch and display terms on page load
-    fetchTerms();
-
-    // Bind addRow function to button
-    document.getElementById('addrowbtn').onclick = addRow;
-});
 
 //allows for random numbers within a certain range
 function getRandomNumber(min, max) {
@@ -297,3 +215,198 @@ function disableFlashcards(){
     document.getElementById('editbtn').disabled = false;
     document.getElementById('addrowbtn').disabled = false;
 }
+
+
+
+//------------Datbase Operations------------
+//Caleb Ruby's additions
+/*
+	This segment of code populates the table with the terms in the study set 
+*/
+    // Function to fetch and display terms
+	const studySetId = new URLSearchParams(window.location.search).get('id');
+    const tableBody = document.getElementById('myTable').querySelector('tbody');
+    function fetchTerms() {
+        fetch(`/study-sets/${studySetId}/terms`)
+        .then(response => response.json())
+        .then(data => {
+            tableBody.innerHTML = '';
+            data.forEach(term => {
+                addTermToTable(term.term, term.definition, term.term_id);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching terms:', error);
+        });
+    }
+
+    // Function to add a term to the table
+    function addTermToTable(term, definition, termId) {
+		const row = tableBody.insertRow();
+		row.dataset.termId = termId; // Assign termId to the row for future reference
+	
+		const questionCell = row.insertCell();
+		questionCell.classList.add('question-cell');
+		questionCell.textContent = term;
+	
+		const answerCell = row.insertCell();
+		answerCell.classList.add('answer-cell');
+		answerCell.textContent = definition;
+	
+		const actionCell = row.insertCell();
+		
+		// Add edit button
+		const editBtn = document.createElement('button');
+		editBtn.textContent = 'Edit';
+		editBtn.onclick = () => makeRowEditable(row);
+		actionCell.appendChild(editBtn);
+	
+		// Add delete button
+		const deleteBtn = document.createElement('button');
+		deleteBtn.textContent = 'Delete';
+		deleteBtn.onclick = () => deleteTerm(row, termId);
+		actionCell.appendChild(deleteBtn);
+	
+		row.appendChild(actionCell);
+	
+    }
+fetchTerms();
+
+
+
+/* 
+	script to handle form submission and save term to database 
+*/
+//grabs values from form 
+document.querySelector('#termForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    const termInput = document.querySelector('#term');
+    const definitionInput = document.querySelector('#definition');
+    
+    const term = termInput.value;
+    const definition = definitionInput.value;
+
+    saveTerm(term, definition);
+    
+    // Clear the form inputs
+    termInput.value = '';
+    definitionInput.value = '';
+});
+//fetches the route 
+function saveTerm(term, definition) {
+    fetch(`/study-sets/${studySetId}/terms`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ term, definition })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Term added successfully');
+    })
+    .catch(error => {
+        console.error('Error adding term:', error);
+    });
+
+	fetchTerms();	//just make sure table updates after adding a term 
+}
+
+
+
+/**
+	hanldes deletion 
+ */
+// Function to handle deleting term from database
+function deleteTerm(row, termId) {
+	fetch(`/terms/${termId}`, {
+		method: 'DELETE'
+	})
+	.then(response => response.json())
+	.then(data => {
+		alert('Term deleted successfully');
+		// Remove the row from the table
+		row.remove();
+		fetchTerms();
+	})
+	.catch(error => {
+		console.error('Error deleting term:', error);
+	});
+}
+
+
+
+/**
+ * Script to handle term editing 
+ */
+//makes the table row editable 
+function makeRowEditable(row) {
+    const questionCell = row.querySelector('.question-cell');
+    const answerCell = row.querySelector('.answer-cell');
+
+    if (!questionCell || !answerCell) {
+        console.error('Error: Unable to find questionCell or answerCell');
+        return;
+    }
+
+    // Enable content editing
+    questionCell.contentEditable = true;
+    answerCell.contentEditable = true;
+
+    // Change "Edit" button to "Save" button
+    const editBtn = row.querySelector('button');
+    editBtn.textContent = 'Save';
+    editBtn.onclick = () => saveRowEdits(row, questionCell, answerCell);
+		//calls the saving function to save changes 
+}
+
+// Function to save row edits and update the database
+function saveRowEdits(row, questionCell, answerCell) {
+    const term = questionCell.textContent;
+    const definition = answerCell.textContent;
+    const termId = row.dataset.termId;
+
+    fetch(`/terms/${termId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ term, definition })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Term updated successfully');
+        // Disable content editing
+        questionCell.contentEditable = false;
+        answerCell.contentEditable = false;
+        // Change "Save" button back to "Edit" button
+        const saveBtn = row.querySelector('button');
+        saveBtn.textContent = 'Edit';
+        saveBtn.onclick = () => makeRowEditable(row);
+    })
+    .catch(error => {
+        console.error('Error updating term:', error);
+    });
+}
+
+
+/**
+ * function to update the study set title header  
+ */
+// Function to fetch study set details and update the title
+function updateStudySetTitle() {
+    const studySetId = new URLSearchParams(window.location.search).get('id');
+    fetch(`/study-sets/${studySetId}`)
+    .then(response => response.json())
+    .then(data => {
+        const studySetNameElement = document.getElementById('studySetName').querySelector('h1');
+        studySetNameElement.textContent = data.set_name; // Assuming 'set_name' is the property for the study set title
+    })
+    .catch(error => {
+        console.error('Error fetching study set details:', error);
+    });
+}
+
+// Call the function to update the study set title when the page loads
+document.addEventListener('DOMContentLoaded', updateStudySetTitle);

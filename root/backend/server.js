@@ -295,6 +295,63 @@ app.post('/study-sets/:set_id/terms', (req, res) => {
       res.status(201).json({ id: result.insertId, term, definition });
   });
 });
+//get terms from a set 
+app.get('/study-sets/:set_id/terms', (req, res) => {
+  const { set_id } = req.params;
+  const query = 'SELECT * FROM Terms WHERE set_id = ?';
+
+  db.query(query, [set_id], (err, results) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.status(200).json(results); // Ensure the response is JSON formatted
+  });
+});
+// Get study set details by ID
+app.get('/study-sets/:studySetId', (req, res) => {
+  const { studySetId } = req.params;
+  const query = 'SELECT set_name FROM StudySets WHERE set_id = ?';
+
+  db.query(query, [studySetId], (err, result) => {
+      if (err) {
+          console.error('Database query error:', err); // Log the error details
+          return res.status(500).json({ error: err.message });
+      }
+      if (result.length === 0) {
+          return res.status(404).json({ message: 'Study set not found' });
+      }
+      res.status(200).json(result[0]);
+  });
+});
+
+//delete terms 
+app.delete('/terms/:term_id', (req, res) => {
+  const { term_id } = req.params;
+  const query = 'DELETE FROM Terms WHERE term_id = ?';
+
+  db.query(query, [term_id], (err, result) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.status(200).json({ message: 'Term deleted successfully' });
+  });
+});
+//edit terms 
+// Update term
+app.put('/terms/:term_id', (req, res) => {
+  const { term_id } = req.params;
+  const { term, definition } = req.body;
+  const query = 'UPDATE Terms SET term = ?, definition = ? WHERE term_id = ?';
+
+  db.query(query, [term, definition, term_id], (err, result) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.status(200).json({ message: 'Term updated successfully' });
+  });
+});
+
+
 
 
 
