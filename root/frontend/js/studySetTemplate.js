@@ -178,7 +178,7 @@ function flashCards(){
 	disableSSaction();
 	//used to keep track of the current question
 	var currentQuestion = 1;
-	var questionCount = getRowCount();
+	var questionCount = getRowCount()-1;
 	fetchTerms();
 	//this div will check if there are any questions and generate the flashcard elements if there are.
 	if(questionCount > 1){
