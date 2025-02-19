@@ -92,7 +92,7 @@ footer {
     border: none;
     padding: 5px 10px;
     cursor: pointer;
-    border-radius: 5px; /* Add this line to round the corners */
+    border-radius: 5px; /* round the corners */
 }
 
 .deleteBtn:hover {
