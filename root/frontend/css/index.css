@@ -10,7 +10,7 @@ will figure out eventually
 		padding: 0;
 	}
 	html, body {
-		height: 100%;
+		height: 100vh;
 		margin: 0;
 	}
 	
@@ -20,6 +20,7 @@ will figure out eventually
 		background-color: white; 				/*sets the background color of the body*/
 		display: flex;
 		flex-direction: column;
+		height: auto;
 	}
 
 	
@@ -181,9 +182,10 @@ will figure out eventually
 	/*edits the footer div*/
 	footer {
 		background-color: #333;					/*sets the background color to grey*/
-		width: 100%;							/*stretches it to the length of the page*/
-		position: fixed;							/*puts the footer at the bottom of the page*/
-		height: auto;							/*sets the height of the footer to 150 pixels*/
+		width: 100%;								/*stretches it to the length of the page*/
+		position: relative;							/*puts the footer at the bottom of the page*/
+		height: 200px;							/*sets the height of the footer to 150 pixels*/
+		bottom: 0px;
 	}
 }
 
