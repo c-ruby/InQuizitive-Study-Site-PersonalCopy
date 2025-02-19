@@ -84,3 +84,18 @@ footer {
     padding: 1rem;
     text-align: center;
 }
+
+/* CSS to style the delete buttons */
+.deleteBtn {
+    background-color: red;
+    color: white; /* Change the text color to white for better contrast */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px; /* Add this line to round the corners */
+}
+
+.deleteBtn:hover {
+    background-color: darkred; /* Change the color on hover for a better user experience */
+}
+

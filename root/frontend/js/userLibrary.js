@@ -23,6 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Create a delete button
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = 'Delete';
+                deleteBtn.classList.add('deleteBtn'); // Use a class instead of an ID
                 deleteBtn.style.marginLeft = '10px'; // Add some space between the name and the button
                 deleteBtn.onclick = () => {
                     if (confirm(`Are you sure you want to delete the study set: ${set.set_name}?`)) {
