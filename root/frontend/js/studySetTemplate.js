@@ -239,6 +239,8 @@ function flashCards(){
 			else{
 				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
 			}
+			// Toggle the 'clicked' class to change the background color
+            flashcardTextholder.classList.toggle('clicked');	
 		}
 	}
 	else{
