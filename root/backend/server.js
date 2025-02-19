@@ -351,6 +351,88 @@ app.put('/terms/:term_id', (req, res) => {
   });
 });
 
+// Route to delete all terms associated with a study set and delete the study set
+app.delete('/study-sets/:set_id', (req, res) => {
+  const { set_id } = req.params;
+
+  // Start a transaction to ensure both deletions happen atomically
+  db.beginTransaction(err => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+
+      // First, delete all terms associated with the study set
+      const deleteTermsQuery = 'DELETE FROM Terms WHERE set_id = ?';
+      db.query(deleteTermsQuery, [set_id], (err, result) => {
+          if (err) {
+              return db.rollback(() => {
+                  res.status(500).json({ error: err.message });
+              });
+          }
+
+          // Then, delete the study set itself
+          const deleteStudySetQuery = 'DELETE FROM StudySets WHERE set_id = ?';
+          db.query(deleteStudySetQuery, [set_id], (err, result) => {
+              if (err) {
+                  return db.rollback(() => {
+                      res.status(500).json({ error: err.message });
+                  });
+              }
+
+              // Commit the transaction
+              db.commit(err => {
+                  if (err) {
+                      return db.rollback(() => {
+                          res.status(500).json({ error: err.message });
+                      });
+                  }
+                  res.status(200).json({ message: 'Study set and associated terms deleted successfully' });
+              });
+          });
+      });
+  });
+  
+});// Route to delete all terms associated with a study set and delete the study set
+app.delete('/study-sets/:set_id', (req, res) => {
+    const { set_id } = req.params;
+
+    // Start a transaction to ensure both deletions happen atomically
+    db.beginTransaction(err => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+
+        // First, delete all terms associated with the study set
+        const deleteTermsQuery = 'DELETE FROM Terms WHERE set_id = ?';
+        db.query(deleteTermsQuery, [set_id], (err, result) => {
+            if (err) {
+                return db.rollback(() => {
+                    res.status(500).json({ error: err.message });
+                });
+            }
+
+            // Then, delete the study set itself
+            const deleteStudySetQuery = 'DELETE FROM StudySets WHERE set_id = ?';
+            db.query(deleteStudySetQuery, [set_id], (err, result) => {
+                if (err) {
+                    return db.rollback(() => {
+                        res.status(500).json({ error: err.message });
+                    });
+                }
+
+                // Commit the transaction
+                db.commit(err => {
+                    if (err) {
+                        return db.rollback(() => {
+                            res.status(500).json({ error: err.message });
+                        });
+                    }
+                    res.status(200).json({ message: 'Study set and associated terms deleted successfully' });
+                });
+            });
+        });
+    });
+});
 
 
 
