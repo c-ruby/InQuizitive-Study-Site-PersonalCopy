@@ -178,10 +178,10 @@ function flashCards(){
 	disableSSaction();
 	//used to keep track of the current question
 	var currentQuestion = 1;
-	var questionCount = getRowCount()-1;
+	var questionCount = getRowCount();
 	fetchTerms();
 	//this div will check if there are any questions and generate the flashcard elements if there are.
-	if(questionCount > 1){
+	if(questionCount > 0){
 		
 		//this creates the exit button for the flashcards
 		var exitbtn = document.createElement("button");
@@ -251,6 +251,8 @@ function flashCards(){
 			else{
 				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
 			}
+			// Toggle the 'clicked' class to change the background color
+            flashcardTextholder.classList.toggle('clicked');	
 		}
 	}
 	else{

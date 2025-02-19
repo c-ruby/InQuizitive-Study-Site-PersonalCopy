@@ -84,6 +84,11 @@ td {
     border-radius: 15px;
 }
 
+/*the color that the card will change when you click it */
+.clicked {
+    background-color: #535353; 
+}
+
 #exitButton{
     position: absolute;
     top: 0px;
