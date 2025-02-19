@@ -157,6 +157,18 @@ function generate_quiz(){
 	
 	
 	quiz.appendChild(submitbtn);
+	
+}
+
+function quizCheck(){
+	var questionCount = getRowCount();
+	const answerSelectionArray = [];
+	
+	for(var i=0; i<=questionCount; i++){
+		answerSelectionArray.push("0");
+	}
+	
+	alert(answerSelectionArray.length);
 }
 
 // ------------ FLASH CARDS ------------ //
@@ -166,10 +178,10 @@ function flashCards(){
 	disableSSaction();
 	//used to keep track of the current question
 	var currentQuestion = 1;
-	var questionCount = getRowCount();
+	var questionCount = getRowCount()-1;
 	fetchTerms();
 	//this div will check if there are any questions and generate the flashcard elements if there are.
-	if(questionCount > 0){
+	if(questionCount > 1){
 		
 		//this creates the exit button for the flashcards
 		var exitbtn = document.createElement("button");
