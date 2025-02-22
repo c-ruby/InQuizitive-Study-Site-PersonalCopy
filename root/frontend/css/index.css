@@ -1,20 +1,17 @@
 @media only screen and (min-width:512px){ 
-/*
-^^^^ this is supposed to allow for responsive design
-absolutely zero clue how it works since the last time ive done it
-will figure out eventually
-*/
-	/*this adds these attributes to the entire webpage*/
+
+	/* Adds these attributes to the entire webpage*/
 	* {
 		margin: 0;
 		padding: 0;
 	}
 	html, body {
-		height: 100vh;
+		height: 100%;
+		width: 100%;
 		margin: 0;
 	}
 	
-	/*This sets attributes for the body*/
+	/* Body attributes */
 	body {
 		font-family: Arial, sans-serif; 		/*Sets the fonts, will probably change and add backup fonts*/
 		background-color: white; 				/*sets the background color of the body*/
@@ -22,56 +19,59 @@ will figure out eventually
 		flex-direction: column;
 		height: auto;
 	}
-
 	
-	/*this sets attributes for the header*/
-	/*header includes: navbar, subheader*/
+	/* Header attributes */
+	/* header includes subheader */
 	header{
-		width: 100%; 
+		align-self: center;
+		width: 50%;
 		margin-bottom: 1rem;
 	}
 	
-	/*this sets attributes for the navbar*/
+	/* Navbar attributes */
 	nav {
-		background-color: #333; 				/*sets background color to a grey*/
-		width: 100%; 							/*makes the navbar the length of the page*/
-		position: absolute; 					/*sets the position of the nav bar so that it doesnt move*/
-		/*not even gonna lie no idea what top and left do*/
-		top: 0;
-		left: 0;
-		height: 65px; 							/*sets the height of the navbar to 65 pixels*/
-		display: flex; 							/*sets the display as flex, this allows everything in the navbar to align side by side*/
-		z-index: 1000;							/*completely forgotten what this does*/
-		align-items: center;					/*This centers everything on the navbar*/
-		justify-content: space-between;			/*This adds appropriate spaces between everything in the navbar*/
+		background-color: rgb(218, 41, 28);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+		width: 70%;
+		padding: 0px 16px;
+		margin-top: 10px;
+		align-self: center;
+		position: fixed;
+		z-index: 1000; 		/*Prevents navbar from being covered*/
+		height: 65px;
+		border-radius: 20px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: space-between;
 	}
 
-	/*This edits the unordered list that stores the home, explore, and about links in the navbar*/
+	/* Edits unordered list that stores the links in the navbar*/
 	nav ul {
-		list-style-type: none;					/*doesnt add a list style*/
-		display: flex; 							/*sets the links next to each other*/
-		align-items: center;					/*centers the links*/
-		
+		margin-left: 15px;
+		list-style-type: none;
+		display: flex;
+		align-items: center;
 	}
 
-	/*edits the unordered list items*/
+	/* Edits unordered list items*/
 	nav ul li {
-		margin: 0 20px;							/*creates spaces on the side of each link*/
+		margin: 0 0px;			/* Creates spaces on the side of each link*/
 	}
 
-	/*This is what edits the actual links of the unordered list*/
+	/* Edits text of the link buttons*/
 	nav ul li a {
-		color: white;							/*sets the text to white as to no blend into background*/
+		color: white;
 		text-decoration: none;
-		font-size: 18px;						/*sets the font size*/
-		padding: 20px;							/*creates padding around each link*/
-		display: block;							/*sets the dislay to block*/
+		font-size: 18px;
+		padding: 20px;			/*creates padding around each link*/
+		display: block;			/*sets the dislay to block*/
+		transition: 0.3s;			 /*changes how long it takes to change color */
 	}
 	
-	/*edits the attributes of the navbar links when the cursor hovers over it*/
+	/* Edits navbar links with mouse hovering*/
 	nav a:hover {
-			background-color: #575757;			/*edits the background color*/	
-			transition: 0.3s;					/*changes how long it takes to change color */
+			background-color: rgb(173, 36, 36);
+			transform: scale(1.1);
 		}	
 	
 	/*This is for the login/signup button*/
@@ -79,11 +79,16 @@ will figure out eventually
 		color: white;							/*makes the text white*/
 		text-decoration: none;					/*no idea*/
 		font-size: 18px;						/*changes the font size*/
-		padding: 20px;							/*adds 20 pixels of padding to the button*/
+		padding: 20px;
 		display: block;							/*makes the display block*/
+		transition: 0.3s;
 	}
 
-/* Account Details/User Info styles */
+	#login_signup:hover {
+		transform:scale(1.1);
+	}
+
+	/* Account Details/User Info styles */
     #user-info {
         color: white;							/*makes the text white*/
 		text-decoration: none;					/*no idea*/
