@@ -5,15 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inquisitive</title>
     <link rel="stylesheet" href="../css/index.css">
-    <link rel="icon" type="image/jpeg" href="../images/beanz.jpg">
+    <link rel="icon" type="image/jpeg" href="../images/logo.png">
     <style>
         /* Hide the elements initially 
         
             the reason I hide both is to stop the website from flashing "login/signup" when switching tabs
         */
-        #login_signup, #user-info {
+        #login_signup, #user-info, header {
             display: none;
         }
+
     </style>
 </head>
 <body>        
@@ -23,14 +24,19 @@
             <li><a href="explore.html">Explore</a></li>
             <li><a href="about.html">About</a></li>
         </ul>
-        <input type="text" placeholder="search.." id="searchbar" onkeypress="clickPress(event)">
+        <input type="text" placeholder="search..." id="searchbar" onkeypress="clickPress(event)">
         <a id="login_signup" href="login.html">Login/Sign Up</a>
         <a id="user-info" href="profile.html" style="display: none;"></a> <!-- invisible userInfo -->
     </nav>
     
+    <div class="navBackground">
+        <div id="navBackgroundBar"> </div>
+        <!-- Logo will eventually go in here. -->
+    </div>
+    
     <header>
         <div class="subheader">
-            <h1>Welcome to Inquizitive</h1>
+            <h1>INQUISITIVE</h1>
         </div>
     </header>
     <div class="content">
