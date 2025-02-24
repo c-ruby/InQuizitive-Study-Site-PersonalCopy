@@ -14,7 +14,7 @@
 	/* Body attributes */
 	body {
 		font-family: Arial, sans-serif;
-		background-color: #e0e0e0;
+		background-color: #ecebeb;
 		display: flex;
 		flex-direction: column;
 		height: auto;
@@ -28,11 +28,6 @@
 		justify-items: center;
 	}
 	
-	.logoImg {
-		width: 100px;
-		height: 100px;
-	}
-
 	/* Navbar attributes */
 	nav {
 		background-color: rgb(218, 41, 28);
@@ -43,7 +38,7 @@
 		align-self: center;
 		position: fixed;
 		z-index: 1000; 		/*Prevents navbar from being covered*/
-		height: 65px;
+		height: 10vh;
 		border-radius: 20px;
 		display: inline-flex;
 		align-items: center;
@@ -107,7 +102,7 @@
 		display: block;	
     }
 
-/*this is for the div that contains the searchbar*/
+	/*this is for the div that contains the searchbar*/
 	#searcharea{
 		background-color: white; 
 		width: 40%;				
@@ -143,15 +138,22 @@
 	}
 	
 	/*this edits the attributes of the content div*/
-	.content {
-		margin-top: 80px; 	
+	.homeSetContainer {
+		margin-top: 10px; 	
 		text-align: center;	
-		display: flex;		
-		width:100%;			
-		align-content: center;
-		min-height: 100vh;
-		margin-bottom: 80px;
+		display: flex;
+		width: 60%;			
+		align-self: center;
+		min-height: 40vh;
 		flex: 1;
+	}
+
+	.homeSetContainer a {
+		margin-top: 20px;
+		padding: 3px 8px;
+		border-radius: 3px;
+		color: white;
+		background-color: rgb(185, 185, 185);
 	}
 	
 	/*This edits all paragraph attributes if they are in the content class*/
@@ -163,16 +165,33 @@
 	.content a{
 		margin:auto;
 	}
-	
+
 	/*This edits the two divs of userSets and viewedSets inside of the content div*/
 	#userSets, #viewedSets{
 		width: 50%;								/*This edit the width of both divs so that they are 50% the size of the content*/
 		padding: 10px;							/*this gives the divs 10 pixels of padding*/
 		margin: 25px;							/*this gives them 25 pixels of margin */
-		background: #333;						/*changes the background color to grey*/
-		border-radius: 15px;					/*rounds the corners*/
-		color: white;							/*makes the text white*/
-		
+		background: #e3e3e3;					/*changes the background color to grey*/
+		border-radius: 10px;					/*rounds the corners*/
+		color: black;							/*makes the text white*/
+		grid-column: auto;
+		border-color:#c2c2c2;
+		border-style: solid;
+	}
+
+	.homeImageContainer img {
+		border: 5px solid #c2c2c2; 
+		border-left: #c2c2c2;
+		border-right: #c2c2c2;
+		margin-top: 2vh;
+		width: 100%;
+		height: 50vh;
+	}
+
+	.logoContainer img {
+		width: 80px;
+		height: 80px;
+		margin: 5px;
 	}
 
 	#studySetCreation{
@@ -185,7 +204,7 @@
 
 	/*edits the footer div*/
 	footer {
-		background-color: #333;					/*sets the background color to grey*/
+		background-color: #c2c2c2;					/*sets the background color to grey*/
 		width: 100%;								/*stretches it to the length of the page*/
 		position: relative;							/*puts the footer at the bottom of the page*/
 		height: 100px;							/*sets the height of the footer to 150 pixels*/
