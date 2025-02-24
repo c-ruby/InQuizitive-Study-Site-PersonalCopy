@@ -28,17 +28,6 @@
 		justify-items: center;
 	}
 	
-	#navBackgroundBar {
-		width: 100%;
-		height: 13%;
-		position: fixed;
-		background: #ffffff;
-		border-bottom-style: solid;
-		border-color: #c3c3c3;
-		border-width: 2px;
-		
-	}
-
 	.logoImg {
 		width: 100px;
 		height: 100px;
