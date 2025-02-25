@@ -36,7 +36,7 @@
 		padding: 0px 16px;
 		margin-top: 10px;
 		align-self: center;
-		position: fixed;
+		position: absolute;
 		z-index: 1000; 		/*Prevents navbar from being covered*/
 		height: 10vh;
 		border-radius: 20px;
