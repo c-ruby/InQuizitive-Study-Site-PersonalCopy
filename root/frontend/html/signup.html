@@ -56,14 +56,22 @@
                     <label for="signup_username">Username:</label>
                     <br><br>
                     <input type="text" id="signup_username" name="username" required>
+                    <p id="userReqs">Usernames must be between 6-15 characters long & only use letters and numbers<p>
                     <br><br>
                     <label for="signup_password">Password:</label>
                     <br><br>
                     <input type="password" id="signup_password" name="password" required>
+                    
+                    <br><br>
+                    <label for="password_verification">Re-Enter Password:</label>
+                    <br><br>
+                    <input type="password" id="password_verification" name="password" required>
+                    <p id="passReqs">6-20 characters long & only use letters, numbers, and "!@#$%^&*()_"</p>
                     <br><br>
                     <button type="submit" id="createAccount" name="submit">Submit</button>
                 </form>
                 <br>
+                
                 <p>
                     Already have an account? <a href="login.html">Login</a>
                 </p>

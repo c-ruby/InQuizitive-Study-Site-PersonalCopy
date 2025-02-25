@@ -1,4 +1,4 @@
-/*Start of Login CSS*/
+
 	/*this edits the login div*/
 	#signup{
 		color: white;							/*changes the text to white*/
@@ -17,7 +17,7 @@
 	}
 	
 	/*edits the username and password inputs specifically*/
-	#signup #signup_username, #signup_password{
+	#signup #signup_username, #signup_password, #password_verification{
 		width: 60%								/*sets their width at 60%*/
 	}
 
@@ -31,4 +31,8 @@
 		padding: 10px;							/*gives the button 10 pixels of padding*/
 		border-radius: 15px;					/*rounds the corners of the button*/
 	}	
-	/*End of Login CSS*/
+
+	#userReqs, #passReqs{
+		font-size: 12px;
+		color: #808080;
+	}

@@ -127,6 +127,23 @@ app.post('/add-user', async (req, res) =>
   }
 });
 
+//Simply checks for presence of user account in database
+  //I use it for signup but can be used elsewhere
+app.post('/check-username', async (req, res) => {
+  const { username } = req.body;
+  const query = 'SELECT * FROM user_credentials WHERE username = ?'; //first queries to match entry with that username 
+  db.query(query, [username], async (err, results) => {
+      if (err) {
+          return res.status(500).send('Server error');  //exits on error 
+      }
+      if (results.length != 0) {
+          return res.status(401).send('This username exists');  //exits if  entry found 
+      }
+      // Send a response indicating the username is available
+      return res.status(200).send('Username does not exist');
+  });
+});
+
 // Route to handle user login
 app.post('/login', async (req, res) => 
 {
@@ -442,14 +459,6 @@ app.delete('/study-sets/:set_id', (req, res) => {
 
 
 
-/*    Have not touched these yet
-//simple protected route
-app.get('/profile', checkAuth, (req, res) => {
-  res.send(`Welcome, ${req.session.user.username}`);
-});
-
-
-*/
 
 
 
