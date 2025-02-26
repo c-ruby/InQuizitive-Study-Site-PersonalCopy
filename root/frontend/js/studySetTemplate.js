@@ -43,6 +43,18 @@ function getRowCount(){
 	const table = document.getElementById('myTable');
     return table.rows.length;
 }
+//used to randomize array
+function shuffleArray(array){
+	for (let i = array.length - 1; i > 0; i--) { 
+		// Generate random index 
+		const j = Math.floor(Math.random() * (i + 1));
+					  
+		// Swap elements at indices i and j
+		const temp = array[i];
+		array[i] = array[j];
+		array[j] = temp;
+	}
+}
 
 //Streamlined the disabling and enabling of the buttons and opacity for when generating quizzes/flashcards
 function enableSSaction(){
@@ -52,6 +64,7 @@ function enableSSaction(){
 
     var quiz = document.getElementById("Quiz");
     if (quiz) {
+		
         quiz.parentNode.removeChild(quiz);
     }
 	
@@ -82,13 +95,46 @@ function disableSSaction(){
 	document.getElementById('addrowbtn').disabled = true;
 }
 
+/*
+variables for question type count
+mcquestions = multiple choice
+oequestions = open ended/fill in the blank
+tfquestions = true or false questions
 
-
+they need to be 1 higher than the amount disired | ie 2 = 1
+I will fix this later - Caleb
+*/
+var mcquestions = 5;
+var oequestions = 1;
+var tfquestions = 1;
 
 // ------------ QUIZZES ------------ //
+//used to hold questions and answers for quiz generation
+const correct_questions = [];
+const correct_answers = [];
+const rand_answers = [];
+
+//used to fill the question array and randomize it
+function QuestionHandler(){
+	if(correct_questions.length === 0){
+		for(var i=1; i<getRowCount(); i++){
+			correct_questions.push(i);
+			rand_answers.push(i);
+		}
+		shuffleArray(correct_questions);
+	}
+	else{
+		shuffleArray(correct_questions);
+	}
+	shuffleArray(correct_questions);
+}
+
 //generates the quiz
 function generate_quiz(){
 	var questionCount = getRowCount();
+	var qcount = 0;
+	const selectedAnswers = [];
+	
 	
 	disableSSaction();
 	
@@ -105,7 +151,7 @@ function generate_quiz(){
 	var submitbtn = document.createElement("button");
     submitbtn.id = "submitbtn";
     submitbtn.innerHTML = "Submit";
-	submitbtn.onclick = enableSSaction;
+	submitbtn.onclick = quizCheck;
 		
 	//This code is what generates the quiz questions and answers	
 	var formforquiz = document.createElement("form");
@@ -113,62 +159,108 @@ function generate_quiz(){
 	var answerLbl = document.createElement("label");
 	var questionAnswer = document.createElement("input");
 	//gives the form an id
-	formforquiz.id ="quiz-QA-selector"
+	formforquiz.id = "quiz-QA-selector"
 	
 	//adds the form to the div
 	quiz.appendChild(formforquiz);
 	
-	//this for loop will create n question answer combos for n questions in table
-	for(var qcount = 1; qcount <= questionCount; qcount++){
+	//randomizes the quiz questions
+	QuestionHandler();
+	
+	//Multiple choice question generation
+	while(qcount != mcquestions){
 		//adds question label and answer buttons
 		questionLbl = document.createElement("label");
-		questionLbl.innerHTML = qcount;
+		questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(qcount)).innerHTML;
 		formforquiz.appendChild(questionLbl);
 		formforquiz.appendChild(document.createElement("br"));
 		formforquiz.appendChild(document.createElement("br"));
+			
 		//selects correct answer and which answer selection it is randomly
 		var correctAnswer = getRandomNumber(1, 4);
+			
 		
 		//double for loops to place two buttons next to each other, and two bellow
 		var answerTracker = 0;
-		for (var i = 0; i<2; i++){
-			for (var j=0; j<2; j++){
-				answerTracker++;
-				//generates the actual radio input
-				questionAnswer = document.createElement("input");
-				questionAnswer.type = 'radio';
-				questionAnswer.name = 'Answer' + qcount;
-				questionAnswer.id = "Q"+qcount+"A"+answerTracker;
+		for (var i = 1; i<=4; i++){
+			answerTracker++;
+			
+			shuffleArray(rand_answers);
+			
+			//generates the actual radio input
+			questionAnswer = document.createElement("input");
+			questionAnswer.type = 'radio';
+			questionAnswer.name = 'Answer' + qcount;
+			questionAnswer.id = "Q"+qcount+"A"+answerTracker;
+			questionAnswer.classList.add("quizOption");
 				
-				//generates the label for each input
-				answerLbl = document.createElement("label");
-				answerLbl.for = "Q"+qcount+"A"+answerTracker;
-				answerLbl.innerHTML = document.getElementById("question"+answerTracker).innerText;
+			//generates the label for each input
+			answerLbl = document.createElement("label");
+			answerLbl.htmlFor = "Q"+qcount+"A"+answerTracker;
+			answerLbl.id = "Q"+qcount+"LB"+answerTracker;
+			answerLbl.innerHTML = document.getElementById("answer" + rand_answers.at(answerTracker)).innerText;
 				
-				formforquiz.appendChild(answerLbl);
-				formforquiz.appendChild(questionAnswer);
+			formforquiz.appendChild(answerLbl);
+			formforquiz.appendChild(questionAnswer);
+			
+			if(i == 2){
+				formforquiz.appendChild(document.createElement("br"));
 			}
-			formforquiz.appendChild(document.createElement("br"));
 		}
+		
 		formforquiz.appendChild(document.createElement("br"));
+		formforquiz.appendChild(document.createElement("br"));
+		
+		//this loop double checks the answers to make sure the correct one is there
+		for (i = 1; i<=4; i++){
+			if(document.getElementById("Q"+qcount+"LB"+i).innerHTML != document.getElementById("answer" + correct_questions.at(qcount)).innerHTML){
+				if(i == 4){
+					document.getElementById("Q"+qcount+"LB"+correctAnswer).innerHTML = document.getElementById("answer" + correct_questions.at(qcount)).innerText + "C";
+					document.getElementById("Q"+qcount+"A"+correctAnswer).classList.add("correct_response");
+				}
+			}
+			else{
+				document.getElementById("Q"+qcount+"LB"+i).innerHTML = document.getElementById("question"+getRandomNumber(1, 4)).innerHTML;
+				if(i == 4){
+					document.getElementById("Q"+qcount+"LB"+correctAnswer).innerHTML = document.getElementById("answer" + correct_questions.at(qcount)).innerText + "C";
+					document.getElementById("Q"+qcount+"A"+correctAnswer).classList.add("correct_response");
+				}
+			}
+		}
+		qcount++;
 	}
+	
 	formforquiz.appendChild(document.createElement("br"));
 	formforquiz.appendChild(document.createElement("br"));
-	
-	
 	quiz.appendChild(submitbtn);
 	
 }
 
-function quizCheck(){
-	var questionCount = getRowCount();
-	const answerSelectionArray = [];
-	
-	for(var i=0; i<=questionCount; i++){
-		answerSelectionArray.push("0");
-	}
-	
-	alert(answerSelectionArray.length);
+function quizCheck() {
+    var total = mcquestions;
+    var correctAnswered = 0;
+
+    // Select all input elements with the class 'quizOption'
+    const inputs = document.querySelectorAll('.quizOption');
+    let selected = false;
+
+    // Iterate through each input element and check if it is selected
+    inputs.forEach(input => {
+        if (input.checked) {
+            selected = true;
+            if (input.classList.contains("correct_response")) {
+                correctAnswered++;
+            }
+        }
+    });
+
+    if (!selected) {
+        alert("No option selected.");
+    } else {
+		correctAnswered = correctAnswered/total*100;
+        alert(`Correct answers: ${correctAnswered}` + "%");
+		enableSSaction();
+    }
 }
 
 // ------------ FLASH CARDS ------------ //
