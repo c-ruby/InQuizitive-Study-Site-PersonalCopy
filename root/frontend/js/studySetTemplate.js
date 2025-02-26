@@ -104,7 +104,7 @@ tfquestions = true or false questions
 they need to be 1 higher than the amount disired | ie 2 = 1
 I will fix this later - Caleb
 */
-var mcquestions = 5;
+var mcquestions = 4;
 var oequestions = 1;
 var tfquestions = 1;
 
@@ -167,68 +167,75 @@ function generate_quiz(){
 	//randomizes the quiz questions
 	QuestionHandler();
 	
-	//Multiple choice question generation
-	while(qcount != mcquestions){
-		//adds question label and answer buttons
-		questionLbl = document.createElement("label");
-		questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(qcount)).innerHTML;
-		formforquiz.appendChild(questionLbl);
-		formforquiz.appendChild(document.createElement("br"));
-		formforquiz.appendChild(document.createElement("br"));
-			
-		//selects correct answer and which answer selection it is randomly
-		var correctAnswer = getRandomNumber(1, 4);
-			
-		
-		//double for loops to place two buttons next to each other, and two bellow
-		var answerTracker = 0;
-		for (var i = 1; i<=4; i++){
-			answerTracker++;
-			
-			shuffleArray(rand_answers);
-			
-			//generates the actual radio input
-			questionAnswer = document.createElement("input");
-			questionAnswer.type = 'radio';
-			questionAnswer.name = 'Answer' + qcount;
-			questionAnswer.id = "Q"+qcount+"A"+answerTracker;
-			questionAnswer.classList.add("quizOption");
-				
-			//generates the label for each input
-			answerLbl = document.createElement("label");
-			answerLbl.htmlFor = "Q"+qcount+"A"+answerTracker;
-			answerLbl.id = "Q"+qcount+"LB"+answerTracker;
-			answerLbl.innerHTML = document.getElementById("answer" + rand_answers.at(answerTracker)).innerText;
-				
-			formforquiz.appendChild(answerLbl);
-			formforquiz.appendChild(questionAnswer);
-			
-			if(i == 2){
-				formforquiz.appendChild(document.createElement("br"));
-			}
-		}
-		
-		formforquiz.appendChild(document.createElement("br"));
-		formforquiz.appendChild(document.createElement("br"));
-		
-		//this loop double checks the answers to make sure the correct one is there
-		for (i = 1; i<=4; i++){
-			if(document.getElementById("Q"+qcount+"LB"+i).innerHTML != document.getElementById("answer" + correct_questions.at(qcount)).innerHTML){
-				if(i == 4){
-					document.getElementById("Q"+qcount+"LB"+correctAnswer).innerHTML = document.getElementById("answer" + correct_questions.at(qcount)).innerText + "C";
-					document.getElementById("Q"+qcount+"A"+correctAnswer).classList.add("correct_response");
-				}
-			}
-			else{
-				document.getElementById("Q"+qcount+"LB"+i).innerHTML = document.getElementById("question"+getRandomNumber(1, 4)).innerHTML;
-				if(i == 4){
-					document.getElementById("Q"+qcount+"LB"+correctAnswer).innerHTML = document.getElementById("answer" + correct_questions.at(qcount)).innerText + "C";
-					document.getElementById("Q"+qcount+"A"+correctAnswer).classList.add("correct_response");
-				}
-			}
-		}
-		qcount++;
+	if(questionCount<4){
+		alert("not enought questions to generate quiz");
+		enableSSaction();
 	}
+	else{
+		while(qcount != mcquestions){
+			//adds question label and answer buttons
+			questionLbl = document.createElement("label");
+			questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(qcount)).innerHTML;
+			formforquiz.appendChild(questionLbl);
+			formforquiz.appendChild(document.createElement("br"));
+			formforquiz.appendChild(document.createElement("br"));
+				
+			//selects correct answer and which answer selection it is randomly
+			var correctAnswer = getRandomNumber(1, 4);
+				
+			
+			//double for loops to place two buttons next to each other, and two bellow
+			var answerTracker = 0;
+			for (var i = 1; i<=4; i++){
+				answerTracker++;
+				
+				shuffleArray(rand_answers);
+				
+				//generates the actual radio input
+				questionAnswer = document.createElement("input");
+				questionAnswer.type = 'radio';
+				questionAnswer.name = 'Answer' + qcount;
+				questionAnswer.id = "Q"+qcount+"A"+answerTracker;
+				questionAnswer.classList.add("quizOption");
+					
+				//generates the label for each input
+				answerLbl = document.createElement("label");
+				answerLbl.htmlFor = "Q"+qcount+"A"+answerTracker;
+				answerLbl.id = "Q"+qcount+"LB"+answerTracker;
+				answerLbl.innerHTML = document.getElementById("answer" + rand_answers.at(answerTracker)).innerText;
+					
+				formforquiz.appendChild(answerLbl);
+				formforquiz.appendChild(questionAnswer);
+				
+				if(i == 2){
+					formforquiz.appendChild(document.createElement("br"));
+				}
+			}
+			
+			formforquiz.appendChild(document.createElement("br"));
+			formforquiz.appendChild(document.createElement("br"));
+			
+			//this loop double checks the answers to make sure the correct one is there
+			for (i = 1; i<=4; i++){
+				if(document.getElementById("Q"+qcount+"LB"+i).innerHTML != document.getElementById("answer" + correct_questions.at(qcount)).innerHTML){
+					if(i == 4){
+						document.getElementById("Q"+qcount+"LB"+correctAnswer).innerHTML = document.getElementById("answer" + correct_questions.at(qcount)).innerText + "C";
+						document.getElementById("Q"+qcount+"A"+correctAnswer).classList.add("correct_response");
+					}
+				}
+				else{
+					document.getElementById("Q"+qcount+"LB"+i).innerHTML = document.getElementById("question"+getRandomNumber(1, 4)).innerHTML;
+					if(i == 4){
+						document.getElementById("Q"+qcount+"LB"+correctAnswer).innerHTML = document.getElementById("answer" + correct_questions.at(qcount)).innerText + "C";
+						document.getElementById("Q"+qcount+"A"+correctAnswer).classList.add("correct_response");
+					}
+				}
+			}
+			qcount++;
+		}
+	}
+	//Multiple choice question generation
+	
 	
 	formforquiz.appendChild(document.createElement("br"));
 	formforquiz.appendChild(document.createElement("br"));
