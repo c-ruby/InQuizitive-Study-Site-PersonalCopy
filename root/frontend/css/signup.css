@@ -1,12 +1,45 @@
 
+	.outer-container {
+		display: flex;
+		flex-direction: column;
+	}
+	
+	.content-container {
+		margin: auto;
+		height: 100%;
+		width: 50%;
+		align-self: center;
+		align-content: center;
+		justify-items: center;
+		justify-content: center;
+		align-items: center;
+		background-color: #e3e3e3;
+		display:flex;
+		flex-direction: column;
+	}
+	
+	.logoContainer {
+		height: 25%;
+		width: 25%;
+		text-align: center;
+		margin-top: 10%;
+	}
+
+	.logoContainer img {
+		height: 100%;
+		width: 100%;
+	}
+
+	
 	/*this edits the login div*/
 	#signup{
-		color: white;							/*changes the text to white*/
-		margin: auto;							/*sets the margins to auto, centered it*/
-		width: 20%;								/*sets the with to only 25% of the page*/
-		background-color: #333;					/*set the background color to grey*/
-		padding: 30px;							/*gives it 30 pixels of padding*/
-		border-radius: 15px;					/*rounds the corners*/		
+		color: white;		
+		margin: auto;
+		margin-bottom: 15vh;
+		width: 45%;	
+		background-color: #333;
+		padding: 30px;		
+		border-radius: 15px;
 	}
 
 	/*edits the inputs inside of the login div*/
