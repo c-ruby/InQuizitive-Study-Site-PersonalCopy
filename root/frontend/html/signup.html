@@ -8,22 +8,6 @@
     <link rel="stylesheet" href="../css/signup.css">
     <link rel="icon" type="image/jpeg" href="../images/beanz.jpg">
     <style>
-        .outer-container {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .content-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center; /* Centers the content vertically */
-            align-items: center; /* Centers the content horizontally */
-            flex-grow: 1;
-            padding: 20px;
-        }
-    </style>
-    <style>
         /* Hide the elements initially 
         
             the reason I hide both is to stop the website from flashing "login/signup" when switching tabs
@@ -34,6 +18,7 @@
     </style>
 </head>
 <body>
+    
     <div class="outer-container">
         <nav>
             <ul>
@@ -45,6 +30,9 @@
             <a id="login_signup" href="login.html">Login/Sign Up</a>
             <span id="user-info" href="profile.html" style="display: none;"></span> <!-- invisible userInfo -->
         </nav>
+    </div>
+
+    <div class="content-container">
 
         <div class="logoContainer">
             <img src="../images/logo.png">
@@ -55,35 +43,34 @@
                 <h1>Create Account</h1>
             </div>
         </header>
-        <div class="content-container">
-            <div id="signup">
-                <form id="signupForm" method="POST" action="/add-item">
-                    <label for="signup_username">Username:</label>
-                    <br><br>
-                    <input type="text" id="signup_username" name="username" required>
-                    <p id="userReqs">Usernames must be between 6-15 characters long & only use letters and numbers<p>
-                    <br><br>
-                    <label for="signup_password">Password:</label>
-                    <br><br>
-                    <input type="password" id="signup_password" name="password" required>
-                    
-                    <br><br>
-                    <label for="password_verification">Re-Enter Password:</label>
-                    <br><br>
-                    <input type="password" id="password_verification" name="password" required>
-                    <p id="passReqs">6-20 characters long & only use letters, numbers, and "!@#$%^&*()_"</p>
-                    <br><br>
-                    <button type="submit" id="createAccount" name="submit">Submit</button>
-                </form>
-                <br>
+
+        <div id="signup">
+            <form id="signupForm" method="POST" action="/add-item">
+                <label for="signup_username">Username:</label>
+                <br><br>
+                <input type="text" id="signup_username" name="username" required>
+                <p id="userReqs">Usernames must be between 6-15 characters long & only use letters and numbers<p>
+                <br><br>
+                <label for="signup_password">Password:</label>
+                <br><br>
+                <input type="password" id="signup_password" name="password" required>
                 
-                <p>
-                    Already have an account? <a href="login.html">Login</a>
-                </p>
-            </div>
+                <br><br>
+                <label for="password_verification">Re-Enter Password:</label>
+                <br><br>
+                <input type="password" id="password_verification" name="password" required>
+                <p id="passReqs">6-20 characters long & only use letters, numbers, and "!@#$%^&*()_"</p>
+                <br><br>
+                <button type="submit" id="createAccount" name="submit">Submit</button>
+            </form>
+            <br>
+            
+            <p>
+                Already have an account? <a href="login.html">Login</a>
+            </p>
         </div>
-        <footer></footer>
     </div>
+    
     <script src="../js/myscript.js"></script>
     <script src="../js/signup.js"></script>
     <script src="../js/searchBar.js"></script>
