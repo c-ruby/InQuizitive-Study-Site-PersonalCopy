@@ -104,7 +104,7 @@ tfquestions = true or false questions
 they need to be 1 higher than the amount disired | ie 2 = 1
 I will fix this later - Caleb
 */
-var mcquestions = 4;
+var mcquestions = 5;
 var oequestions = 1;
 var tfquestions = 1;
 
@@ -183,13 +183,9 @@ function generate_quiz(){
 			//selects correct answer and which answer selection it is randomly
 			var correctAnswer = getRandomNumber(1, 4);
 				
-			
+			shuffleArray(rand_answers);
 			//double for loops to place two buttons next to each other, and two bellow
-			var answerTracker = 0;
-			for (var i = 1; i<=4; i++){
-				answerTracker++;
-				
-				shuffleArray(rand_answers);
+			for (var answerTracker = 1; answerTracker<=4; answerTracker++){
 				
 				//generates the actual radio input
 				questionAnswer = document.createElement("input");
@@ -207,9 +203,7 @@ function generate_quiz(){
 				formforquiz.appendChild(answerLbl);
 				formforquiz.appendChild(questionAnswer);
 				
-				if(i == 2){
-					formforquiz.appendChild(document.createElement("br"));
-				}
+				formforquiz.appendChild(document.createElement("br"));
 			}
 			
 			formforquiz.appendChild(document.createElement("br"));
@@ -224,7 +218,7 @@ function generate_quiz(){
 					}
 				}
 				else{
-					document.getElementById("Q"+qcount+"LB"+i).innerHTML = document.getElementById("question"+getRandomNumber(1, 4)).innerHTML;
+					document.getElementById("Q"+qcount+"LB"+i).innerHTML = document.getElementById("answer"+getRandomNumber(1, 4)).innerHTML;
 					if(i == 4){
 						document.getElementById("Q"+qcount+"LB"+correctAnswer).innerHTML = document.getElementById("answer" + correct_questions.at(qcount)).innerText + "C";
 						document.getElementById("Q"+qcount+"A"+correctAnswer).classList.add("correct_response");
