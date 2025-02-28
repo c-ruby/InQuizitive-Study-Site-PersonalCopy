@@ -38,9 +38,9 @@
 		margin-top: 10px;
 		align-self: center;
 		position: absolute;
-		z-index: 1000; 		/*Prevents navbar from being covered*/
+		z-index: 1000;
 		height: 70px;
-		border-radius: 20px;
+		border-radius: 10px;
 		display: inline-flex;
 		align-items: center;
 		justify-content: space-between;
@@ -98,8 +98,7 @@
 		transition: 0.3s;
 	}
 
-    #user-info a /*makes it so the text doesn't go purple bc it treats it as link*/
-	{
+    #user-info a {
         color: white;
 		text-decoration: none;
 		font-size: 18px;
@@ -107,7 +106,7 @@
     }
 
 	/*this is for the div that contains the searchbar*/
-	#searcharea{
+	#searcharea {
 		background-color: white; 
 		width: 40%;				
 		padding: 5px;			
@@ -115,7 +114,7 @@
 		display: flex;			
 	}
 	
-	/*edits the part of the searchbar you type into*/
+	/* Edits the part of the searchbar you type into */
 	#searchbar{
 		background-color: white;
 		width: 50%;				
@@ -125,12 +124,13 @@
 		
 	}
 	
-	/*This edits the attributes for the subheader that currently contains just the name of the page*/
+	/* Edits subheader */
 	.subheader{
 		display:flex;
-		margin-top: 125px;		
+		margin-top: 80px;
 		width: 30%;
 		justify-content: center;
+		align-content: center;
 		background: #333;		
 	} 
 	
@@ -138,7 +138,8 @@
 	.subheader h1{
 		color: white;
 		background: #333;	
-		padding: 20px;		
+		padding: 20px;
+		text-align: center;
 	}
 	
 	/*this edits the attributes of the content div*/
