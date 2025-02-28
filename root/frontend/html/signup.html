@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inquisitive</title>
+    <title>Sign-Up | Inquisitive</title>
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/signup.css">
-    <link rel="icon" type="image/jpeg" href="../images/beanz.jpg">
+    <link rel="icon" type="image/png" href="../images/logo.png">
     <style>
         /* Hide the elements initially 
         
@@ -37,30 +37,26 @@
         <div class="logoContainer">
             <img src="../images/logo.png">
         </div>
-
-        <header>
-            <div class="subheader">
-                <h1>Create Account</h1>
-            </div>
-        </header>
+        <div class="subheader">
+            <h1>Create Account</h1>
+        </div>
 
         <div id="signup">
             <form id="signupForm" method="POST" action="/add-item">
                 <label for="signup_username">Username:</label>
-                <br><br>
+                
                 <input type="text" id="signup_username" name="username" required>
                 <p id="userReqs">Usernames must be between 6-15 characters long & only use letters and numbers<p>
-                <br><br>
+                
                 <label for="signup_password">Password:</label>
-                <br><br>
+                
                 <input type="password" id="signup_password" name="password" required>
                 
-                <br><br>
                 <label for="password_verification">Re-Enter Password:</label>
-                <br><br>
+                
                 <input type="password" id="password_verification" name="password" required>
                 <p id="passReqs">6-20 characters long & only use letters, numbers, and "!@#$%^&*()_"</p>
-                <br><br>
+                
                 <button type="submit" id="createAccount" name="submit">Submit</button>
             </form>
             <br>
@@ -71,6 +67,8 @@
         </div>
     </div>
     
+    <footer></footer>
+
     <script src="../js/myscript.js"></script>
     <script src="../js/signup.js"></script>
     <script src="../js/searchBar.js"></script>
