@@ -17,7 +17,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 setNameSpan.textContent = set.set_name;
                 setNameSpan.style.cursor = 'pointer';
                 setNameSpan.onclick = () => {
-                    window.location.href = `studySetTemplate.html?id=${set.set_id}`;
+                    // Send request to update visit history
+                    fetch('/update-visit-history', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ set_id: set.set_id })
+                    }).then(() => {
+                        window.location.href = `studySetTemplate.html?id=${set.set_id}`;
+                    }).catch(error => {
+                        console.error('Error updating visit history:', error);
+                    });
                 };
 
                 // Create a delete button

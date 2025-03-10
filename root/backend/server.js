@@ -453,6 +453,58 @@ app.delete('/study-sets/:set_id', (req, res) => {
 
 
 
+app.get('/recent-study-sets', (req, res) => {
+  const username = req.session.user.username; // Get the username from the session
+  if (!username) {
+      return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  const query = `
+    SELECT s.set_id, s.set_name, v.visit_timestamp
+    FROM VisitHistory v
+    JOIN StudySets s ON v.set_id = s.set_id
+    WHERE v.username = ?
+    ORDER BY v.visit_timestamp DESC
+    LIMIT 50
+  `;
+  
+  db.query(query, [username], (err, results) => {
+      if (err) {
+          console.error('Error fetching recent study sets:', err); // Log the error
+          return res.status(500).json({ error: err.message });
+      }
+      res.status(200).json(results);
+  });
+});
+
+
+//add a listing to the visit history for the current user 
+app.post('/update-visit-history', (req, res) => {
+
+  console.log("updating visit history...")
+
+  const username = req.session.user.username; // Get the username from the session
+  const { set_id } = req.body;
+  
+  if (!username || !set_id) {
+      return res.status(400).json({ error: 'Bad Request' });
+  }
+
+  const query = `
+    INSERT INTO VisitHistory (username, set_id, visit_timestamp)
+    VALUES (?, ?, NOW())
+  `;
+  
+  db.query(query, [username, set_id], (err, results) => {
+      if (err) {
+          return res.status(500).json({ error: err.message });
+      }
+      res.status(200).send('Visit history updated');
+  });
+});
+
+
+
 
 
 
