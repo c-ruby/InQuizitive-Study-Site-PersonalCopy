@@ -29,6 +29,7 @@ function cloneRow() {
 	count++;
 }
 
+// ------------ STUDY SET UTILITIES ------------ //
 
 //allows for random numbers within a certain range
 function getRandomNumber(min, max) {
@@ -95,20 +96,21 @@ function disableSSaction(){
 	document.getElementById('addrowbtn').disabled = true;
 }
 
+
+
+// ------------ QUIZZES ------------ //
+
 /*
 variables for question type count
 mcquestions = multiple choice
 oequestions = open ended/fill in the blank
 tfquestions = true or false questions
-
-they need to be 1 higher than the amount disired | ie 2 = 1
-I will fix this later - Caleb
 */
-var mcquestions = 4;
-var oequestions = 1;
-var tfquestions = 1;
+var mcquestions = 1;
+var oequestions = 0;
+var tfquestions = 0;
+var totalQuestions = mcquestions + oequestions + tfquestions;
 
-// ------------ QUIZZES ------------ //
 //used to hold questions and answers for quiz generation
 const correct_questions = [];
 const correct_answers = [];
@@ -131,8 +133,16 @@ function QuestionHandler(){
 
 //generates the quiz
 function generate_quiz(){
-	var questionCount = getRowCount();
+	
+	correct_questions.length = 0;
+	correct_answers.length = 0;
+	rand_answers.length = 0;
+	
+	
+	var termCount = getRowCount()-1;
 	var qcount = 0;
+	
+	const questions = [];
 	const selectedAnswers = [];
 	
 	
@@ -158,6 +168,7 @@ function generate_quiz(){
 	var questionLbl = document.createElement("label");
 	var answerLbl = document.createElement("label");
 	var questionAnswer = document.createElement("input");
+	
 	//gives the form an id
 	formforquiz.id = "quiz-QA-selector"
 	
@@ -167,74 +178,73 @@ function generate_quiz(){
 	//randomizes the quiz questions
 	QuestionHandler();
 	
-	if(questionCount<4){
+	//Multiple choice question generation
+	if(termCount<4){
 		alert("not enought questions to generate quiz");
 		enableSSaction();
 	}
 	else{
 		while(qcount != mcquestions){
+			
+			var randomQuestion = getRandomNumber(0, correct_questions.length-1);
+			var currentQuestion = correct_questions.at(randomQuestion);
+	
 			//adds question label and answer buttons
 			questionLbl = document.createElement("label");
-			questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(qcount)).innerHTML;
+			questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML;
+			questionLbl.id = "Q"+qcount;
 			formforquiz.appendChild(questionLbl);
 			formforquiz.appendChild(document.createElement("br"));
 			formforquiz.appendChild(document.createElement("br"));
 				
-			//selects correct answer and which answer selection it is randomly
-			var correctAnswer = getRandomNumber(1, 4);
-				
+			//selects correct answer and which answer selection it is randomly if needed
+			var correctAnswer = getRandomNumber(0, 3);
 			
-			//double for loops to place two buttons next to each other, and two bellow
-			var answerTracker = 0;
-			for (var i = 1; i<=4; i++){
-				answerTracker++;
-				
-				shuffleArray(rand_answers);
-				
+			//will randomize answers
+			shuffleArray(rand_answers);
+			
+			//this for loop will generate all of the quiz multiple choice answers
+			for (var i = 0; i<4; i++){	
 				//generates the actual radio input
 				questionAnswer = document.createElement("input");
 				questionAnswer.type = 'radio';
 				questionAnswer.name = 'Answer' + qcount;
-				questionAnswer.id = "Q"+qcount+"A"+answerTracker;
+				questionAnswer.id = "Q"+qcount+"A"+i;
 				questionAnswer.classList.add("quizOption");
 					
 				//generates the label for each input
 				answerLbl = document.createElement("label");
-				answerLbl.htmlFor = "Q"+qcount+"A"+answerTracker;
-				answerLbl.id = "Q"+qcount+"LB"+answerTracker;
-				answerLbl.innerHTML = document.getElementById("answer" + rand_answers.at(answerTracker)).innerText;
+				answerLbl.htmlFor = "Q"+qcount+"A"+i;
+				answerLbl.id = "Q"+qcount+"LB"+i;
+				answerLbl.innerHTML = document.getElementById("answer" + rand_answers.at(i)).innerText;
+				
+				//pushes the corrent generated answers to array, this is only used to check if the correct answer is in the options
+				selectedAnswers.push(rand_answers.at(i));
 					
 				formforquiz.appendChild(answerLbl);
 				formforquiz.appendChild(questionAnswer);
 				
-				if(i == 2){
-					formforquiz.appendChild(document.createElement("br"));
+				formforquiz.appendChild(document.createElement("br"));
+				
+				if(rand_answers.at(i) == currentQuestion){
+					document.getElementById("Q"+qcount+"A"+i).classList.add("correct_response");
 				}
 			}
+			
+			if(selectedAnswers.includes(currentQuestion) == false){
+				document.getElementById("Q"+qcount+"LB"+correctAnswer).innerText =  document.getElementById("answer" + currentQuestion).innerText;
+				document.getElementById("Q"+qcount+"A"+correctAnswer).classList.add("correct_response");
+			}
+			
+			selectedAnswers.length = 0;
 			
 			formforquiz.appendChild(document.createElement("br"));
 			formforquiz.appendChild(document.createElement("br"));
 			
-			//this loop double checks the answers to make sure the correct one is there
-			for (i = 1; i<=4; i++){
-				if(document.getElementById("Q"+qcount+"LB"+i).innerHTML != document.getElementById("answer" + correct_questions.at(qcount)).innerHTML){
-					if(i == 4){
-						document.getElementById("Q"+qcount+"LB"+correctAnswer).innerHTML = document.getElementById("answer" + correct_questions.at(qcount)).innerText + "C";
-						document.getElementById("Q"+qcount+"A"+correctAnswer).classList.add("correct_response");
-					}
-				}
-				else{
-					document.getElementById("Q"+qcount+"LB"+i).innerHTML = document.getElementById("question"+getRandomNumber(1, 4)).innerHTML;
-					if(i == 4){
-						document.getElementById("Q"+qcount+"LB"+correctAnswer).innerHTML = document.getElementById("answer" + correct_questions.at(qcount)).innerText + "C";
-						document.getElementById("Q"+qcount+"A"+correctAnswer).classList.add("correct_response");
-					}
-				}
-			}
 			qcount++;
 		}
 	}
-	//Multiple choice question generation
+	
 	
 	
 	formforquiz.appendChild(document.createElement("br"));
@@ -244,7 +254,7 @@ function generate_quiz(){
 }
 
 function quizCheck() {
-    var total = mcquestions;
+    var total = totalQuestions;
     var correctAnswered = 0;
 
     // Select all input elements with the class 'quizOption'
@@ -277,10 +287,10 @@ function flashCards(){
 	disableSSaction();
 	//used to keep track of the current question
 	var currentQuestion = 1;
-	var questionCount = getRowCount();
+	var termCount = getRowCount()-1;
 	fetchTerms();
 	//this div will check if there are any questions and generate the flashcard elements if there are.
-	if(questionCount > 0){
+	if(termCount > 0){
 		
 		//this creates the exit button for the flashcards
 		var exitbtn = document.createElement("button");
@@ -321,7 +331,7 @@ function flashCards(){
 		//adds the onclick function to the next button
 		document.getElementById("nextButton").onclick = function() {
 			currentQuestion++;
-			if(currentQuestion > questionCount){
+			if(currentQuestion > termCount){
 				currentQuestion = 1;
 				flashCardtext.innerHTML = document.getElementById("question1").innerText;
 			}
@@ -334,7 +344,7 @@ function flashCards(){
 		document.getElementById("backButton").onclick = function() {
 			currentQuestion--;
 			if(currentQuestion < 1){
-				currentQuestion = questionCount;
+				currentQuestion = termCount;
 				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
 			}
 			else{
