@@ -1,4 +1,5 @@
-module.exports = function(app, db) {
+module.exports = function(app, db) 
+{
     // Route to get study sets for the current user
     app.get('/study-sets', (req, res) => {
       const username = req.session.user.username;
@@ -183,5 +184,5 @@ module.exports = function(app, db) {
           res.status(200).send('Visit history updated');
       });
     });
-  };
+};
   

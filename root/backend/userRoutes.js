@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 
-module.exports = function(app, db) {
+module.exports = function(app, db) 
+{
   // Route to handle adding a new user account
   app.post('/add-user', async (req, res) => {
     const { username, password } = req.body;

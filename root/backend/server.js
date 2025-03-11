@@ -55,7 +55,7 @@ require('./userRoutes')(app, db);
 
 
 /*
-    main functions 
+Starting the server, database connection, and serving static files 
 */
 
 // Serve static files from the "frontend" directory
