@@ -54,9 +54,6 @@ require('./userRoutes')(app, db);
 
 
 
-
-
-
 /*
     main functions 
 */
@@ -83,6 +80,8 @@ db.connect(err => {
   }
   console.log('MySQL Connected...');
 });
+
+
 
 // Start the server
 app.listen(port, () => {
