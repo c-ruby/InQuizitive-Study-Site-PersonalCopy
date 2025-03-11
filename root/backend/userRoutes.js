@@ -73,4 +73,67 @@ module.exports = function(app, db)
         res.send('Login successful');
     });
     });
+
+    // User Logout Route
+  app.post('/logout', (req, res) => {
+    req.session.destroy(err => {
+      if (err) {
+        return res.status(500).send('Server error');
+      }
+      res.clearCookie('connect.sid', { path: '/' }); // Clear the session cookie
+      res.send('Logout successful');
+    });
+  });
+
+  // Route to handle changing password
+  app.post('/change-password', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      const query = 'UPDATE user_credentials SET password = ? WHERE username = ?';
+      db.query(query, [hashedPassword, username], (err, results) => {
+        if (err) {
+          console.error('Error updating user password:', err);
+          res.status(500).json({ error: 'Database error' });
+        } else {
+          res.status(200).json({ message: 'Password changed successfully' });
+        }
+      });
+    } catch (err) {
+      res.status(500).send('Server error');
+    }
+  });
+
+  // Route to handle deleting account
+  app.post('/delete-account', (req, res) => {
+    if (!req.session.user.username) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const username = req.session.user.username;
+
+    console.log(`Attempting to delete account for user: ${username}`);
+
+    const query = 'DELETE FROM user_credentials WHERE username = ?';
+    db.query(query, [username], (err, results) => {
+      if (err) {
+        console.error('Error deleting user account:', err);
+        res.status(500).json({ error: 'Database error' });
+      } 
+      else if (results.affectedRows === 0) {
+        console.warn(`No account found for user: ${username}`);
+        res.status(404).json({ message: 'Account not found' });
+      } 
+      else {
+        console.log(`Account for user ${username} deleted successfully`);
+        req.session.destroy((err) => {
+          if (err) {
+            console.error('Error destroying session:', err);
+          }
+          res.status(200).json({ message: 'Account deleted successfully' });
+        });
+      }
+    });
+  });
 }
