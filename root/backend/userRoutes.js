@@ -85,25 +85,31 @@ module.exports = function(app, db)
     });
   });
 
-  // Route to handle changing password
-  app.post('/change-password', async (req, res) => {
-    const { username, password } = req.body;
+// Route to handle changing password
+app.post('/change-password', async (req, res) => {
+  const username = req.session.user.username;
+  if (!username) {
+      return res.status(401).json({ error: 'Unauthorized' });
+  }
+  const { password } = req.body;
+ 
 
-    try {
+  try {
       const hashedPassword = await bcrypt.hash(password, 10);
       const query = 'UPDATE user_credentials SET password = ? WHERE username = ?';
       db.query(query, [hashedPassword, username], (err, results) => {
-        if (err) {
-          console.error('Error updating user password:', err);
-          res.status(500).json({ error: 'Database error' });
-        } else {
-          res.status(200).json({ message: 'Password changed successfully' });
-        }
+          if (err) {
+              console.error('Error updating user password:', err);
+              res.status(500).json({ error: 'Database error' });
+          } else {
+              res.status(200).json({ message: 'Password changed successfully' });
+          }
       });
-    } catch (err) {
+  } catch (err) {
       res.status(500).send('Server error');
-    }
-  });
+  }
+});
+
 
   // Route to handle deleting account
   app.post('/delete-account', (req, res) => {
