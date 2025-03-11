@@ -1,7 +1,21 @@
-document.addEventListener('DOMContentLoaded', fetchRecentStudySets);
+//calls the history fetch function when the document loads, if the user is logged in 
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/check-auth')
+      .then(response => response.json())
+      .then(data => {
+        if (data.loggedIn) {
+          fetchRecentStudySets();
+        } else {
+          console.log('User is not logged in');
+        }
+      })
+      .catch(error => {
+        console.error('Error checking authentication:', error);
+      });
+  });
 
+//fetches and displays the recent history 
 function fetchRecentStudySets() {
-    console.log("Yeah the history function is going ")
     fetch('/recent-study-sets')
     .then(response => {
         if (!response.ok) {
@@ -18,11 +32,6 @@ function fetchRecentStudySets() {
         }
         
         studySetsList.innerHTML = '';
-        
-        if (!Array.isArray(data)) {
-            console.error('Data is not an array:', data);
-            return;
-        }
         
         data.forEach(set => {
             const listItem = document.createElement('li');

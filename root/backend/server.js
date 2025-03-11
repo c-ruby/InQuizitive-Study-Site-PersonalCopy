@@ -5,11 +5,8 @@
 const path = require('path');
 process.chdir(path.resolve(__dirname, '../../'));
 
-
-
 // Load environment variables from .env file
 require('dotenv').config(); 
-
 
 //Requirements 
 const session = require('express-session'); //allows for 'sessions'
@@ -17,11 +14,20 @@ const bcrypt = require('bcrypt'); //for password hashing
 const express = require('express');  //middle-ware: serves front, handles communication to back 
 const mysql = require('mysql2');  //database features
 
-
 //create instances and constants
 const bodyParser = require('body-parser'); 
 const app = express();
 const port = process.env.PORT || 3001;
+
+// create MySQL Connection from environment variables
+const db = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_NAME,
+  
+});
+
 
 // Use sessions to track user login status
 app.use(session({
@@ -37,26 +43,23 @@ app.use(session({
   cookie: { secure: false }  // Set to 'true' when we use HTTPS
 }));
 
-/*
-// Debugging output to check the current working directory and environment variables
-console.log('Current Working Directory:', process.cwd());
-console.log('DB_HOST:', process.env.DB_HOST);
-console.log('DB_USER:', process.env.DB_USER);
-console.log('DB_PASS:', process.env.DB_PASS);
-console.log('DB_NAME:', process.env.DB_NAME); 
-*/
-
-
 //middleware to parse JSON communications from front-end 
 app.use(bodyParser.json());
 
+// Import and use the routes
+require('./studySetRoutes')(app, db);
+require('./userRoutes')(app, db);
+require('./searchRoutes')(app, db);
+
+
+
+
 
 
 /*
-~~~~~~~~~~Functions and routes~~~~~~~~~~
+Starting the server, database connection, and serving static files 
 */
 
-// Serve static files from the 'frontend' directory
 // Serve static files from the "frontend" directory
 app.use(express.static(path.join(__dirname, '../frontend')));
 app.use(express.static(path.join(__dirname, '../frontend/html')));
@@ -71,7 +74,25 @@ app.use(express.static(path.join(__dirname, '../frontend/js')));
   result: express serves static files (frontend) from the frontend directory
 */  
 
-  // Start the server
-  app.listen(port, () => {
-    console.log(`Server started successfully on port: ${port}`);
-  });
+// Connect to MySQL
+db.connect(err => {
+  if (err) {
+    console.error('Error connecting to the database:', err);
+    return;
+  }
+  console.log('MySQL Connected...');
+});
+
+
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server started successfully on port: ${port}`);
+});
+
+
+
+
+
+
+
