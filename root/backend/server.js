@@ -172,6 +172,33 @@ app.post('/login', async (req, res) =>
   });
 });
 
+const changeUsername = require('./routes/changeUsername');
+app.use(changeUsernameRoute);
+
+// route to handle changing username
+app.post('/change-username', async (req, res) => {
+  const { username } = req.body;
+
+  if (!username) {
+      return res.status(400).json({ message: 'Please enter a username' });
+  }
+
+  try {
+      const query = 'UPDATE user_credentials SET username = ? WHERE username = ?';
+      db.query(query, [username, req.session.user.username], (err, results) => {
+          if (err) {
+              console.error('Error updating username:', err);
+              return res.status(500).json({ success: false, message: 'An error occurred while updating your username. Please try again.' });
+          }
+          res.json({ success: true});
+      });
+  }
+  catch (err) {
+      console.error(err);
+      res.status(500).json({ success: false, message: 'An error occurred while updating your username. Please try again.' });
+  }
+});
+
 
 // Middleware to check if user is logged in
 function checkAuth(req, res, next) {
