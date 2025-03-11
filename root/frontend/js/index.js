@@ -1,4 +1,17 @@
-document.addEventListener('DOMContentLoaded', fetchRecentStudySets);
+document.addEventListener('DOMContentLoaded', () => {
+    fetch('/check-auth')
+      .then(response => response.json())
+      .then(data => {
+        if (data.loggedIn) {
+          fetchRecentStudySets();
+        } else {
+          console.log('User is not logged in');
+        }
+      })
+      .catch(error => {
+        console.error('Error checking authentication:', error);
+      });
+  });
 
 function fetchRecentStudySets() {
     console.log("Yeah the history function is going ")
