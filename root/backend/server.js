@@ -49,6 +49,8 @@ app.use(bodyParser.json());
 // Import and use the routes
 require('./studySetRoutes')(app, db);
 require('./userRoutes')(app, db);
+require('./searchRoutes')(app, db);
+
 
 
 
