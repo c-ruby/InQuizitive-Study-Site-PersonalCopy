@@ -251,11 +251,6 @@ router.post('/update-visit-history', (req, res) => {
   });
   
 
-  // Start the server
-router.listen(port, () => {
-    console.log(`Server started successfully on port: ${port}`);
-  });
-
 
 module.exports = router; // Export the router so it can be mounted in the main app
   
