@@ -106,14 +106,15 @@ mcquestions = multiple choice
 oequestions = open ended/fill in the blank
 tfquestions = true or false questions
 */
-var mcquestions = 1;
-var oequestions = 0;
-var tfquestions = 0;
+var mcquestions = 5;
+var oequestions = 5;
+var tfquestions = 5;
 var totalQuestions = mcquestions + oequestions + tfquestions;
 
 //used to hold questions and answers for quiz generation
 const correct_questions = [];
-const correct_answers = [];
+const oe_questions = [];
+const tf_questions = [];
 const rand_answers = [];
 
 //used to fill the question array and randomize it
@@ -124,20 +125,26 @@ function QuestionHandler(){
 			rand_answers.push(i);
 		}
 		shuffleArray(correct_questions);
+		shuffleArray(rand_answers);
 	}
 	else{
 		shuffleArray(correct_questions);
+		shuffleArray(rand_answers);
 	}
 	shuffleArray(correct_questions);
+	shuffleArray(rand_answers);
 }
 
 //generates the quiz
 function generate_quiz(){
 	
 	correct_questions.length = 0;
-	correct_answers.length = 0;
+	oe_questions.length = 0;
 	rand_answers.length = 0;
+	tf_questions.length = 0;
 	
+	var randomQuestion = 0;
+	var currentQuestion = 0;
 	
 	var termCount = getRowCount()-1;
 	var qcount = 0;
@@ -145,6 +152,9 @@ function generate_quiz(){
 	const questions = [];
 	const selectedAnswers = [];
 	
+	var tempmcquestions = mcquestions;
+	
+	var tfflag = 0;
 	
 	disableSSaction();
 	
@@ -178,21 +188,21 @@ function generate_quiz(){
 	//randomizes the quiz questions
 	QuestionHandler();
 	
-	//Multiple choice question generation
+	//--------------------- Multiple choice --------------------------//
 	if(termCount<4){
-		alert("not enought questions to generate quiz");
-		enableSSaction();
+		//set the mcquestions to 0
+		mcquestions = 0;
 	}
 	else{
 		while(qcount != mcquestions){
 			
-			var randomQuestion = getRandomNumber(0, correct_questions.length-1);
-			var currentQuestion = correct_questions.at(randomQuestion);
+			randomQuestion = getRandomNumber(0, correct_questions.length-1);
+			currentQuestion = correct_questions.at(randomQuestion);
 	
 			//adds question label and answer buttons
 			questionLbl = document.createElement("label");
 			questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML;
-			questionLbl.id = "Q"+qcount;
+			questionLbl.id = "MC"+qcount;
 			formforquiz.appendChild(questionLbl);
 			formforquiz.appendChild(document.createElement("br"));
 			formforquiz.appendChild(document.createElement("br"));
@@ -209,13 +219,13 @@ function generate_quiz(){
 				questionAnswer = document.createElement("input");
 				questionAnswer.type = 'radio';
 				questionAnswer.name = 'Answer' + qcount;
-				questionAnswer.id = "Q"+qcount+"A"+i;
+				questionAnswer.id = "MC"+qcount+"A"+i;
 				questionAnswer.classList.add("quizOption");
 					
 				//generates the label for each input
 				answerLbl = document.createElement("label");
-				answerLbl.htmlFor = "Q"+qcount+"A"+i;
-				answerLbl.id = "Q"+qcount+"LB"+i;
+				answerLbl.htmlFor = "MC"+qcount+"A"+i;
+				answerLbl.id = "MC"+qcount+"LB"+i;
 				answerLbl.innerHTML = document.getElementById("answer" + rand_answers.at(i)).innerText;
 				
 				//pushes the corrent generated answers to array, this is only used to check if the correct answer is in the options
@@ -227,13 +237,13 @@ function generate_quiz(){
 				formforquiz.appendChild(document.createElement("br"));
 				
 				if(rand_answers.at(i) == currentQuestion){
-					document.getElementById("Q"+qcount+"A"+i).classList.add("correct_response");
+					document.getElementById("MC"+qcount+"A"+i).classList.add("correct_response");
 				}
 			}
 			
 			if(selectedAnswers.includes(currentQuestion) == false){
-				document.getElementById("Q"+qcount+"LB"+correctAnswer).innerText =  document.getElementById("answer" + currentQuestion).innerText;
-				document.getElementById("Q"+qcount+"A"+correctAnswer).classList.add("correct_response");
+				document.getElementById("MC"+qcount+"LB"+correctAnswer).innerText =  document.getElementById("answer" + currentQuestion).innerText;
+				document.getElementById("MC"+qcount+"A"+correctAnswer).classList.add("correct_response");
 			}
 			
 			selectedAnswers.length = 0;
@@ -243,6 +253,115 @@ function generate_quiz(){
 			
 			qcount++;
 		}
+		qcount = 0;
+	}
+	
+	//--------------------- Open Ended Question generation --------------------------//
+	
+	//randomizes the quiz questions
+	QuestionHandler();
+
+	
+	while(qcount != oequestions){
+		
+		randomQuestion = getRandomNumber(0, correct_questions.length-1);
+		
+		
+		//adds question label and text input
+		questionLbl = document.createElement("label");
+		questionLbl.innerHTML = "term: " + document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML + '&nbsp';
+		questionLbl.id = "OE"+qcount;
+		formforquiz.appendChild(questionLbl);
+		
+		//generates the actual radio input
+		questionAnswer = document.createElement("input");
+		questionAnswer.type = 'text';
+		questionAnswer.name = 'OE' + qcount;
+		questionAnswer.id = "OE"+qcount+"A";
+		questionAnswer.classList.add("quizOption");
+		formforquiz.appendChild(questionAnswer);
+			
+		formforquiz.appendChild(document.createElement("br"));
+		formforquiz.appendChild(document.createElement("br"));
+			
+		oe_questions.push(document.getElementById("answer"+correct_questions.at(randomQuestion)));	
+		
+		qcount++;
+	}
+	qcount = 0;
+	
+	//--------------------- True or False Question generation --------------------------//
+	
+	QuestionHandler();
+	
+	while(qcount != tfquestions){
+		randomQuestion = getRandomNumber(0, correct_questions.length-1);
+		currentQuestion = correct_questions.at(randomQuestion);
+		tfflag = getRandomNumber(0, 1);
+		
+		//adds term label
+		questionLbl = document.createElement("label");
+		questionLbl.innerHTML = "Term: ";
+		formforquiz.appendChild(questionLbl);
+		
+		questionLbl = document.createElement("label");
+		questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML;
+		questionLbl.id = "TFT"+qcount;
+		formforquiz.appendChild(questionLbl);
+		formforquiz.appendChild(document.createElement("br"));
+		
+		tf_questions.push(currentQuestion);
+		
+		if(tfflag == 0){
+			randomQuestion = getRandomNumber(0, correct_questions.length-1);
+			currentQuestion = correct_questions.at(randomQuestion);
+		}
+		
+		//adds definition label
+		questionLbl = document.createElement("label");
+		questionLbl.innerHTML = "Defintion: ";
+		formforquiz.appendChild(questionLbl);
+		
+		questionLbl = document.createElement("label");
+		questionLbl.innerHTML = document.getElementById("answer"+correct_questions.at(randomQuestion)).innerHTML;
+		questionLbl.id = "TFD"+qcount;
+		formforquiz.appendChild(questionLbl);
+		formforquiz.appendChild(document.createElement("br"));
+		
+		for(var i=0; i<2; i++){
+			
+			//adds question label
+			questionLbl = document.createElement("label");
+			if(i==0){
+				questionLbl.innerHTML = "T: ";
+			}
+			else{
+				questionLbl.innerHTML = "F: ";
+			}
+			
+			formforquiz.appendChild(questionLbl);
+			
+			//generates the actual radio input
+			questionAnswer = document.createElement("input");
+			questionAnswer.type = 'radio';
+			questionAnswer.name = 'TF' + qcount;
+			questionAnswer.id = "TF"+qcount+"A"+i;
+			questionAnswer.classList.add("quizOption");
+			formforquiz.appendChild(questionAnswer);
+		}
+		
+			
+		if(document.getElementById("TFT"+qcount).innerHTML == document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML){
+			document.getElementById("TF"+qcount+"A"+0).classList.add("correct_response");
+		}
+		else{
+			document.getElementById("TF"+qcount+"A"+1).classList.add("correct_response");
+		}
+		
+		formforquiz.appendChild(document.createElement("br"));
+		formforquiz.appendChild(document.createElement("br"));
+		
+		qcount++;
 	}
 	
 	
@@ -251,12 +370,15 @@ function generate_quiz(){
 	formforquiz.appendChild(document.createElement("br"));
 	quiz.appendChild(submitbtn);
 	
+	
+	mcquestions = tempmcquestions;
 }
 
 function quizCheck() {
     var total = totalQuestions;
     var correctAnswered = 0;
-
+	var questionIterator = 0;
+	var iterator = 0;
     // Select all input elements with the class 'quizOption'
     const inputs = document.querySelectorAll('.quizOption');
     let selected = false;
@@ -270,14 +392,19 @@ function quizCheck() {
             }
         }
     });
-
-    if (!selected) {
-        alert("No option selected.");
-    } else {
-		correctAnswered = correctAnswered/total*100;
-        alert(`Correct answers: ${correctAnswered}` + "%");
-		enableSSaction();
-    }
+	
+	//open ended check
+	while(iterator != oequestions){
+		if(document.getElementById("OE"+iterator+"A").value === oe_questions[iterator].textContent){
+			correctAnswered++;
+		}
+		iterator++
+	}
+	
+    
+	correctAnswered = correctAnswered/total*100;
+    alert(`Correct answers: ${correctAnswered}` + "%");
+	enableSSaction();
 }
 
 // ------------ FLASH CARDS ------------ //
@@ -369,6 +496,11 @@ function flashCards(){
 		enableSSaction();
 	}
 }
+
+// ------------ SETINGS ------------ //
+// WILL FILL IN LATER
+
+
 
 //------------Datbase Operations------------
 //Caleb Ruby's additions
