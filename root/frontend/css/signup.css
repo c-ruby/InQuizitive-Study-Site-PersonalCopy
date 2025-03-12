@@ -1,38 +1,107 @@
 
-	/*this edits the login div*/
-	#signup{
-		color: white;							/*changes the text to white*/
-		margin: auto;							/*sets the margins to auto, centered it*/
-		width: 20%;								/*sets the with to only 25% of the page*/
-		background-color: #333;					/*set the background color to grey*/
-		padding: 30px;							/*gives it 30 pixels of padding*/
-		border-radius: 15px;					/*rounds the corners*/		
-	}
+	/**************************/
+	/* SIGNUP WEBPAGE STYLING */
+	/**************************/
 
-	/*edits the inputs inside of the login div*/
-	/*We can probably make these clearner will work on at some point*/
-	#signup input{
-		padding:10px;							/*gives the inputs 10 pixels of padding*/
-		border-radius: 15px;					/*rounds the corners*/
+	.outer-container {
+		display: flex;
+		flex-direction: column;
 	}
 	
-	/*edits the username and password inputs specifically*/
+	.content-container {
+		margin: auto;
+		height: 100%;
+		width: 40%;
+		align-items: center;
+		justify-content: center;
+		background-color: #c2c2c2;
+		display: flex;
+		flex-direction: column;
+		overflow: auto;
+	}
+
+	.subheader{
+		margin-top: auto;
+		margin-bottom: 15px;
+		display: flex;
+		width: 40%;
+		background: rgb(218, 41, 28);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+		border-radius: 10px;
+	} 
+	
+	.subheader h1{
+		color: white;
+		background: rgb(218, 41, 28);
+		text-align: center;
+	}
+
+	.logoContainer {
+		height: 25%;
+		width: 25%;
+		text-align: center;
+		margin-top: 10%;
+	}
+
+	.logoContainer img {
+		height: 100%;
+		width: 100%;
+	}
+	
+	/*this edits the login div*/
+	#signup{
+		color: white;		
+		margin-bottom: 15vh;
+		width: 50%;	
+		background-color: #333;
+		padding: 20px;		
+		border-radius: 10px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+	}
+
+	/* Edits the inputs inside of the login div */
+	#signup input{
+		padding:2%;
+		margin-bottom: 5%;
+		margin-top: 2%;
+		border-radius: 5px;
+	}
+	
+	/* Edits the username and password inputs specifically */
 	#signup #signup_username, #signup_password, #password_verification{
-		width: 60%								/*sets their width at 60%*/
+		width: 90%;
 	}
 
 	/*edits links inside of the login div*/
 	#signup a{
 		color: white;							/*sets their text to white*/
+		margin: 5px;
 	}
 	
 	/*edits the submit button on the login/signup page*/
 	#signup button{
 		padding: 10px;							/*gives the button 10 pixels of padding*/
-		border-radius: 15px;					/*rounds the corners of the button*/
+		border-radius: 10px;					/*rounds the corners of the button*/
 	}	
 
 	#userReqs, #passReqs{
+		margin-top: -4%;
+		margin-bottom: 10px;
 		font-size: 12px;
 		color: #808080;
+	}
+
+	footer {
+		background-color: #c2c2c2;
+		margin: auto;
+		width: 40%;
+		align-items: center;
+		justify-content: center;
+		background-color: #c2c2c2;
+		display: flex;
+		flex-direction: column;
+		height: 150px;
 	}
