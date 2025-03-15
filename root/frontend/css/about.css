@@ -1,17 +1,151 @@
-/*Start of About CSS*/
-	/*This edits all of the attributes of the about class*/
-	.about{
-		width: 80%;								/*This will make the width 80% of the content div*/
-		text-align: center;						/*Aligns all text in the about div to center*/
-		margin: auto;							/*Centers the div*/
-		padding: 30px;							/*adds 30 px of padding to create a border around the dive*/
-		color: white;							/*Changes the text color to white*/
-		background: #333;						/*Changes the backgroud color to the grey we've been using*/
-		border-radius: 15px;					/*Rounds the corners of the div creating the pill design*/
-		height: 80%;							/*Sets the height to 80% of the content div;*/
-	}
 	
-	.about h2, p{
-		padding: 20px;
+	/*************************/
+	/* ABOUT WEBPAGE STYLING */
+	/*************************/
+
+	.outer-container {
+		display: contents;
 	}
+
+	.content-container {
+		margin: auto;
+		height: 100%;
+		width: 40%;
+		align-items: center;
+		justify-content: center;
+		background-color: #e3e3e3;
+		border: solid #c2c2c2;
+		border-radius: 10px;
+		display: flex;
+		flex-direction: column;
+		overflow: visible;
+	}
+
+	.subheader{
+		margin-top: 2vh;
+		margin-bottom: -1vh;
+		display: flex;
+		width: 50%;
+		background: rgb(218, 41, 28);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+		border-radius: 10px;
+		border-style: none;
+		font-size: 10px;
+	} 
+	
+	.subheader h1{
+		color: white;
+		background: rgb(218, 41, 28);
+	}
+
+	.logoContainer {
+		margin-top: 0;
+	}
+
+	.logoContainer img {
+		width: 80px;
+		height: 80px;
+		margin: 5px;
+	}
+
+	.content {
+		width: 100%;
+		align-items: center;
+		justify-content: center;
+		align-content: center;
+		display:flex;
+		flex-direction: column;
+	}
+
+	.content p{
+		width: 70%;		
+		text-align: left;
+	}
+
+	.content h2 {
+		text-align: center;
+		color:rgb(40, 40, 40);
+	}
+
+	.content h3 {
+		text-align: center;
+		color:rgb(40, 40, 40);
+		display: flex;
+	}
+
+	.content ul {
+		list-style-type: none;
+		margin-top: 1vh;
+		margin-bottom: 5vh;
+	}
+
+	.content ul li {
+		background-color: rgb(218, 41, 28);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+		border-radius: 10px;
+	}
+
+	.content ul li a {
+		color: white;
+		text-decoration: none;
+		font-size: 18px;
+		padding: 20px;
+		display: block;
+		transition: 0.3s;
+		border-radius: 10px;
+	}
+
+	.content a:hover {
+		background-color: rgb(173, 36, 36);
+		border-radius: 10px;
+	}
+
+	/*edits the footer div*/
+	footer {
+		margin-top: 5vh;
+		background-color: #c2c2c2;
+		width: 100%;			
+		position: relative;		
+		min-height: 10vh;		
+		bottom: 0px;
+	}
+
+	
 	/*End of About CSS*/
+
+
+/*
+███████████████████████████████████████████████████████████████████████
+███████████████████████████████████████████████████████████████████████
+███████████████████████████████████████████████████████████████████████
+                ██      ███████████████████████████████████████████████
+               █          ██████████████████████████████████████████ ██
+              ██   █████   ██████████████████████████████████ ███ █████
+               █    ██      ███████████████████████████████████████████
+                 █████      ███████████████████████████████████████████
+               ███████      ███████████████████████████████████ ███████
+            ██████████       █████████████████████████████████ ████████
+           ██████          ████████████████████████████████████████████
+            █████  █       ████████████████████████████████████████████
+        ████     ██        ████████████████████████████████████████████
+ █   █  ██   █    █████████████████████████████████████████████████████
+███████████████████████████████████████████████████████████████ ███████
+                                               ████████████████████████
+                                          █        ██████████████ █████
+                                             █      ███████████████████
+                                      ████  █ █       ████  ███████████
+                                      ████████ █      █████████████████
+                                    ██████ █████       ███████████ ████
+                                  █████████  ██         █    ██████████
+                                      ██████████       ████████████████
+                                          ██████       ██ █████████████
+                                          ████         ████████████████
+                                        ███ ██       ██████████████████
+                                       ██      ██ ██ ███ ██████████████
+     █     ██     ██  ████ ██  ██ █ ██ ██ ██   ████████████████████████
+███████    █   █       ███    █   █   █   █ █ █  ██ █  █ █   ██████████
+███████   ██ ███ ██  █ ███  ███ █ █   █   █ █ █  ██ █  █ █ ████████████
+███████   ██ ███ ██   ████  █ █ █     █   █ █ █  ██ █    █ █  █████ ███
+      █    █   █     █   █  █ █      █ █  █ █ █  ██ █    █ █  ███      
+      ████████████████    ███████████████████████████████████████      
+*/
