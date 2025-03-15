@@ -1,9 +1,10 @@
-@media only screen and (min-width:512px){ 
+@media only screen and (min-width:600px){ 
 
 	/* Adds these attributes to the entire webpage*/
 	* {
 		margin: 0;
 		padding: 0;
+		box-sizing: border-box;
 	}
 	html, body {
 		height: 100%;
@@ -206,6 +207,30 @@
 		color:white;
 		background:grey;
 	}
+
+	h1 {
+		color:rgb(40, 40, 40);
+	}
+
+	h2 {
+		color:rgb(40, 40, 40);
+	}
+
+	h3{ 
+		color: rgb(40, 40, 40);
+	}
+
+	h4 {
+		text-align: center;
+		color:rgb(40, 40, 40);
+		margin-top: 20px;
+	}
+
+	h5 {
+		text-align: center;
+		color: rgb(40, 40, 40);
+	}
+
 
 	/*edits the footer div*/
 	footer {

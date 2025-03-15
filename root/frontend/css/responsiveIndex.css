@@ -1,0 +1,244 @@
+/* THIS IS FOR SMALLER VIEWPORTS */
+@media only screen and (max-width:600px){
+	* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+	
+	/* Body attributes */
+	body {
+		font-family: Arial, sans-serif;
+		background-color: #ecebeb;
+		display: flex;
+		flex-direction: column;
+		height: auto;
+	}
+		
+	/* Header attributes */
+	/* header includes subheader */
+	header{
+		width: 100%;
+		margin-bottom: 1rem;
+		margin-top: -80px;
+		justify-items: center;
+	}
+		
+	/* Navbar attributes */
+	nav {
+		background-color: rgb(218, 41, 28);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+		width: 100%;
+		padding: 0px 16px;
+		position: relative;
+		height: 18vh;
+		display: inline-grid;
+		justify-content: center;
+	}
+
+	nav #searchbar {
+		margin-top: 1vh;
+		width: 90%;
+		justify-self: center;
+	}
+
+	nav #login_signup {
+		background-color: rgb(218, 41, 28);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+		width: 50%;
+		border-radius: 10px;
+		justify-self: center;
+		position: relative;
+		height: 8vh;
+		margin-top: 25vh;
+		display: inline-grid;
+		align-items: center;
+		justify-content: center;
+		text-decoration: none;
+		color: white;		
+		font-size: 18px;	
+	}
+
+	nav #user-info {
+		background-color: rgb(218, 41, 28);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+		width: 50%;
+		border-radius: 10px;
+		justify-self: center;
+		position: relative;
+		height: 8vh;
+		margin-top: 25vh;
+		display: inline-grid;
+		align-items: center;
+		justify-content: center;
+		text-decoration: none;
+		color: white;		
+		font-size: 18px;	
+	}
+	
+	/* Edits unordered list that stores the links in the navbar*/
+	nav ul {
+		list-style-type: none;
+		display:flex;
+	}
+	
+	/* Edits unordered list items*/
+	nav ul li {
+		margin: 0 2vh;			/* Creates spaces on the side of each link*/
+	}
+
+	/* Edits text of the link buttons*/
+	nav ul li a {
+		color: white;
+		text-decoration: none;
+		font-size: 18px;
+		padding: 20px;
+		display: block;
+		transition: 0.3s;
+	}
+	
+	/* Edits navbar links with mouse hovering*/
+	nav a:hover {
+		background-color: rgb(173, 36, 36);
+		height: auto;
+		transition: 0.3s;
+	}	
+
+	/*this is for the div that contains the searchbar*/
+	#searcharea {
+		background-color: white; 
+		width: 40%;				
+		padding: 5px;			
+		border-radius: 15px;	
+		display: flex;			
+	}
+	
+	/* Edits the part of the searchbar you type into */
+	#searchbar{
+		background-color: white;
+		width: 50%;				
+		padding: 10px;			
+		border-radius: 15px;	
+		outline: none;			
+	}
+	
+	/* Edits subheader */
+	.subheader{
+		display:flex;
+		margin-top: 80px;
+		width: 30%;
+		justify-content: center;
+		align-content: center;
+		background: #333;		
+	} 
+	
+	/*this is to edit the attributes of the header inside the subheader, this is the text that currently just displays the name of the page*/
+	.subheader h1{
+		color: white;
+		background: #333;	
+		padding: 20px;
+		text-align: center;
+	}
+	
+	/*this edits the attributes of the content div*/
+	.homeSetContainer {
+		margin-top: 10vh; 	
+		text-align: center;	
+		display: flex;
+		flex-direction: column;
+		width: 90%;
+		align-items: center;
+		align-self: center;
+		min-height: 50vh;
+		flex: 1;
+	}
+
+	.homeSetContainer a {
+		margin-top: 20px;
+		padding: 3px 8px;
+		border-radius: 3px;
+		color: white;
+		background-color: rgb(185, 185, 185);
+	}
+	
+	/*This edits all paragraph attributes if they are in the content class*/
+	.content p{
+		width: 100%;							/*This will make the paragraphs 100% of the content width*/
+		text-align: center;						/*This will align the text inside the paragraph to center*/
+	}
+	
+	.content a{
+		margin:auto;
+	}
+
+	/*This edits the two divs of userSets and viewedSets inside of the content div*/
+	#userSets, #viewedSets{
+		width: 100%;		
+		padding: 10px;		
+		margin: 2vh;	
+		background: #e3e3e3;
+		border-radius: 10px;
+		color: black;		
+		grid-column: auto;
+		border-color:#c2c2c2;
+		border-style: solid;
+		min-height: 40vh;
+	}
+
+	.homeImageContainer img {
+		display: none;
+	}
+
+	.logoContainer {
+		margin-top: 0;
+		justify-self: center;
+		align-self: center;
+	}
+
+	.logoContainer img {
+		width: 20vh;
+		height: 20vh;
+	}
+
+	#studySetCreation{
+		margin: 25px;
+		padding: 15px;
+		border-radius: 15px;
+		color:white;
+		background:grey;
+	}
+
+	h1 {
+		color:rgb(40, 40, 40);
+	}
+
+	h2 {
+		color:rgb(40, 40, 40);
+	}
+
+	h3{ 
+		color: rgb(40, 40, 40);
+	}
+
+	h4 {
+		text-align: center;
+		color:rgb(40, 40, 40);
+		margin-top: 20px;
+	}
+
+	h5 {
+		text-align: center;
+		color: rgb(40, 40, 40);
+	}
+
+	/*edits the footer div*/
+	footer {
+		text-align: center;
+		color: white;
+		background-color: #c2c2c2;	
+		width: 100%;
+		position: relative;
+		height: 25vh;
+		margin-top: 10vh;
+	}
+}
