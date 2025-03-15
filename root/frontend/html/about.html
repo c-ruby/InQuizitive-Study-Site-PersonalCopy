@@ -4,57 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inquisitive | About</title>
-    <link rel="stylesheet" href="../css/index.css">
+	<link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="../css/about.css">
     <link rel="stylesheet" href="../css/responsiveIndex.css">
     <link rel="icon" type="image/png" href="../images/logo.png">
 	<style>
         /* Hide the elements initially */
-        #login_signup, #user-info {
+        #user-info {
             display: none;
         }
     </style>
 </head>
-<body>	
-	<nav>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="explore.html">Explore</a></li>
-            <li><a href="about.html">About</a></li>
-        </ul>
-        <input type="text" placeholder="search.." id="searchbar" onkeypress="clickPress(event)">
-        <a id="login_signup" href="login.html">Login/Sign Up</a>
-        <a id="user-info" href="profile.html" style="display: none;"></a> <!-- invisible userInfo -->
-    </nav>
+<body>
+	<div class = "outer-container">
+		<div class="logoContainer">
+			<img src="../images/logo.png">
+		</div>
+		<nav>
+    	    <ul>
+    	        <li><a href="index.html">Home</a></li>
+    	        <li><a href="explore.html">Explore</a></li>
+    	        <li><a href="about.html">About</a></li>
+    	    </ul>
+    	    <input type="text" placeholder="search.." id="searchbar" onkeypress="clickPress(event)">
+    	    <a id="login_signup" href="login.html">Login/Sign Up</a>
+    	    <a id="user-info" href="profile.html" style="display: none;"></a> <!-- invisible userInfo -->
+    	</nav>
+	</div>
 
-	<div class="logoContainer">
-        <img src="../images/logo.png">
-    </div>
-
-	<header>
+	<div class="content-container">
 		<div class="subheader">
 			<h1>About Inquisitive</h1>
 		</div>
-	</header>
-    <div class="content">
-		<div class="about">
+
+		<div class="content">
 			<h2>About the Project</h2>
 			<p>
-				The Inquisitive Study Site (ISS) exists to provide a safe, free, and accessible learning and study environment to students who are looking to further educate themselves
+				&emsp;&emsp;&emsp;The Inquisitive Study Site (ISS) exists to provide a safe, free, and accessible learning and study environment to students who are looking to further educate themselves
 				on a given topic. The project will be continually worked on for the next 14 to 15 weeks, and wll receive many updates, following a rough gantt chart timeline.
+				This project is meant to combat the "paywall products" of the modern age, providing a similar but distinct enough service to satisfy a given user's needs, all within the capabilities of the website of course.
 			</p>
+
 			<h2>About the Team</h2>
 			<p>
-				Consisting of 4 members, Caleb Ruby, Caleb Rachocki, Caleb Massey, and Ibrahim Alani, the team working on the ISS is dedicated to the performance, appearance, functionality, and friendliness of the project. 
+				&emsp;&emsp;&emsp;Consisting of 4 members, Caleb Ruby, Caleb Rachocki, Caleb Massey, and Ibrahim Alani, the team working on the ISS is dedicated to the performance, appearance, functionality, and friendliness of the project. 
 				We are continuing to work on the project, and are open to feedback and user criticisms, both requested and unrequested. 
 				All 4 members of the team are experienced in different aspects of computing, whether it be hardware or software. 
 				This project serves as a "Magnum Opus" for our college careers, applying as much as we can from our experiences over the last 4 years. 
 				Our desire overall is to put forth our best effort in making the ISS everything we would like it to be.
+				We have experienced poor resources and services in our academic years; we ultimately desire to make a difference.
 			</p>
+
+			<h2>
+				Progress Reports
+			</h2>
+
+			<ul><li><a href="https://students.pennwest.edu/mas9309/">Weekly Reports Available Here!</a></li></ul>
+			
 		</div>
-    </div>
-	<footer>
-		
-	</footer>
+	</div>
+
+	<footer></footer>
+	
 	<script src="../js/myscript.js"></script>
 	<script src="../js/searchBar.js"></script>
 </body>
