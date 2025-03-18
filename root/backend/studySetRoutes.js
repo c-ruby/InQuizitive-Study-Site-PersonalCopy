@@ -16,22 +16,34 @@ module.exports = function(app, db)
       });
     });
   
-    // Route to add a study set
-    app.post('/study-sets', (req, res) => {
-      const username = req.session.user.username;
-      if (!username) {
-          return res.status(401).json({ error: 'Unauthorized' });
-      }
-  
-      const { set_name } = req.body;
-      const query = 'INSERT INTO StudySets (username, set_name) VALUES (?, ?)';
-      db.query(query, [username, set_name], (err, result) => {
-          if (err) {
-              return res.status(500).json({ error: err.message });
-          }
-          res.status(201).json({ id: result.insertId, set_name });
-      });
+   // Route to add a study set
+app.post('/study-sets', (req, res) => {
+    const username = req.session.user.username;
+    if (!username) {
+        return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const { set_name, category } = req.body;
+    
+    // Validate the category input (optional, to ensure valid categories)
+    const validCategories = [
+        "Math", "Natural Science", "Tech Science", "History",
+        "Social Sciences", "Language", "Test Prep", "Other"
+    ];
+    if (!validCategories.includes(category)) {
+        return res.status(400).json({ error: 'Invalid category' });
+    }
+
+    // Insert set_name and category into the database
+    const query = 'INSERT INTO StudySets (username, set_name, category) VALUES (?, ?, ?)';
+    db.query(query, [username, set_name, category], (err, result) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+        res.status(201).json({ id: result.insertId, set_name, category });
     });
+});
+
   
     // Route to add terms to a set
     app.post('/study-sets/:set_id/terms', (req, res) => {

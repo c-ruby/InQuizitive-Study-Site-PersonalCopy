@@ -78,17 +78,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // Fetch and display study sets on page load
     fetchStudySets();
 
+
     // Function to handle new study set creation
     const createStudySetForm = document.getElementById('createStudySetForm');
     createStudySetForm.addEventListener('submit', function(event) {
         event.preventDefault();
+
         const setTitle = document.getElementById('setTitle').value;
+        const category = document.getElementById('category').value;
+
+        // Validate category selection
+        if (!category) {
+            alert('Please select a category.');
+            return;
+        }
+
+        // Send setTitle and category to the server
         fetch('/study-sets', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ set_name: setTitle })
+            body: JSON.stringify({ set_name: setTitle, category })
         })
         .then(response => response.json())
         .then(data => {

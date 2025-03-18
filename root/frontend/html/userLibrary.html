@@ -44,9 +44,24 @@
                 <h2>Create New Study Set</h2>
                 <form id="createStudySetForm">
                     <label for="setTitle">Set Title:</label>
-                    <input type="text" id="setTitle" name="setTitle" required>
+                    <input type="text" id="setTitle" name="setTitle" required><br><br>
+                
+                    <label for="category">Category:</label>
+                    <select id="category" name="category" required>
+                        <option value="">--Select a Category--</option>
+                        <option value="Math">Math</option>
+                        <option value="Natural Science">Natural Science</option>
+                        <option value="Tech Science">Tech Science</option>
+                        <option value="History">History</option>
+                        <option value="Social Sciences">Social Sciences</option>
+                        <option value="Language">Language</option>
+                        <option value="Test Prep">Test Prep</option>
+                        <option value="Other">Other</option>
+                    </select><br><br>
+                
                     <button type="submit">Create Set</button>
                 </form>
+                
             </section>
         </div>
 
