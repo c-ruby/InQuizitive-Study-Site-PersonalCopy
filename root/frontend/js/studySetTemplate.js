@@ -5,6 +5,60 @@ study set templates and their features
 should be placed in this file
 */
 
+//-------user-auth---------//
+let auth = false; // Authorization flag
+let studySetUser = null; // creator of current study set 
+let currentUser = null; // logged in user
+
+function checkEditAuth() {
+    fetch('/check-auth')
+        .then(response => response.json())
+        .then(data => {
+            if (!data.loggedIn) {
+                // If user is not logged in
+                auth = false;
+            } else {
+                // If user is logged in
+                currentUser = data.username;
+
+                // Find the user that made the study set
+                const studySetId = new URLSearchParams(window.location.search).get('id');
+                fetch(`/study-set-info/${studySetId}`) 
+                    .then(response => response.json())
+                    .then(data => {
+                        studySetUser = data.username;
+
+                        // If set creator username matches current username
+                        auth = currentUser === studySetUser;
+
+                        // Log after resolving async calls
+                        console.log("Logged in User:", currentUser);
+                        console.log("StudySet Creator:", studySetUser);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching study set details:', error);
+                    });
+            }
+        })
+        .catch(error => {
+            console.error('Error checking authentication:', error);
+        });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    checkEditAuth(); // Call function
+
+    // Note: Logs below may execute before async operations finish
+    setTimeout(() => {
+        console.log("Final Auth Status:", auth);
+    }, 1000); // Delay to wait for async calls
+});
+
+
+
+
+
+
 // ------------ STUDY SET TABLE ------------ //
 /*
 This is simply to clone the rows on the study set template page

@@ -58,7 +58,23 @@ module.exports = function(app, db)
       });
     });
   
-    // Route to get study set details by ID
+    //get study set infor from set ID 
+    app.get('/study-set-info/:studySetId', (req, res) => {
+        const { studySetId } = req.params;
+        const query = 'SELECT * FROM StudySets WHERE set_id = ?';
+        db.query(query, [studySetId], (err, result) => {
+            if (err) {
+                console.error('Database query error:', err);
+                return res.status(500).json({ error: err.message });
+            }
+            if (result.length === 0) {
+                return res.status(404).json({ message: 'Study set not found' });
+            }
+            res.status(200).json(result[0]);
+        });
+      });
+
+    // Route to get study set name by ID
     app.get('/study-sets/:studySetId', (req, res) => {
       const { studySetId } = req.params;
       const query = 'SELECT set_name FROM StudySets WHERE set_id = ?';

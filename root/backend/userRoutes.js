@@ -31,6 +31,8 @@ module.exports = function(app, db)
     }
   });
 
+
+
   // Route to check for the presence of a user account in the database
   app.post('/check-username', async (req, res) => {
     const { username } = req.body;
