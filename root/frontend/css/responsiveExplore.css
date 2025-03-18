@@ -1,8 +1,20 @@
-@media only screen and (min-width:600px){ 
+/* THIS IS FOR SMALLER VIEWPORTS */
+@media only screen and (max-width:600px){
+	
+	/**************************************/
+	/* RESPONSIVE EXPLORE WEBPAGE STYLING */
+	/**************************************/
 
     .subheader {
         margin:auto;
-        margin-top: 6vh;
+        margin-top: 20vh;
+		display: flex;
+		width: 70%;
+		background: rgb(218, 41, 28);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+		border-radius: 5px;
+		border-style: none;
+		font-size: 10px;
     }
 
     #exploreSearchbar {
@@ -30,7 +42,9 @@
         padding: 10px 0;
         position: fixed;
         width: 100%;
-        bottom: 0;
+        bottom: -15vh;
     }
+
+
 
 }

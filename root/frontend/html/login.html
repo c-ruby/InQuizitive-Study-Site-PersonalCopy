@@ -7,12 +7,10 @@
     <link rel="stylesheet" href="../css/index.css">
     <link rel="stylesheet" href="../css/login.css">
     <link rel="stylesheet" href="../css/responsiveIndex.css">
+    <link rel="stylesheet" href="../css/responsiveLogin.css">
     <link rel="icon" type="image/png" href="../images/logo.png">
     <style>
-        /* Hide the elements initially 
-        
-            the reason I hide both is to stop the website from flashing "login/signup" when switching tabs
-        */
+        /* Hide the elements initially */
         #login_signup, #user-info {
             display: none;
         }
@@ -29,12 +27,11 @@
             </ul>
             <input type="text" placeholder="search.." id="searchbar" onkeypress="clickPress(event)">
             <a id="login_signup" href="login.html">Login/Sign Up</a>
-            <a id="user-info" href="profile.html" style="display: none;"></a> <!-- invisible userInfo -->
+            <span id="user-info" href="profile.html" style="display: none;"></span> <!-- invisible userInfo -->
         </nav>
     </div>
 
     <div class="content-container">
-        
         <div class="logoContainer">
             <img src="../images/logo.png">
         </div>

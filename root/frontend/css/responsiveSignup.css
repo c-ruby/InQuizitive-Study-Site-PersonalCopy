@@ -1,8 +1,19 @@
-@media only screen and (min-width:600px){ 
+/* THIS IS FOR SMALLER VIEWPORTS */
+@media only screen and (max-width:600px){
 
-	/**************************/
-	/* SIGNUP WEBPAGE STYLING */
-	/**************************/
+	/*************************************/
+	/* RESPONSIVE SIGNUP WEBPAGE STYLING */
+	/*************************************/
+
+    nav #login_signup, #user-info {
+        display: none;
+    }
+
+    nav #searchbar {
+        margin-bottom: 5vh;
+		width: 90%;
+		justify-self: center;
+	}
 
 	.outer-container {
 		display: flex;
@@ -12,7 +23,7 @@
 	.content-container {
 		margin: auto;
 		height: 100%;
-		width: 40%;
+		width: 90%;
 		align-items: center;
 		justify-content: center;
 		background-color: #e3e3e3;
@@ -24,10 +35,10 @@
 	}
 
 	.subheader{
-		margin-top: auto;
+        margin-top: auto;
 		margin-bottom: 15px;
 		display: flex;
-		width: 40%;
+		width: 70%;
 		background: rgb(218, 41, 28);
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 		border-radius: 10px;
@@ -37,27 +48,14 @@
 	
 	.subheader h1{
 		color: white;
-		background: rgb(218, 41, 28);
 		text-align: center;
 	}
 
-	.logoContainer {
-		height: 25%;
-		width: 25%;
-		text-align: center;
-		margin-top: 12vh;
-	}
-
-	.logoContainer img {
-		height: 100%;
-		width: 100%;
-	}
-	
 	/*this edits the login div*/
 	#signup{
 		color: white;		
 		margin-bottom: 15vh;
-		width: 50%;	
+		width: 80%;	
 		background-color: #333;
 		padding: 20px;		
 		border-radius: 10px;
@@ -104,12 +102,13 @@
 		border-left: solid #c2c2c2;
 		border-right: solid #c2c2c2;
 		margin: auto;
-		width: 40%;
+		width: 90%;
 		align-items: center;
 		justify-content: center;
 		display: flex;
 		flex-direction: column;
 		height: 150px;
 	}
+
 
 }
