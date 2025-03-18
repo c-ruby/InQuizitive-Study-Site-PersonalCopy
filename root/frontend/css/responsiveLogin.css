@@ -1,18 +1,29 @@
-@media only screen and (min-width:600px){ 
+/* THIS IS FOR SMALLER VIEWPORTS */
+@media only screen and (max-width:600px){
 
-	/**************************/
-	/* SIGNUP WEBPAGE STYLING */
-	/**************************/
+	/************************************/
+	/* RESPONSIVE LOGIN WEBPAGE STYLING */
+	/************************************/
+
+    nav #login_signup, #user-info {
+        display: none;
+    }
+
+    nav #searchbar {
+        margin-bottom: 5vh;
+		width: 90%;
+		justify-self: center;
+	}
 
 	.outer-container {
 		display: flex;
 		flex-direction: column;
 	}
-	
+
 	.content-container {
 		margin: auto;
 		height: 100%;
-		width: 40%;
+		width: 90%;
 		align-items: center;
 		justify-content: center;
 		background-color: #e3e3e3;
@@ -27,7 +38,7 @@
 		margin-top: auto;
 		margin-bottom: 15px;
 		display: flex;
-		width: 40%;
+		width: 70%;
 		background: rgb(218, 41, 28);
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 		border-radius: 10px;
@@ -37,66 +48,46 @@
 	
 	.subheader h1{
 		color: white;
-		background: rgb(218, 41, 28);
 		text-align: center;
 	}
 
-	.logoContainer {
-		height: 25%;
-		width: 25%;
-		text-align: center;
-		margin-top: 12vh;
-	}
-
-	.logoContainer img {
-		height: 100%;
-		width: 100%;
-	}
-	
 	/*this edits the login div*/
-	#signup{
+	#login{
 		color: white;		
 		margin-bottom: 15vh;
-		width: 50%;	
+		width: 80%;	
 		background-color: #333;
 		padding: 20px;		
 		border-radius: 10px;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-		text-align: center;
+		text-align: center;	
 	}
 
 	/* Edits the inputs inside of the login div */
-	#signup input{
+	#login input{
 		padding:2%;
 		margin-bottom: 5%;
 		margin-top: 2%;
 		border-radius: 5px;
 	}
 	
-	/* Edits the username and password inputs specifically */
-	#signup #signup_username, #signup_password, #password_verification{
+	/*edits the username and password inputs specifically*/
+	#login #username, #password{
 		width: 90%;
 	}
 
 	/*edits links inside of the login div*/
-	#signup a{
-		color: white;							/*sets their text to white*/
+	#login a{
+		color: white;
 		margin: 5px;
 	}
 	
 	/*edits the submit button on the login/signup page*/
-	#signup button{
-		padding: 10px;							/*gives the button 10 pixels of padding*/
-		border-radius: 10px;					/*rounds the corners of the button*/
-	}	
-
-	#userReqs, #passReqs{
-		margin-top: -4%;
-		margin-bottom: 10px;
-		font-size: 12px;
-		color: #808080;
+	#login button{
+		padding: 10px;
+		border-radius: 10px;
 	}
 
 	footer {
@@ -104,7 +95,7 @@
 		border-left: solid #c2c2c2;
 		border-right: solid #c2c2c2;
 		margin: auto;
-		width: 40%;
+		width: 90%;
 		align-items: center;
 		justify-content: center;
 		display: flex;

@@ -1,5 +1,10 @@
 /* THIS IS FOR SMALLER VIEWPORTS */
 @media only screen and (max-width:600px){
+
+	/************************************/
+	/* RESPONSIVE INDEX WEBPAGE STYLING */
+	/************************************/
+
 	* {
 		margin: 0;
 		padding: 0;
@@ -136,7 +141,6 @@
 	/*this is to edit the attributes of the header inside the subheader, this is the text that currently just displays the name of the page*/
 	.subheader h1{
 		color: white;
-		background: #333;	
 		padding: 20px;
 		text-align: center;
 	}
@@ -209,27 +213,13 @@
 		background:grey;
 	}
 
-	h1 {
-		color:rgb(40, 40, 40);
-	}
-
-	h2 {
-		color:rgb(40, 40, 40);
-	}
-
-	h3{ 
-		color: rgb(40, 40, 40);
-	}
-
 	h4 {
 		text-align: center;
-		color:rgb(40, 40, 40);
 		margin-top: 20px;
 	}
 
 	h5 {
 		text-align: center;
-		color: rgb(40, 40, 40);
 	}
 
 	/*edits the footer div*/
