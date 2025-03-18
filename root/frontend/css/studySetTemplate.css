@@ -54,6 +54,10 @@ td {
     border-radius: 15px;
 }
 
+#Quiz h1{
+	color: white;
+}
+
 #quiz-QA-selector{
     padding: 15px;
     
@@ -82,9 +86,15 @@ td {
     transition: opacity 2s;
     text-align: center;
     border-radius: 15px;
+	color: white;
+}
+
+#flashcardText{
+	color: white;
 }
 
 /*the color that the card will change when you click it */
+
 .clicked {
     background-color: #535353; 
 }
@@ -114,6 +124,10 @@ td {
     opacity: 1;
     transition: opacity 2s;
     
+}
+
+.content{
+	align-items: normal;
 }
 
 #flashCardTextHolder{

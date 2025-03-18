@@ -261,108 +261,113 @@ function generate_quiz(){
 	//randomizes the quiz questions
 	QuestionHandler();
 
-	
-	while(qcount != oequestions){
-		
-		randomQuestion = getRandomNumber(0, correct_questions.length-1);
-		
-		
-		//adds question label and text input
-		questionLbl = document.createElement("label");
-		questionLbl.innerHTML = "term: " + document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML + '&nbsp';
-		questionLbl.id = "OE"+qcount;
-		formforquiz.appendChild(questionLbl);
-		
-		//generates the actual radio input
-		questionAnswer = document.createElement("input");
-		questionAnswer.type = 'text';
-		questionAnswer.name = 'OE' + qcount;
-		questionAnswer.id = "OE"+qcount+"A";
-		questionAnswer.classList.add("quizOption");
-		formforquiz.appendChild(questionAnswer);
+	if(termCount>0){
+		while(qcount != oequestions){
 			
-		formforquiz.appendChild(document.createElement("br"));
-		formforquiz.appendChild(document.createElement("br"));
+			randomQuestion = getRandomNumber(0, correct_questions.length-1);
 			
-		oe_questions.push(document.getElementById("answer"+correct_questions.at(randomQuestion)));	
-		
-		qcount++;
+			
+			//adds question label and text input
+			questionLbl = document.createElement("label");
+			questionLbl.innerHTML = "term: " + document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML + '&nbsp';
+			questionLbl.id = "OE"+qcount;
+			formforquiz.appendChild(questionLbl);
+			
+			//generates the actual radio input
+			questionAnswer = document.createElement("input");
+			questionAnswer.type = 'text';
+			questionAnswer.name = 'OE' + qcount;
+			questionAnswer.id = "OE"+qcount+"A";
+			questionAnswer.classList.add("quizOption");
+			formforquiz.appendChild(questionAnswer);
+				
+			formforquiz.appendChild(document.createElement("br"));
+			formforquiz.appendChild(document.createElement("br"));
+				
+			oe_questions.push(document.getElementById("answer"+correct_questions.at(randomQuestion)));	
+			
+			qcount++;
+		}
 	}
+	
 	qcount = 0;
 	
 	//--------------------- True or False Question generation --------------------------//
 	
 	QuestionHandler();
 	
-	while(qcount != tfquestions){
-		randomQuestion = getRandomNumber(0, correct_questions.length-1);
-		currentQuestion = correct_questions.at(randomQuestion);
-		tfflag = getRandomNumber(0, 1);
-		
-		//adds term label
-		questionLbl = document.createElement("label");
-		questionLbl.innerHTML = "Term: ";
-		formforquiz.appendChild(questionLbl);
-		
-		questionLbl = document.createElement("label");
-		questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML;
-		questionLbl.id = "TFT"+qcount;
-		formforquiz.appendChild(questionLbl);
-		formforquiz.appendChild(document.createElement("br"));
-		
-		tf_questions.push(currentQuestion);
-		
-		if(tfflag == 0){
+	if(termCount>0){
+			while(qcount != tfquestions){
 			randomQuestion = getRandomNumber(0, correct_questions.length-1);
 			currentQuestion = correct_questions.at(randomQuestion);
-		}
-		
-		//adds definition label
-		questionLbl = document.createElement("label");
-		questionLbl.innerHTML = "Defintion: ";
-		formforquiz.appendChild(questionLbl);
-		
-		questionLbl = document.createElement("label");
-		questionLbl.innerHTML = document.getElementById("answer"+correct_questions.at(randomQuestion)).innerHTML;
-		questionLbl.id = "TFD"+qcount;
-		formforquiz.appendChild(questionLbl);
-		formforquiz.appendChild(document.createElement("br"));
-		
-		for(var i=0; i<2; i++){
+			tfflag = getRandomNumber(0, 1);
 			
-			//adds question label
+			//adds term label
 			questionLbl = document.createElement("label");
-			if(i==0){
-				questionLbl.innerHTML = "T: ";
-			}
-			else{
-				questionLbl.innerHTML = "F: ";
-			}
-			
+			questionLbl.innerHTML = "Term: ";
 			formforquiz.appendChild(questionLbl);
 			
-			//generates the actual radio input
-			questionAnswer = document.createElement("input");
-			questionAnswer.type = 'radio';
-			questionAnswer.name = 'TF' + qcount;
-			questionAnswer.id = "TF"+qcount+"A"+i;
-			questionAnswer.classList.add("quizOption");
-			formforquiz.appendChild(questionAnswer);
-		}
-		
+			questionLbl = document.createElement("label");
+			questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML;
+			questionLbl.id = "TFT"+qcount;
+			formforquiz.appendChild(questionLbl);
+			formforquiz.appendChild(document.createElement("br"));
 			
-		if(document.getElementById("TFT"+qcount).innerHTML == document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML){
-			document.getElementById("TF"+qcount+"A"+0).classList.add("correct_response");
+			tf_questions.push(currentQuestion);
+			
+			if(tfflag == 0){
+				randomQuestion = getRandomNumber(0, correct_questions.length-1);
+				currentQuestion = correct_questions.at(randomQuestion);
+			}
+			
+			//adds definition label
+			questionLbl = document.createElement("label");
+			questionLbl.innerHTML = "Defintion: ";
+			formforquiz.appendChild(questionLbl);
+			
+			questionLbl = document.createElement("label");
+			questionLbl.innerHTML = document.getElementById("answer"+correct_questions.at(randomQuestion)).innerHTML;
+			questionLbl.id = "TFD"+qcount;
+			formforquiz.appendChild(questionLbl);
+			formforquiz.appendChild(document.createElement("br"));
+			
+			for(var i=0; i<2; i++){
+				
+				//adds question label
+				questionLbl = document.createElement("label");
+				if(i==0){
+					questionLbl.innerHTML = "T: ";
+				}
+				else{
+					questionLbl.innerHTML = "F: ";
+				}
+				
+				formforquiz.appendChild(questionLbl);
+				
+				//generates the actual radio input
+				questionAnswer = document.createElement("input");
+				questionAnswer.type = 'radio';
+				questionAnswer.name = 'TF' + qcount;
+				questionAnswer.id = "TF"+qcount+"A"+i;
+				questionAnswer.classList.add("quizOption");
+				formforquiz.appendChild(questionAnswer);
+			}
+			
+				
+			if(document.getElementById("TFT"+qcount).innerHTML == document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML){
+				document.getElementById("TF"+qcount+"A"+0).classList.add("correct_response");
+			}
+			else{
+				document.getElementById("TF"+qcount+"A"+1).classList.add("correct_response");
+			}
+			
+			formforquiz.appendChild(document.createElement("br"));
+			formforquiz.appendChild(document.createElement("br"));
+			
+			qcount++;
 		}
-		else{
-			document.getElementById("TF"+qcount+"A"+1).classList.add("correct_response");
-		}
-		
-		formforquiz.appendChild(document.createElement("br"));
-		formforquiz.appendChild(document.createElement("br"));
-		
-		qcount++;
 	}
+	
 	
 	
 	
@@ -375,31 +380,39 @@ function generate_quiz(){
 }
 
 function quizCheck() {
+	var termCount = getRowCount()-1;
     var total = totalQuestions;
     var correctAnswered = 0;
 	var questionIterator = 0;
 	var iterator = 0;
-    // Select all input elements with the class 'quizOption'
-    const inputs = document.querySelectorAll('.quizOption');
-    let selected = false;
-
-    // Iterate through each input element and check if it is selected
-    inputs.forEach(input => {
-        if (input.checked) {
-            selected = true;
-            if (input.classList.contains("correct_response")) {
-                correctAnswered++;
-            }
-        }
-    });
 	
-	//open ended check
-	while(iterator != oequestions){
-		if(document.getElementById("OE"+iterator+"A").value === oe_questions[iterator].textContent){
-			correctAnswered++;
-		}
-		iterator++
+	if(termCount == 0){
+		enableSSaction();
 	}
+	else{
+		 // Select all input elements with the class 'quizOption'
+		const inputs = document.querySelectorAll('.quizOption');
+		let selected = false;
+
+		// Iterate through each input element and check if it is selected
+		inputs.forEach(input => {
+			if (input.checked) {
+				selected = true;
+				if (input.classList.contains("correct_response")) {
+					correctAnswered++;
+				}
+			}
+		});
+		
+		//open ended check
+		while(iterator != oequestions){
+			if(document.getElementById("OE"+iterator+"A").value === oe_questions[iterator].textContent){
+				correctAnswered++;
+			}
+			iterator++
+		}
+	}
+   
 	
     
 	correctAnswered = correctAnswered/total*100;
@@ -465,6 +478,10 @@ function flashCards(){
 			else{
 				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
 			}
+			
+			if(flashcardTextholder.classList.contains('clicked')){
+				flashcardTextholder.classList.toggle('clicked');
+			}
 		}
 		
 		//adds the onclick function to the back button
@@ -477,6 +494,9 @@ function flashCards(){
 			else{
 				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
 			}
+			if(flashcardTextholder.classList.contains('clicked')){
+				flashcardTextholder.classList.toggle('clicked');
+			}
 		}
 		
 		//this does the "flipping" of the flashcards
@@ -487,6 +507,7 @@ function flashCards(){
 			else{
 				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
 			}
+			
 			// Toggle the 'clicked' class to change the background color
             flashcardTextholder.classList.toggle('clicked');	
 		}
