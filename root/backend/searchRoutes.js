@@ -1,28 +1,41 @@
 module.exports = function(app, db) {
     // Basic title search route using POST method
     app.post('/study-sets/search', (req, res) => {
-        const { set_name } = req.body;
-        console.log('Search query:', set_name);  // Print the search query
-
-        const sql = `
-            SELECT * FROM StudySets
-            WHERE set_name LIKE ?
-            ORDER BY set_name;
-        `;
-
+        let { set_name, categories } = req.body;
+    
+        // Ensure `categories` is an array or fallback to a default array
+        if (!Array.isArray(categories)) {
+            categories = []; // Default to empty array
+        }
+    
         const wildcardQuery = `%${set_name}%`;
-        //console.log('Full query:', sql, 'with parameter:', wildcardQuery);  // Print the full query and parameter
-
-        db.query(sql, [wildcardQuery], (err, results) => {
+    
+        let sql = `
+            SELECT * 
+            FROM StudySets
+            WHERE set_name LIKE ?
+        `;
+    
+        const params = [wildcardQuery];
+    
+        // Add the category filter only if categories are selected
+        if (categories.length > 0) {
+            sql += ` AND category IN (${categories.map(() => '?').join(', ')})`;
+            params.push(...categories); // Bind category values dynamically
+        }
+    
+        sql += ' ORDER BY set_name';
+    
+        // Execute the query
+        db.query(sql, params, (err, results) => {
             if (err) {
                 console.error('Database query error:', err.message);
                 return res.status(500).json({ error: err.message });
             }
-            //console.log('Query results:', results);  // Print the query results
-            if (results.length === 0) {
-                return res.status(200).json([]); // Return an empty array if no results found
-            }
-            res.status(200).json(results);
+            res.status(200).json(results.length ? results : []);
         });
     });
+    
+    
+    
 };
