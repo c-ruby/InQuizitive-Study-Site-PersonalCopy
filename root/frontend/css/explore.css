@@ -33,4 +33,49 @@
         bottom: 0;
     }
 
+
+/*example css for the category search options*/
+    #popupOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    #popupMenu {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 300px;
+        text-align: center;
+    }
+    
+    #categories {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    #openPopupBtn {
+        margin: 5px auto;
+        padding: 10px;
+        width: 80%;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        background: rgb(126, 126, 126);
+    }
+    
+    #openPopupBtn:hover {
+        background-color: #5c5c5c;
+    }
+    
 }

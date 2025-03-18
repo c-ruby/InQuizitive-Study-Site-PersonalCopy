@@ -41,6 +41,31 @@
 		</div>
 	</header>
 	
+    
+    <!--  Search Filtering and options   -->
+      <!-- Category Filters -->
+      <div id="popupOverlay" style="display: none;">
+        <div id="popupMenu">
+            <h3>Select Categories</h3>
+            <div id="categories">
+                <label><input type="checkbox" class="category-checkbox" value="Math"> Math</label>
+                <label><input type="checkbox" class="category-checkbox" value="Natural Science"> Natural Science</label>
+                <label><input type="checkbox" class="category-checkbox" value="Tech Science"> Tech Science</label>
+                <label><input type="checkbox" class="category-checkbox" value="History"> History</label>
+                <label><input type="checkbox" class="category-checkbox" value="Social Sciences"> Social Sciences</label>
+                <label><input type="checkbox" class="category-checkbox" value="Language"> Language</label>
+                <label><input type="checkbox" class="category-checkbox" value="Test Prep"> Test Prep</label>
+                <label><input type="checkbox" class="category-checkbox" value="Other"> Other</label>
+            </div>
+            <button id="selectAllBtn">Select All</button>
+            <button id="deselectAllBtn">Deselect All</button>
+            <button id="applyFiltersBtn">Apply</button>
+            <button id="closePopupBtn">Close</button>
+        </div>
+    </div>
+    <button id="openPopupBtn">Filter Categories</button>
+
+    
     <input type="text" id="exploreSearchbar" placeholder="Search...">
 
     <div id="searchResult"></div>

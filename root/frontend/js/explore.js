@@ -87,3 +87,51 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+//handle the category selector 
+document.addEventListener('DOMContentLoaded', () => {
+    const popupOverlay = document.getElementById('popupOverlay');
+    const openPopupBtn = document.getElementById('openPopupBtn');
+    const closePopupBtn = document.getElementById('closePopupBtn');
+    const selectAllBtn = document.getElementById('selectAllBtn');
+    const deselectAllBtn = document.getElementById('deselectAllBtn');
+    const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+    const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
+
+    // Open the popup
+    openPopupBtn.addEventListener('click', () => {
+        popupOverlay.style.display = 'flex';
+    });
+
+    // Close the popup
+    closePopupBtn.addEventListener('click', () => {
+        popupOverlay.style.display = 'none';
+    });
+
+    // Select All Categories
+    selectAllBtn.addEventListener('click', () => {
+        categoryCheckboxes.forEach(checkbox => {
+            checkbox.checked = true;
+        });
+    });
+
+    // Deselect All Categories
+    deselectAllBtn.addEventListener('click', () => {
+        categoryCheckboxes.forEach(checkbox => {
+            checkbox.checked = false;
+        });
+    });
+
+    // Apply Filters (optional: log selected categories)
+    applyFiltersBtn.addEventListener('click', () => {
+        const selectedCategories = Array.from(categoryCheckboxes)
+            .filter(checkbox => checkbox.checked)
+            .map(checkbox => checkbox.value);
+        console.log('Selected Categories:', selectedCategories);
+
+        // Optionally pass these categories to your search function
+        // fetchSearchResultsWithCategories(selectedCategories);
+
+        popupOverlay.style.display = 'none'; // Close popup after applying
+    });
+});
