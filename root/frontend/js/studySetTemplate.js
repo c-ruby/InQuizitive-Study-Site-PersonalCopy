@@ -659,12 +659,18 @@ function flashCards(){
 		const deleteBtn = document.createElement('button');
 		deleteBtn.textContent = 'Delete';
 		deleteBtn.classList.add('delete-button'); // Add class for selection
+		if (!auth) {
+			deleteBtn.classList.add('hidden'); // Immediately hide if not authorized
+		}
 		deleteBtn.onclick = () => deleteTerm(row, termId);
 		actionCell.appendChild(deleteBtn);
 
 		const editBtn = document.createElement('button');
 		editBtn.textContent = 'Edit';
 		editBtn.classList.add('edit-button'); // Add class for selection
+		if (!auth) {
+			editBtn.classList.add('hidden'); // Immediately hide if not authorized
+		}
 		editBtn.onclick = () => makeRowEditable(row);
 		actionCell.appendChild(editBtn);
 

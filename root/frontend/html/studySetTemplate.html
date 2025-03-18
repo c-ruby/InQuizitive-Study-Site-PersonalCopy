@@ -63,6 +63,12 @@
         </div>
     </div>
     <footer id="SSfooter"></footer>
+    <script>
+        if (!auth) {
+            termForm.classList.add('hidden'); // Immediately hide if not authorized
+        }
+
+    </script>
     <script src="../js/myscript.js"></script>
     <script src="../js/studySetTemplate.js"></script>
     <script src="../js/searchBar.js"></script>
