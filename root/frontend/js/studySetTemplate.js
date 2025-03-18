@@ -10,56 +10,87 @@ let auth = false; // Authorization flag
 let studySetUser = null; // creator of current study set 
 let currentUser = null; // logged in user
 
-function checkEditAuth() {
-    fetch('/check-auth')
-        .then(response => response.json())
-        .then(data => {
-            if (!data.loggedIn) {
-                // If user is not logged in
-                auth = false;
-            } else {
-                // If user is logged in
-                currentUser = data.username;
+async function checkEditAuth() {
+    try {
+        // Fetch user authentication status
+        const authResponse = await fetch('/check-auth');
+        const authData = await authResponse.json();
 
-                // Find the user that made the study set
-                const studySetId = new URLSearchParams(window.location.search).get('id');
-                fetch(`/study-set-info/${studySetId}`) 
-                    .then(response => response.json())
-                    .then(data => {
-                        studySetUser = data.username;
+        if (!authData.loggedIn) {
+            auth = false; // User is not logged in
+        } else {
+            currentUser = authData.username;
 
-                        // If set creator username matches current username
-                        auth = currentUser === studySetUser;
+            // Fetch the study set information
+            const studySetId = new URLSearchParams(window.location.search).get('id');
+            const studySetResponse = await fetch(`/study-set-info/${studySetId}`);
+            const studySetData = await studySetResponse.json();
 
-                        // Log after resolving async calls
-                        console.log("Logged in User:", currentUser);
-                        console.log("StudySet Creator:", studySetUser);
-                    })
-                    .catch(error => {
-                        console.error('Error fetching study set details:', error);
-                    });
-            }
-        })
-        .catch(error => {
-            console.error('Error checking authentication:', error);
-        });
+            studySetUser = studySetData.username;
+
+            // Determine authorization
+            auth = currentUser === studySetUser;
+
+            console.log("Logged in User:", currentUser);
+            console.log("StudySet Creator:", studySetUser);
+        }
+    } catch (error) {
+        console.error('Error during authentication process:', error);
+    }
+
+    console.log("Final Auth Status:", auth);
+    updateVisibility(); // Call after async tasks complete
 }
 
+
 document.addEventListener('DOMContentLoaded', () => {
-    checkEditAuth(); // Call function
-
-    // Note: Logs below may execute before async operations finish
-    setTimeout(() => {
-        console.log("Final Auth Status:", auth);
-    }, 1000); // Delay to wait for async calls
-
-	if(!auth)
-	{
-		// Hide elements if not authorized
-		termForm.style.display = "none";
-		
-	}
+    checkEditAuth();	
 });
+
+//toggle visibility for protected elements 
+// Update visibility for protected elements
+function updateVisibility() {
+    const termForm = document.getElementById('termForm'); // Select the term form element
+    const deleteButtons = document.querySelectorAll('button.delete-button'); // Select all delete buttons
+    const editButtons = document.querySelectorAll('button.edit-button'); // Select all edit buttons
+
+    // Update visibility for term form
+    if (termForm) {
+        if (auth) {
+            termForm.classList.remove('hidden'); // Show form
+            console.log("We're trying to show the form");
+        } else {
+            termForm.classList.add('hidden'); // Hide form
+            console.log("We're trying to hide the form");
+        }
+    }
+
+    // Update visibility for delete buttons
+    deleteButtons.forEach(deleteBtn => {
+        if (auth) {
+            deleteBtn.classList.remove('hidden'); // Show button
+            console.log("We're trying to show the delete button");
+        } else {
+            deleteBtn.classList.add('hidden'); // Hide button
+            console.log("We're trying to hide the delete button");
+        }
+    });
+
+    // Update visibility for edit buttons
+    editButtons.forEach(editBtn => {
+        if (auth) {
+            editBtn.classList.remove('hidden'); // Show button
+            console.log("We're trying to show the edit button");
+        } else {
+            editBtn.classList.add('hidden'); // Hide button
+            console.log("We're trying to hide the edit button");
+        }
+    });
+}
+
+
+
+
 
 
 
@@ -593,7 +624,7 @@ function flashCards(){
 	const studySetId = new URLSearchParams(window.location.search).get('id');
     const tableBody = document.getElementById('myTable').querySelector('tbody');
     function fetchTerms() {
-        fetch(`/study-sets/${studySetId}/terms`)
+        return fetch(`/study-sets/${studySetId}/terms`)
         .then(response => response.json())
         .then(data => {
             tableBody.innerHTML = '';
@@ -624,19 +655,23 @@ function flashCards(){
 		answerCell.setAttribute('id', 'answer' + count);
 	
 		const actionCell = row.insertCell();
-		if(auth){
-			// Add edit button
-			const editBtn = document.createElement('button');
-			editBtn.textContent = 'Edit';
-			editBtn.onclick = () => makeRowEditable(row);
-			actionCell.appendChild(editBtn);
 		
-			// Add delete button
-			const deleteBtn = document.createElement('button');
-			deleteBtn.textContent = 'Delete';
-			deleteBtn.onclick = () => deleteTerm(row, termId);
-			actionCell.appendChild(deleteBtn);
-		}
+		const deleteBtn = document.createElement('button');
+		deleteBtn.textContent = 'Delete';
+		deleteBtn.classList.add('delete-button'); // Add class for selection
+		deleteBtn.onclick = () => deleteTerm(row, termId);
+		actionCell.appendChild(deleteBtn);
+
+		const editBtn = document.createElement('button');
+		editBtn.textContent = 'Edit';
+		editBtn.classList.add('edit-button'); // Add class for selection
+		editBtn.onclick = () => makeRowEditable(row);
+		actionCell.appendChild(editBtn);
+
+		
+		
+		
+
 		row.appendChild(actionCell);
 		
 	
@@ -779,3 +814,5 @@ function updateStudySetTitle() {
 
 // Call the function to update the study set title when the page loads
 document.addEventListener('DOMContentLoaded', updateStudySetTitle);
+
+

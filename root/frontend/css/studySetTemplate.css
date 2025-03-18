@@ -1,4 +1,9 @@
 /*Start of Template Page CSS*/
+.hidden {
+    display: none;
+}
+
+
 
 #templink {
     color: black;
