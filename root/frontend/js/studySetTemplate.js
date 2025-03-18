@@ -52,6 +52,14 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         console.log("Final Auth Status:", auth);
     }, 1000); // Delay to wait for async calls
+
+	if(!auth)
+	{
+		// Hide elements if not authorized
+		termForm.style.display = "none";
+		editBtn.style.display = "none";
+		deleteBtn.style.display = "none";
+	}
 });
 
 
@@ -617,19 +625,19 @@ function flashCards(){
 		answerCell.setAttribute('id', 'answer' + count);
 	
 		const actionCell = row.insertCell();
+		if(auth){
+			// Add edit button
+			const editBtn = document.createElement('button');
+			editBtn.textContent = 'Edit';
+			editBtn.onclick = () => makeRowEditable(row);
+			actionCell.appendChild(editBtn);
 		
-		// Add edit button
-		const editBtn = document.createElement('button');
-		editBtn.textContent = 'Edit';
-		editBtn.onclick = () => makeRowEditable(row);
-		actionCell.appendChild(editBtn);
-	
-		// Add delete button
-		const deleteBtn = document.createElement('button');
-		deleteBtn.textContent = 'Delete';
-		deleteBtn.onclick = () => deleteTerm(row, termId);
-		actionCell.appendChild(deleteBtn);
-	
+			// Add delete button
+			const deleteBtn = document.createElement('button');
+			deleteBtn.textContent = 'Delete';
+			deleteBtn.onclick = () => deleteTerm(row, termId);
+			actionCell.appendChild(deleteBtn);
+		}
 		row.appendChild(actionCell);
 		
 	
