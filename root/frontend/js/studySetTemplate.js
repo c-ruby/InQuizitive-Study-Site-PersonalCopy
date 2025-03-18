@@ -57,8 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	{
 		// Hide elements if not authorized
 		termForm.style.display = "none";
-		editBtn.style.display = "none";
-		deleteBtn.style.display = "none";
+		
 	}
 });
 
@@ -140,7 +139,7 @@ function enableSSaction(){
     document.getElementById('flashcardbtn').disabled = false;
     document.getElementById('quizbtn').disabled = false;
     document.getElementById('settingsbtn').disabled = false;
-    document.getElementById('editbtn').disabled = false;
+    
     document.getElementById('addrowbtn').disabled = false;
 }
 
@@ -154,7 +153,7 @@ function disableSSaction(){
 	document.getElementById('flashcardbtn').disabled = true;
 	document.getElementById('quizbtn').disabled = true;
 	document.getElementById('settingsbtn').disabled = true;
-	document.getElementById('editbtn').disabled = true;
+
 	document.getElementById('addrowbtn').disabled = true;
 }
 
