@@ -1,4 +1,13 @@
 /*Start of Template Page CSS*/
+.hidden {
+    display: none;
+}
+
+#studySetName{
+    margin: 5px auto;
+    margin-top: 6vh;
+}
+
 
 #templink {
     color: black;
