@@ -53,7 +53,7 @@
                 <th>Questions</th><th>Answers</th>
             </table>
 
-            <form id="termForm">
+            <form id="termForm" class = "hidden">
                 <label for="term">Term:</label>
                 <input type="text" id="term" name="term" required><br><br>
                 <label for="definition">Definition:</label>
@@ -63,12 +63,7 @@
         </div>
     </div>
     <footer id="SSfooter"></footer>
-    <script>
-        if (!auth) {
-            termForm.classList.add('hidden'); // Immediately hide if not authorized
-        }
 
-    </script>
     <script src="../js/myscript.js"></script>
     <script src="../js/studySetTemplate.js"></script>
     <script src="../js/searchBar.js"></script>
