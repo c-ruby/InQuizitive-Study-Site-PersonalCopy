@@ -145,21 +145,26 @@
 	
 	/*this edits the attributes of the content div*/
 	.homeSetContainer {
-		margin-top: 10px; 	
+		/*margin-top: 10px;*/ 	
 		text-align: center;	
 		display: flex;
-		width: 60%;			
+		width: 60%;		
 		align-self: center;
 		min-height: 40vh;
 		flex: 1;
 	}
 
+	/* Edits the User Library Buttons */
 	.homeSetContainer a {
-		margin-top: 20px;
-		padding: 3px 8px;
-		border-radius: 3px;
+		padding: 10px;
+		border-radius: 10px;
 		color: white;
-		background-color: rgb(185, 185, 185);
+		text-decoration: none;
+		background-color: rgb(218, 41, 28);
+	}
+
+	.homeSetContainer a:hover {
+		background-color: rgb(173, 36, 36);
 	}
 	
 	/*This edits all paragraph attributes if they are in the content class*/
@@ -173,8 +178,8 @@
 	}
 
 	.content p{
-		width: 50%;							/*This will make the paragraphs 100% of the content width*/
-		text-align: center;						/*This will align the text inside the paragraph to center*/
+		width: 50%;
+		text-align: center;
 	}
 	
 	.content a{
@@ -201,13 +206,37 @@
 		border-style: solid;
 	}
 
+	/* Edit the headers in the "Your Library" and "Recently Viewed Sets" */
+	#userSets h2, #viewedSets h2{
+		width: 70%;			
+		padding: 5px;		
+		margin: auto;
+		margin-bottom: 20px;
+		background:rgb(245, 245, 245);
+		border-radius: 10px;
+		color:rgb(40, 40, 40);
+		grid-column: auto;
+		border-color:#c2c2c2;
+		border-style: solid;
+	}
+
+	/* Edit the links in the "Recently Viewed Sets" */
+	#viewedSets ul #visitHistory {
+		text-decoration: none;
+		padding: 10px;
+		border-radius: 10px;
+		color: white;
+		text-decoration: none;
+		background-color: rgb(218, 41, 28);
+	}
+
 	.homeImageContainer img {
 		border: 5px solid #c2c2c2; 
 		border-left: #c2c2c2;
 		border-right: #c2c2c2;
 		margin-top: 2vh;
 		width: 100%;
-		height: 300px;
+		height: 350px;
 		object-fit: cover;
 		object-position: 0 100%;
 	}

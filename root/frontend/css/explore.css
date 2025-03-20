@@ -7,7 +7,7 @@
 
     #exploreSearchbar {
         display: block;
-        width: 80%;
+        width: 50%;
         margin: 20px auto;
         padding: 10px;
         font-size: 16px;
@@ -34,7 +34,7 @@
     }
 
 
-/*example css for the category search options*/
+    /* Example css for the category search options */
     #popupOverlay {
         position: fixed;
         top: 0;
@@ -67,15 +67,17 @@
     #openPopupBtn {
         margin: 5px auto;
         padding: 10px;
-        width: 80%;
-        border: none;
+        width: 50%;
+        border: solid 1px;
         border-radius: 5px;
         cursor: pointer;
-        background: rgb(126, 126, 126);
+        background: rgb(218, 41, 28);
+        color:white;
+        font-size: 18px;
     }
     
     #openPopupBtn:hover {
-        background-color: #5c5c5c;
+        background-color: rgb(173, 36, 36);
     }
     
 }
