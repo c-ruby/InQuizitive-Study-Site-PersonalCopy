@@ -1,3 +1,4 @@
+@media only screen and (min-width:600px){ 
 	
 	/*************************/
 	/* ABOUT WEBPAGE STYLING */
@@ -110,9 +111,7 @@
 		bottom: 0px;
 	}
 
-	
-	/*End of About CSS*/
-
+}
 
 /*
 ███████████████████████████████████████████████████████████████████████

@@ -1,101 +1,113 @@
-/* Ensure the body and html take full height */
-html, body {
-    height: 100%;
-    margin: 0;
-}
+@media only screen and (min-width:600px){ 
 
-/* Flex container to hold header, content, and footer */
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
+/* ------------------------- WRAPPER / CONTENT CONTAINER ------------------------- */
+    /* Flex container to hold header, content, and footer */
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    
+    /* Make the content take available space */
+    .content-container {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem; /* Add some space between sections */
+        padding: 2rem; /* Add padding around the entire container */
+    }
+    
+    /* Flexbox container for the sections */
+    .content-container section {
+        width:max-content;
+        max-width: 600px;
+        min-height:fit-content; /* Ensures the section has a minimum height */
+        border: 1px solid #ccc;
+        padding: 1rem;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Align items at the top (start) */
+        justify-content: flex-start; /* Align items at the top (start) */
+        
+        /* Pretty sure these only affect the container, not the sections themselves...
+        No idea, I can't actually check.
+        margin-bottom: auto;
+        margin-top:auto;
+        */
+    }
 
-/* Make the content take available space */
-.content-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem; /* Add some space between sections */
-    padding: 2rem; /* Add padding around the entire container */
-}
+/* ------------------------- WRAPPER / CONTENT CONTAINER ------------------------- */
 
-/* Flexbox container for the sections */
-.content-container section {
-    width:max-content;
-    max-width: 600px;
-    min-height:fit-content; /* Ensures the section has a minimum height */
-    border: 1px solid #ccc;
-    padding: 1rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start; /* Align items at the top (start) */
-    justify-content: flex-start; /* Align items at the top (start) */
-    margin-bottom: auto; /* Add space below each section */
-    margin-top:auto;
-}
 
-/* Style for the study sets list */
-#studySetsList ul {
-    list-style-type: none;
-    padding: 0;
-}
 
-/* Style for individual study set items */
-#studySetsList ul li {
-    padding: 0.5rem;
-    border-bottom: 1px solid #ccc;
-    cursor: pointer;
-}
 
-/* Style for form elements */
-#createStudySetForm label {
-    display: block;
-    margin-bottom: 0.5rem;
-}
+/* ------------------------- CONTROL FEATURES ------------------------- */
 
-#createStudySetForm input {
-    width:auto;
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
+    #studySetsList h2 {
+        font-size: 46px;
+    }
+    /* Style for the study sets list */
+    #studySetsList ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    /* Style for individual study set items */
+    #studySetsList ul li {
+        padding: 0.5rem;
+        border-bottom: 3px solid #ccc;
+        cursor: pointer;
+    }
+    #studySetsList ul li:hover {
+        border-bottom: 3px solid rgb(218, 41, 28);
+    }
 
-#createStudySetForm button {
-    padding: 0.5rem 1rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
-#createStudySetForm button:hover {
-    background-color: #0056b3;
-}
+    
+    /* Style for form elements */
+    #createStudySetForm label {
+        display: block;
+        margin-bottom: 0.5rem;
+    }
+    #createStudySetForm input {
+        width:auto;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+    #createStudySetForm button {
+        padding: 0.5rem 1rem;
+        background-color: rgb(218, 41, 28);
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+    #createStudySetForm button:hover {
+        background-color: rgb(173, 36, 36);
+    }
 
-/* Style to ensure the footer is at the bottom */
-footer {
-    background-color: #333;
-    padding: 1rem;
-    text-align: center;
-}
 
-/* CSS to style the delete buttons */
-.deleteBtn {
-    background-color: red;
-    color: white; /* Change the text color to white for better contrast */
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px; /* round the corners */
-}
 
-.deleteBtn:hover {
-    background-color: darkred; /* Change the color on hover for a better user experience */
-}
 
+    /* CSS to style the delete buttons */
+    .deleteBtn {
+        background-color: rgb(245, 245, 245);
+        color: rgb(40, 40, 40);
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px; /* round the corners */
+        transition: 0.3s;
+    }
+    .deleteBtn:hover {
+        background-color: rgb(173, 36, 36);
+    }
+
+/* ------------------------- CONTROL FEATURES ------------------------- */
+
+}

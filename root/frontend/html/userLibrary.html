@@ -10,26 +10,21 @@
     <link rel="icon" type="image/png" href="../images/fav.png">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="explore.html">Explore</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+        <input type="text" placeholder="Search.." id="searchbar" onkeypress="clickPress(event)">
+        <a id="login_signup" href="login.html">Login / Sign-Up</a>
+        <span id="user-info" href="profile.html" style="display: none;"></span>
+    </nav>
+    <div class="logoContainer">
+        <img src="../images/logo.png">
+    </div>
+	   
     <div class="wrapper">
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="explore.html">Explore</a></li>
-                <li><a href="about.html">About</a></li>
-            </ul>
-            <input type="text" placeholder="Search.." id="searchbar" onkeypress="clickPress(event)">
-            <a id="login_signup" href="login.html">Login/Sign Up</a>
-            <span id="user-info" href="profile.html" style="display: none;"></span>
-        </nav>
-
-        <div class="logoContainer">
-            <img src="../images/logo.png">
-        </div>
-
-        <header>
-            <h1>User Study Sets</h1>
-        </header>
-
         <div class="content-container">
             <!-- Study Sets List -->
             <section id="studySetsList">
