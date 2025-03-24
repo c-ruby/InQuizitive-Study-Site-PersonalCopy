@@ -15,7 +15,7 @@
         width: 100%;
     }
 
-/* --------------------------------- SEARCH STYLING --------------------------------- */
+/* --------------------------------- SEARCH TOOLS STYLING --------------------------------- */
     #exploreSearchbar {
         display: block;
         width: 80%;
@@ -34,11 +34,12 @@
         padding: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
-        display: flex;
-        flex-wrap: wrap;
+        display: grid;
+        grid-auto-flow: row;
+        grid-template-columns: repeat(5, 1fr)
     }
 
-/* --------------------------------- SEARCH STYLING --------------------------------- */
+/* --------------------------------- SEARCH TOOLS STYLING --------------------------------- */
 
 
 
@@ -118,9 +119,12 @@
         color: white;
 		background-color: #003d77;
 		border-color: #003d77;
+        transform: scale(1.05);
     }
 
     .result-item h3 {
+        text-decoration: underline overline;
+        text-underline-offset: 8px;
         margin-bottom: 6px;
         font-size: 26px;
     }

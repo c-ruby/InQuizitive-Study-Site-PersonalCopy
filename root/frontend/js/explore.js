@@ -56,9 +56,9 @@ function displaySearchResults(results) {
         resultItem.classList.add('result-item');
         resultItem.innerHTML = `
             <h3>${result.set_name}</h3>
-            <p>Created by: ${result.username}</p>
-            <p>Created at: ${new Date(result.created_at).toLocaleString()}</p>
-            <p>Category: ${result.category}</p>
+            <p>By: ${result.username}</p>
+            <p>Created: ${new Date(result.created_at).toLocaleString()}</p>
+            <p>Subject: ${result.category}</p>
         `;
         // Add onclick event to update visit history and redirect
         resultItem.style.cursor = 'pointer';
