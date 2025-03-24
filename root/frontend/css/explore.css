@@ -1,10 +1,21 @@
 @media only screen and (min-width:600px){ 
 
+
     .subheader {
         margin:auto;
         margin-top: 6vh;
     }
 
+    footer {
+        background-color: #c2c2c2;		
+        text-align: center;
+        position: relative;
+        margin-top: 5%;
+        height: 150px;
+        width: 100%;
+    }
+
+/* --------------------------------- SEARCH STYLING --------------------------------- */
     #exploreSearchbar {
         display: block;
         width: 80%;
@@ -17,22 +28,22 @@
     
     #searchResult {
         width: 80%;
-        margin: 20px auto;
+        align-self: center;
+        justify-content: center;
         background-color: #fff;
         padding: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
-    }
-    
-    footer {
-        background-color: #c2c2c2;		
-        text-align: center;
-        padding: 10px 0;
-        position: fixed;
-        width: 100%;
-        bottom: 0;
+        display: flex;
+        flex-wrap: wrap;
     }
 
+/* --------------------------------- SEARCH STYLING --------------------------------- */
+
+
+
+
+/* --------------------------------- FILTER STYLING --------------------------------- */
 
     /* Example css for the category search options */
     #popupOverlay {
@@ -83,5 +94,37 @@
 		background-color: rgb(218, 41, 28);
 		border-color: rgb(218, 41, 28);
     }
+    
+/* --------------------------------- FILTER STYLING --------------------------------- */
+
+
+
+
+/* --------------------------------- RESULT STYLING --------------------------------- */
+
+    /* Edit the dynamic results of a given search */
+    .result-item {
+        border: solid 1px;
+        border-color:#c2c2c2;
+        border-radius: 5px;
+        margin: auto;
+        margin-top: 10px;
+        padding: 15px;
+        transition: 0.3s;
+    }
+
+    /* Edit the appearance of results when hovering over them. */
+    .result-item:hover {
+        color: white;
+		background-color: #003d77;
+		border-color: #003d77;
+    }
+
+    .result-item h3 {
+        margin-bottom: 6px;
+        font-size: 26px;
+    }
+
+/* --------------------------------- RESULT STYLING --------------------------------- */
     
 }
