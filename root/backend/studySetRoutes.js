@@ -79,6 +79,9 @@ app.post('/study-sets', (req, res) => {
                 console.error('Database query error:', err);
                 return res.status(500).json({ error: err.message });
             }
+            console.log(result[0]);
+            console.log('Query:', query);
+            console.log('Study Set ID:', studySetId);
             if (result.length === 0) {
                 return res.status(404).json({ message: 'Study set not found' });
             }
@@ -95,6 +98,8 @@ app.post('/study-sets', (req, res) => {
               console.error('Database query error:', err);
               return res.status(500).json({ error: err.message });
           }
+          
+          console.log(result[0]);
           if (result.length === 0) {
               return res.status(404).json({ message: 'Study set not found' });
           }

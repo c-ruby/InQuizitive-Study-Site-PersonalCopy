@@ -806,7 +806,6 @@ function saveRowEdits(row, questionCell, answerCell) {
  */
 // Function to fetch study set details and update the title
 function updateStudySetTitle() {
-    const studySetId = new URLSearchParams(window.location.search).get('id');
     fetch(`/study-sets/${studySetId}`)
     .then(response => response.json())
     .then(data => {
@@ -817,8 +816,35 @@ function updateStudySetTitle() {
         console.error('Error fetching study set details:', error);
     });
 }
+//update the details 
+function fetchStudySetDetails() {
+	// Make a GET request to your route
+	fetch(`/study-set-info/${studySetId}`)
+		.then(response => response.json())
+		.then(data => {
+            // Format the date
+            const rawDate = new Date(data.created_at); // Convert to JavaScript Date object
+            const formattedDate = rawDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            });
+
+            // Populate the details-section with formatted data
+            const detailsSection = document.querySelector('.details-section');
+            detailsSection.innerHTML = `
+                <p><strong>Date Created:</strong> ${formattedDate}</p>
+                <p><strong>Creator:</strong> ${data.username}</p>
+                <p><strong>Category:</strong> ${data.category}</p>
+            `;
+        })
+		.catch(error => {
+			console.error('Error:', error.message);
+		});
+}
 
 // Call the function to update the study set title when the page loads
 document.addEventListener('DOMContentLoaded', updateStudySetTitle);
+document.addEventListener('DOMContentLoaded', fetchStudySetDetails);
 
 
