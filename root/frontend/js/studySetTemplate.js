@@ -240,11 +240,16 @@ function QuestionHandler(){
 			correct_questions.push(i);
 			rand_answers.push(i);
 		}
-		shuffleArray(correct_questions);
-		shuffleArray(rand_answers);
 	}
 	else{
 		shuffleArray(correct_questions);
+	}
+	if(rand_answers.length === 0){
+		for(var i=1; i<getRowCount(); i++){
+			rand_answers.push(i);
+		}
+	}
+	else{
 		shuffleArray(rand_answers);
 	}
 	shuffleArray(correct_questions);

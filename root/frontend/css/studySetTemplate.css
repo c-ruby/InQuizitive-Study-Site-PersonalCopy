@@ -66,7 +66,7 @@ td {
 
 
 
-#Quiz{
+#Quiz, #settings{
     width:50%;
     height: auto;
     background: #333;
@@ -170,6 +170,14 @@ td {
 	height: 100%;
 }
 
+
+#settings{
+	height: 100px;
+}
+
+#settingsHeader{
+	
+}
 
 #termForm, #myTable {
     
