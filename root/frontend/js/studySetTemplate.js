@@ -567,7 +567,7 @@ function flashCards(){
 	disableSSaction();
 	//used to keep track of the current question
 	var currentQuestion = 1;
-	var termCount = getRowCount();
+	var termCount = getRowCount()-1;
 	fetchTerms();
 	//this div will check if there are any questions and generate the flashcard elements if there are.
 	if(termCount > 0){
@@ -616,7 +616,17 @@ function flashCards(){
 				flashCardtext.innerHTML = document.getElementById("question1").innerText;
 			}
 			else{
-				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
+				// Debug before the first line
+				console.log("flashCardtext before:", flashCardtext);
+				console.log("currentQuestion value:", currentQuestion);
+				console.log("Generated element ID:", "question" + currentQuestion);
+				console.log("Element by ID:", document.getElementById("question" + currentQuestion));
+
+				// First assignment line
+				flashCardtext.innerHTML = document.getElementById("question" + currentQuestion).innerText;
+
+				// Debug after the first line
+				console.log("flashCardtext after (first):", flashCardtext.innerHTML);			
 			}
 			
 			if(flashcardTextholder.classList.contains('clicked')){
