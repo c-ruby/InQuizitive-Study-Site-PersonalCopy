@@ -148,21 +148,59 @@ function cloneRow() {
 // ------------ STUDY SET UTILITIES ------------ //
 
 //set class for selected rows 
-const tableRows = document.querySelector('#myTable tbody');
-tableRows.addEventListener('change', (event) => {
-    if (event.target && event.target.matches('.row-checkbox')) {
-        const row = event.target.closest('tr');
-        
-        if (event.target.checked) {
-            row.classList.add('selected-row');
-			console.log('Added to selected class:', row); 
-        } else {
-            row.classList.remove('selected-row');
-			console.log('Removed from selected class:', row); 
+// Set class for selected rows and listen for checkboxes or buttons
+const table = document.querySelector('#myTable tbody');
 
-        }
+function updateRowSelection(target, isChecked) {
+    const row = target.closest('tr');
+    if (isChecked) {
+        row.classList.add('selected-row');
+        console.log('Added to selected class:', row);
+    } else {
+        row.classList.remove('selected-row');
+        console.log('Removed from selected class:', row);
+    }
+    TESTcreateQuizData();
+}
+
+// Event listener for row checkboxes
+table.addEventListener('change', (event) => {
+    if (event.target.matches('.row-checkbox')) {
+        updateRowSelection(event.target, event.target.checked);
     }
 });
+
+
+//test functions for questions data 
+function TESTcreateQuizData() {
+    const selectedRows = document.querySelectorAll('.selected-row'); // Rows with 'selected-row' class
+    const allRows = document.querySelectorAll('#myTable tbody tr'); // All content rows in the table
+
+    const quizData = []; // Structure to hold selected terms and their matching answers
+    const allAnswers = []; // Array to hold all answers from the table
+
+    // Populate quizData with selected rows
+    selectedRows.forEach(row => {
+        const term = row.querySelector('.question-cell').textContent.trim(); // Extract term (question)
+        const answer = row.querySelector('.answer-cell').textContent.trim(); // Extract answer
+        quizData.push({ term, answer }); // Add structure with term and answer
+    });
+
+    // Populate allAnswers with answers from all rows
+    allRows.forEach(row => {
+        const answer = row.querySelector('.answer-cell').textContent.trim(); // Extract answer from row
+        allAnswers.push(answer); // Add answer to the array
+    });
+	console.log('Selected questions for quiz', quizData, '\n\nAll possible answer choices:', allAnswers);
+    return { quizData, allAnswers }; // Return both structures
+	
+}
+
+
+
+
+
+
 
 
 
@@ -704,28 +742,20 @@ function flashCards(){
         });
     }
 
-	function selectAll() {
-		const checkboxes = document.querySelectorAll('.row-checkbox');
-		checkboxes.forEach(checkbox => {
-			checkbox.checked = true; // Check all checkboxes
-			const row = checkbox.closest('tr'); // Get the parent row of the checkbox
-			row.classList.add('selected-row'); // Add the 'selected-row' class
-			console.log('Added to selected class:', row);
-		});
-	}
-	
-	
-	function selectNone() {
-		const checkboxes = document.querySelectorAll('.row-checkbox');
-		checkboxes.forEach(checkbox => {
-			checkbox.checked = false; // Uncheck all checkboxes
-			const row = checkbox.closest('tr'); // Get the parent row of the checkbox
-			row.classList.remove('selected-row'); // Remove the 'selected-row' class
-			console.log('Removed from selected class:', row);
-		});
-	}
-	
-	
+
+//selection buttons 
+function toggleSelection(selectAll) {
+    const checkboxes = document.querySelectorAll('.row-checkbox');
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = selectAll; // Update checkbox state
+        updateRowSelection(checkbox, selectAll); // Update row selection
+    });
+}
+document.getElementById('selectAllButton').addEventListener('click', () => toggleSelection(true));
+document.getElementById('selectNoneButton').addEventListener('click', () => toggleSelection(false));
+
+
+
 
     // Function to add a term to the table
     function addTermToTable(term, definition, termId) {
