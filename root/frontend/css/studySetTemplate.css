@@ -40,6 +40,12 @@
     position:fixed left;
 }
 
+.StudySetOptionsHeader{
+	width:80%;
+	text-align: center;
+	color: white;
+}
+
 .StudySetOptions button {
     width: 80%;
     padding: 15px;

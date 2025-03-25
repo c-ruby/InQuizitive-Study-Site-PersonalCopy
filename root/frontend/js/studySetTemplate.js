@@ -128,19 +128,10 @@ Will update when DB is set up to auto set rows for how many questions are in the
 for now just clones the table row
 */
 function cloneRow() {
-	const table = document.getElementById("myTable");
-    const row = table.insertRow();
-    const question = row.insertCell();
-	const answer = row.insertCell();
-	
-	row.setAttribute('class', 'StudySet-Q&A');
-	row.setAttribute('id', 'row'+count);
-	
-    question.textContent = 'question '+count;
-	answer.textContent = 'answer '+count;
-	
-	question.setAttribute('id', 'question' + count);
-    answer.setAttribute('id', 'answer' + count);
+	var term = 'question' + count;
+	var definition = 'definition' + count;
+	var termId = count;
+	addTermToTable(term, definition, termId)
 	
 	count++;
 }
@@ -257,7 +248,7 @@ function enableSSaction(){
     // Enable buttons
     document.getElementById('flashcardbtn').disabled = false;
     document.getElementById('quizbtn').disabled = false;
-    document.getElementById('settingsbtn').disabled = false;
+    //document.getElementById('settingsbtn').disabled = false;
     
     document.getElementById('addrowbtn').disabled = false;
 }
@@ -271,7 +262,7 @@ function disableSSaction(){
 	//These disable all of the buttons on the side when the quiz is generated
 	document.getElementById('flashcardbtn').disabled = true;
 	document.getElementById('quizbtn').disabled = true;
-	document.getElementById('settingsbtn').disabled = true;
+	//document.getElementById('settingsbtn').disabled = true;
 
 	document.getElementById('addrowbtn').disabled = true;
 }
@@ -300,22 +291,33 @@ const rand_answers = [];
 //used to fill the question array and randomize it
 function QuestionHandler(){
 	if(correct_questions.length === 0){
-		for(var i=1; i<getRowCount(); i++){
-			correct_questions.push(i);
-			rand_answers.push(i);
+		// Check if the class 'my-class' exists
+		if(document.getElementsByClassName('selected-row').length > 0) {
+			for(var i=1; i<=getRowCount(); i++){
+				if(document.getElementById("row"+i).classList.contains('selected-row')){
+					correct_questions.push(i);
+				}
+			}
+		} 
+		else {
+			for(var i=1; i<=getRowCount(); i++){
+				correct_questions.push(i);
+			}	
 		}
 	}
 	else{
 		shuffleArray(correct_questions);
 	}
+	
 	if(rand_answers.length === 0){
-		for(var i=1; i<getRowCount(); i++){
+		for(var i=1; i<=getRowCount(); i++){
 			rand_answers.push(i);
 		}
 	}
 	else{
 		shuffleArray(rand_answers);
 	}
+	
 	shuffleArray(correct_questions);
 	shuffleArray(rand_answers);
 }
@@ -331,7 +333,7 @@ function generate_quiz(){
 	var randomQuestion = 0;
 	var currentQuestion = 0;
 	
-	var termCount = getRowCount()-1;
+	var termCount = getRowCount();
 	var qcount = 0;
 	
 	const questions = [];
@@ -374,7 +376,7 @@ function generate_quiz(){
 	QuestionHandler();
 	
 	//--------------------- Multiple choice --------------------------//
-	if(termCount<4){
+	if(termCount<3){
 		//set the mcquestions to 0
 		mcquestions = 0;
 	}
@@ -565,7 +567,7 @@ function generate_quiz(){
 }
 
 function quizCheck() {
-	var termCount = getRowCount()-1;
+	var termCount = getRowCount();
     var total = totalQuestions;
     var correctAnswered = 0;
 	var questionIterator = 0;
@@ -603,6 +605,8 @@ function quizCheck() {
 	correctAnswered = correctAnswered/total*100;
     alert(`Correct answers: ${correctAnswered}` + "%");
 	enableSSaction();
+	
+	
 }
 
 // ------------ FLASH CARDS ------------ //
@@ -713,11 +717,6 @@ function flashCards(){
 	}
 }
 
-// ------------ SETINGS ------------ //
-// WILL FILL IN LATER
-
-
-
 //------------Datbase Operations------------
 //Caleb Ruby's additions
 /*
@@ -760,6 +759,7 @@ document.getElementById('selectNoneButton').addEventListener('click', () => togg
     // Function to add a term to the table
     function addTermToTable(term, definition, termId) {
 		const row = tableBody.insertRow();
+		row.setAttribute('id', 'row' + count);
 		row.dataset.termId = termId; // Assign termId to the row for future reference
 	
 		// Checkbox cell
@@ -767,6 +767,7 @@ document.getElementById('selectNoneButton').addEventListener('click', () => togg
 		const checkbox = document.createElement('input');
 		checkbox.type = 'checkbox';
 		checkbox.classList.add('row-checkbox'); // Class for easier selection
+		checkbox.setAttribute('id', 'checkbox' + count);
 		checkboxCell.appendChild(checkbox);
 
 		const questionCell = row.insertCell();
