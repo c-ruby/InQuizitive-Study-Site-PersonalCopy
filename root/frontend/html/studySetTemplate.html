@@ -48,9 +48,9 @@
         <ul class="StudySetOptions">
 			<li><h3 class="StudySetOptionsHeader">Learn!</h3></li>
             <li><button id="flashcardbtn" class="studysetbutton" onclick="flashCards()">Flash Cards</button></li>
-			<li><button  class="studysetbutton">Multiple Choice</button></li>
-			<li><button  class="studysetbutton">Fill in the blank</button></li>
-			<li><button  class="studysetbutton">True or False</button></li>
+			<li><button onclick="mconly()" class="studysetbutton">Multiple Choice</button></li>
+			<li><button onclick="oeonly()" class="studysetbutton">Fill in the blank</button></li>
+			<li><button onclick="tfonly()" class="studysetbutton">True or False</button></li>
 			<li><h3 class="StudySetOptionsHeader">Test Yourself!</h3></li>
             <li><button onclick="generate_quiz()" id="quizbtn" class="studysetbutton">Quiz</button></li>            
             <li><button onclick="cloneRow()" id="addrowbtn" class="studysetbutton">Add Row</button></li>

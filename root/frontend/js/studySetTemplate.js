@@ -282,6 +282,11 @@ var oequestions = 5;
 var tfquestions = 5;
 var totalQuestions = mcquestions + oequestions + tfquestions;
 
+
+var tempmcquestions = mcquestions;
+var tempoequestions = oequestions;
+var temptfquestions = tfquestions;
+
 //used to hold questions and answers for quiz generation
 const correct_questions = [];
 const oe_questions = [];
@@ -555,9 +560,6 @@ function generate_quiz(){
 		}
 	}
 	
-	
-	
-	
 	formforquiz.appendChild(document.createElement("br"));
 	formforquiz.appendChild(document.createElement("br"));
 	quiz.appendChild(submitbtn);
@@ -568,7 +570,7 @@ function generate_quiz(){
 
 function quizCheck() {
 	var termCount = getRowCount();
-    var total = totalQuestions;
+    var total = mcquestions+oequestions+tfquestions;
     var correctAnswered = 0;
 	var questionIterator = 0;
 	var iterator = 0;
@@ -606,7 +608,39 @@ function quizCheck() {
     alert(`Correct answers: ${correctAnswered}` + "%");
 	enableSSaction();
 	
+	mcquestions = tempmcquestions;
+	oequestions = tempoequestions;
+	tfquestions = temptfquestions;
+}
+
+function mconly(){
+	mcquestions = 5;
+	oequestions = 0;
+	tfquestions = 0;
 	
+	generate_quiz();
+	document.getElementById(submitbtn).onclick = quizCheck;
+
+}
+
+function oeonly(){
+	mcquestions = 0;
+	oequestions = 5;
+	tfquestions = 0;
+	
+	generate_quiz();
+	document.getElementById(submitbtn).onclick = quizCheck;
+
+}
+
+function tfonly(){
+	mcquestions = 0;
+	oequestions = 0;
+	tfquestions = 5;
+	
+	generate_quiz();
+	document.getElementById(submitbtn).onclick = quizCheck;
+
 }
 
 // ------------ FLASH CARDS ------------ //
