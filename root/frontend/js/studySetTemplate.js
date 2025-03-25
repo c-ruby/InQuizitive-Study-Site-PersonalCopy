@@ -175,9 +175,16 @@ function getRandomNumber(min, max) {
 let count=1;
 
 //used to get the amount of rows in the quiz table
-function getRowCount(){
-	const table = document.getElementById('myTable');
-    return table.rows.length;
+function getRowCount() {
+    const table = document.getElementById('myTable');
+    if (!table) {
+        console.error("Table not found!");
+        return 0;
+    }
+
+    // Select only rows within <tbody>
+    const contentRows = table.querySelectorAll('tbody tr');
+    return contentRows.length;
 }
 //used to randomize array
 function shuffleArray(array){
@@ -567,7 +574,7 @@ function flashCards(){
 	disableSSaction();
 	//used to keep track of the current question
 	var currentQuestion = 1;
-	var termCount = getRowCount()-1;
+	var termCount = getRowCount();
 	fetchTerms();
 	//this div will check if there are any questions and generate the flashcard elements if there are.
 	if(termCount > 0){
