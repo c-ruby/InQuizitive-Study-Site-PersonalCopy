@@ -86,6 +86,30 @@ function updateVisibility() {
             console.log("We're trying to hide the edit button");
         }
     });
+
+	//update visibility for action column
+	const rows = document.querySelectorAll('#myTable tbody tr');
+	const actionsHeader = document.querySelector('#myTable thead th:last-child');
+    if (auth) {
+        actionsHeader.classList.remove('hidden');
+    }
+	else
+	{
+		actionsHeader.classList.add('hidden');
+	}
+
+
+    rows.forEach(row => {
+        // Reference the "Action" cell (last cell in the row)
+        const actionCell = row.lastElementChild;
+
+        // Add or remove the 'hidden' class based on the flag
+        if (auth) {
+            actionCell.classList.remove('hidden');
+        } else {
+            actionCell.classList.add('hidden');
+        }
+    })
 }
 
 
@@ -639,11 +663,29 @@ function flashCards(){
         });
     }
 
+	function selectAll() {
+		const checkboxes = document.querySelectorAll('.row-checkbox');
+		checkboxes.forEach(checkbox => checkbox.checked = true);
+	}
+	
+	function selectNone() {
+		const checkboxes = document.querySelectorAll('.row-checkbox');
+		checkboxes.forEach(checkbox => checkbox.checked = false);
+	}
+	
+
     // Function to add a term to the table
     function addTermToTable(term, definition, termId) {
 		const row = tableBody.insertRow();
 		row.dataset.termId = termId; // Assign termId to the row for future reference
 	
+		// Checkbox cell
+		const checkboxCell = row.insertCell();
+		const checkbox = document.createElement('input');
+		checkbox.type = 'checkbox';
+		checkbox.classList.add('row-checkbox'); // Class for easier selection
+		checkboxCell.appendChild(checkbox);
+
 		const questionCell = row.insertCell();
 		questionCell.classList.add('question-cell');
 		questionCell.textContent = term;
@@ -764,17 +806,23 @@ function makeRowEditable(row) {
     questionCell.contentEditable = true;
     answerCell.contentEditable = true;
 
-    // Change "Edit" button to "Save" button
-    const editBtn = row.querySelector('button');
+    // Target the specific "Edit" button for this row
+    const editBtn = row.querySelector('.edit-button');
+    if (!editBtn) {
+        console.error('Error: Edit button not found');
+        return;
+    }
+
     editBtn.textContent = 'Save';
+    editBtn.classList.add('save-button');
+    editBtn.classList.remove('edit-button'); // Update the class
     editBtn.onclick = () => saveRowEdits(row, questionCell, answerCell);
-		//calls the saving function to save changes 
 }
 
 // Function to save row edits and update the database
 function saveRowEdits(row, questionCell, answerCell) {
-    const term = questionCell.textContent;
-    const definition = answerCell.textContent;
+    const term = questionCell.textContent.trim();
+    const definition = answerCell.textContent.trim();
     const termId = row.dataset.termId;
 
     fetch(`/terms/${termId}`, {
@@ -787,18 +835,28 @@ function saveRowEdits(row, questionCell, answerCell) {
     .then(response => response.json())
     .then(data => {
         alert('Term updated successfully');
+        
         // Disable content editing
         questionCell.contentEditable = false;
         answerCell.contentEditable = false;
-        // Change "Save" button back to "Edit" button
-        const saveBtn = row.querySelector('button');
+
+        // Target the specific "Save" button and revert it back to "Edit"
+        const saveBtn = row.querySelector('.save-button');
+        if (!saveBtn) {
+            console.error('Error: Save button not found');
+            return;
+        }
+
         saveBtn.textContent = 'Edit';
+        saveBtn.classList.add('edit-button');
+        saveBtn.classList.remove('save-button'); // Update the class
         saveBtn.onclick = () => makeRowEditable(row);
     })
     .catch(error => {
         console.error('Error updating term:', error);
     });
 }
+
 
 
 /**

@@ -54,9 +54,24 @@
         </ul>
 
         <div class="StudySet-Container">
+            <div class="controls">
+                <button onclick="selectAll()">Select All</button>
+                <button onclick="selectNone()">Select None</button>
+            </div>
             <table id="myTable">
-                <th>Questions</th><th>Answers</th>
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Questions</th>
+                        <th>Answers</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be dynamically added here -->
+                </tbody>
             </table>
+            
 
             <form id="termForm" class = "hidden">
                 <label for="term">Term:</label>
