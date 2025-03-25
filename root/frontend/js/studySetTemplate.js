@@ -147,6 +147,25 @@ function cloneRow() {
 
 // ------------ STUDY SET UTILITIES ------------ //
 
+//set class for selected rows 
+const tableRows = document.querySelector('#myTable tbody');
+tableRows.addEventListener('change', (event) => {
+    if (event.target && event.target.matches('.row-checkbox')) {
+        const row = event.target.closest('tr');
+        
+        if (event.target.checked) {
+            row.classList.add('selected-row');
+			console.log('Added to selected class:', row); 
+        } else {
+            row.classList.remove('selected-row');
+			console.log('Removed from selected class:', row); 
+
+        }
+    }
+});
+
+
+
 //allows for random numbers within a certain range
 function getRandomNumber(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -670,13 +689,25 @@ function flashCards(){
 
 	function selectAll() {
 		const checkboxes = document.querySelectorAll('.row-checkbox');
-		checkboxes.forEach(checkbox => checkbox.checked = true);
+		checkboxes.forEach(checkbox => {
+			checkbox.checked = true; // Check all checkboxes
+			const row = checkbox.closest('tr'); // Get the parent row of the checkbox
+			row.classList.add('selected-row'); // Add the 'selected-row' class
+			console.log('Added to selected class:', row);
+		});
 	}
+	
 	
 	function selectNone() {
 		const checkboxes = document.querySelectorAll('.row-checkbox');
-		checkboxes.forEach(checkbox => checkbox.checked = false);
+		checkboxes.forEach(checkbox => {
+			checkbox.checked = false; // Uncheck all checkboxes
+			const row = checkbox.closest('tr'); // Get the parent row of the checkbox
+			row.classList.remove('selected-row'); // Remove the 'selected-row' class
+			console.log('Removed from selected class:', row);
+		});
 	}
+	
 	
 
     // Function to add a term to the table
