@@ -146,6 +146,24 @@ function cloneRow() {
 }
 
 // ------------ STUDY SET UTILITIES ------------ //
+//adds checked rows to 'selected-row' class 
+const tableRows = document.querySelector('#myTable tbody');
+tableRows.addEventListener('change', (event) => {
+    if (event.target && event.target.matches('.row-checkbox')) {
+        const row = event.target.closest('tr');
+        console.log('Checkbox changed:', row); // Logs the parent row of the clicked checkbox
+        if (event.target.checked) {
+            row.classList.add('selected-row');
+        } else {
+            row.classList.remove('selected-row');
+        }
+    }
+});
+
+
+
+
+
 
 //allows for random numbers within a certain range
 function getRandomNumber(min, max) {
@@ -155,11 +173,12 @@ function getRandomNumber(min, max) {
 //used for setting row id's
 let count=1;
 
-//used to get the amount of rows in the quiz table
-function getRowCount(){
-	const table = document.getElementById('myTable');
-    return table.rows.length;
+//used to get the amount of selected rows in the quiz table
+function getRowCount() {
+    const selectedRows = document.querySelectorAll('.selected-row'); // Select rows with the 'selected-row' class
+    return selectedRows.length; // Return the count of selected rows
 }
+
 //used to randomize array
 function shuffleArray(array){
 	for (let i = array.length - 1; i > 0; i--) { 
@@ -234,22 +253,32 @@ const tf_questions = [];
 const rand_answers = [];
 
 //used to fill the question array and randomize it
-function QuestionHandler(){
-	if(correct_questions.length === 0){
-		for(var i=1; i<getRowCount(); i++){
-			correct_questions.push(i);
-			rand_answers.push(i);
-		}
-		shuffleArray(correct_questions);
-		shuffleArray(rand_answers);
-	}
-	else{
-		shuffleArray(correct_questions);
-		shuffleArray(rand_answers);
-	}
-	shuffleArray(correct_questions);
-	shuffleArray(rand_answers);
+function QuestionHandler() {
+    if (correct_questions.length === 0) {
+        // Loop through selected rows only
+        const selectedRows = document.querySelectorAll('.selected-row'); // Get rows with the 'selected-row' class
+        selectedRows.forEach((row, index) => {
+            correct_questions.push(index + 1); // Add the index+1 (or other relevant identifier) to correct_questions
+        });
+
+        // Loop through all rows to populate all answer options
+        const allRows = document.querySelectorAll('#myTable tbody tr'); // Get all rows in the table
+        allRows.forEach((row, index) => {
+            rand_answers.push(index + 1); // Add the index+1 (or other relevant identifier) to rand_answers
+        });
+
+        // Shuffle both arrays
+        shuffleArray(correct_questions);
+        shuffleArray(rand_answers);
+    } else {
+        // Reshuffle the arrays if they are already populated
+        shuffleArray(correct_questions);
+        shuffleArray(rand_answers);
+    }
+    shuffleArray(correct_questions);
+    shuffleArray(rand_answers);
 }
+
 
 //generates the quiz
 function generate_quiz(){
@@ -663,15 +692,24 @@ function flashCards(){
         });
     }
 
+	//buttons for checkboxes
 	function selectAll() {
 		const checkboxes = document.querySelectorAll('.row-checkbox');
-		checkboxes.forEach(checkbox => checkbox.checked = true);
+		checkboxes.forEach(checkbox => {
+			checkbox.checked = true; // Check all checkboxes
+			const row = checkbox.closest('tr'); // Get the parent row of the checkbox
+			row.classList.add('selected-row'); // Add the 'selected-row' class
+		});
 	}
-	
 	function selectNone() {
 		const checkboxes = document.querySelectorAll('.row-checkbox');
-		checkboxes.forEach(checkbox => checkbox.checked = false);
+		checkboxes.forEach(checkbox => {
+			checkbox.checked = false; // Uncheck all checkboxes
+			const row = checkbox.closest('tr'); // Get the parent row of the checkbox
+			row.classList.remove('selected-row'); // Remove the 'selected-row' class
+		});
 	}
+	
 	
 
     // Function to add a term to the table
