@@ -179,13 +179,15 @@ app.post('/study-sets', (req, res) => {
       }
   
       const query = `
-        SELECT s.set_id, s.set_name, v.visit_timestamp
+        SELECT s.set_id, s.set_name, MAX(v.visit_timestamp) AS latest_visit
         FROM VisitHistory v
         JOIN StudySets s ON v.set_id = s.set_id
         WHERE v.username = ?
-        ORDER BY v.visit_timestamp DESC
+        GROUP BY s.set_id, s.set_name
+        ORDER BY latest_visit DESC
         LIMIT 50
       `;
+
       
       db.query(query, [username], (err, results) => {
           if (err) {
