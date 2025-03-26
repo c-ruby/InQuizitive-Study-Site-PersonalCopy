@@ -289,6 +289,7 @@
 		border-color:#d8d7d7;
 		border-style: solid;
 		border-width: 2px;
+		max-height: 300px;
 	}
 
 	/* Edit the headers in the "Your Library" and "Recently Viewed Sets" */
@@ -310,6 +311,36 @@
 		text-decoration: none;
 		background-color: rgb(218, 41, 28);
 	}
+
+	/*edits the visit history list*/
+	.styled-list-item {
+		list-style-type: none; /* Removes bullets */
+		border-bottom: 1px solid #ccc; /* Adds a thin line between items */
+		padding: 10px 0; /* Adds spacing for better readability */
+	}
+
+	/*make visit history a scrollable field */
+	#viewedSets {
+		max-height: 300px; /* Define the maximum height for the container */
+		overflow-y: auto; /* Enable vertical scrolling when content exceeds the height */
+		border: 1px solid #ccc; /* Optional: Add a border around the container */
+		padding: 10px; /* Optional: Add padding inside the container */
+		background-color: rgb(245, 245, 245);; /* Optional: Background for better visuals */
+	}
+	
+	#visitHistory {
+		list-style-type: none; /* Remove bullets */
+		margin: 0; /* Reset default margins */
+		padding: 0; /* Reset default padding */
+	}
+	
+	#visitHistory li {
+		border-bottom: 1px solid #ddd; /* Add a thin line between list items */
+		padding: 10px 0; /* Add spacing for better readability */
+	}
+	
+	
+	
 
 	#studySetCreation{
 		margin: 25px;

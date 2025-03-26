@@ -86,6 +86,30 @@ function updateVisibility() {
             console.log("We're trying to hide the edit button");
         }
     });
+
+	//update visibility for action column
+	const rows = document.querySelectorAll('#myTable tbody tr');
+	const actionsHeader = document.querySelector('#myTable thead th:last-child');
+    if (auth) {
+        actionsHeader.classList.remove('hidden');
+    }
+	else
+	{
+		actionsHeader.classList.add('hidden');
+	}
+
+
+    rows.forEach(row => {
+        // Reference the "Action" cell (last cell in the row)
+        const actionCell = row.lastElementChild;
+
+        // Add or remove the 'hidden' class based on the flag
+        if (auth) {
+            actionCell.classList.remove('hidden');
+        } else {
+            actionCell.classList.add('hidden');
+        }
+    })
 }
 
 
@@ -104,24 +128,39 @@ Will update when DB is set up to auto set rows for how many questions are in the
 for now just clones the table row
 */
 function cloneRow() {
-	const table = document.getElementById("myTable");
-    const row = table.insertRow();
-    const question = row.insertCell();
-	const answer = row.insertCell();
-	
-	row.setAttribute('class', 'StudySet-Q&A');
-	row.setAttribute('id', 'row'+count);
-	
-    question.textContent = 'question '+count;
-	answer.textContent = 'answer '+count;
-	
-	question.setAttribute('id', 'question' + count);
-    answer.setAttribute('id', 'answer' + count);
+	var term = 'question' + count;
+	var definition = 'definition' + count;
+	var termId = count;
+	addTermToTable(term, definition, termId)
 	
 	count++;
 }
 
 // ------------ STUDY SET UTILITIES ------------ //
+
+//set class for selected rows 
+// Set class for selected rows and listen for checkboxes or buttons
+const table = document.querySelector('#myTable tbody');
+
+function updateRowSelection(target, isChecked) {
+    const row = target.closest('tr');
+    if (isChecked) {
+        row.classList.add('selected-row');
+        console.log('Added to selected class:', row);
+    } else {
+        row.classList.remove('selected-row');
+        console.log('Removed from selected class:', row);
+    }
+    
+}
+
+// Event listener for row checkboxes
+table.addEventListener('change', (event) => {
+    if (event.target.matches('.row-checkbox')) {
+        updateRowSelection(event.target, event.target.checked);
+    }
+});
+
 
 //allows for random numbers within a certain range
 function getRandomNumber(min, max) {
@@ -132,10 +171,31 @@ function getRandomNumber(min, max) {
 let count=1;
 
 //used to get the amount of rows in the quiz table
-function getRowCount(){
-	const table = document.getElementById('myTable');
-    return table.rows.length;
+function getRowCount() {
+    const table = document.getElementById('myTable');
+    if (!table) {
+        console.error("Table not found!");
+        return 0;
+    }
+
+    // Select only rows within <tbody>
+    const contentRows = table.querySelectorAll('tbody tr');
+    return contentRows.length;
 }
+//get number of selected rows 
+function getSelectedRowCount() {
+    const table = document.getElementById('myTable');
+    if (!table) {
+        console.error("Table not found!");
+        return 0;
+    }
+
+    // Select rows with the class .selected-row within the <tbody>
+    const selectedRows = table.querySelectorAll('tbody tr.selected-row');
+    return selectedRows.length;
+}
+
+
 //used to randomize array
 function shuffleArray(array){
 	for (let i = array.length - 1; i > 0; i--) { 
@@ -169,7 +229,7 @@ function enableSSaction(){
     // Enable buttons
     document.getElementById('flashcardbtn').disabled = false;
     document.getElementById('quizbtn').disabled = false;
-    document.getElementById('settingsbtn').disabled = false;
+    //document.getElementById('settingsbtn').disabled = false;
     
     document.getElementById('addrowbtn').disabled = false;
 }
@@ -183,7 +243,7 @@ function disableSSaction(){
 	//These disable all of the buttons on the side when the quiz is generated
 	document.getElementById('flashcardbtn').disabled = true;
 	document.getElementById('quizbtn').disabled = true;
-	document.getElementById('settingsbtn').disabled = true;
+	//document.getElementById('settingsbtn').disabled = true;
 
 	document.getElementById('addrowbtn').disabled = true;
 }
@@ -203,6 +263,11 @@ var oequestions = 5;
 var tfquestions = 5;
 var totalQuestions = mcquestions + oequestions + tfquestions;
 
+
+var tempmcquestions = mcquestions;
+var tempoequestions = oequestions;
+var temptfquestions = tfquestions;
+
 //used to hold questions and answers for quiz generation
 const correct_questions = [];
 const oe_questions = [];
@@ -212,17 +277,33 @@ const rand_answers = [];
 //used to fill the question array and randomize it
 function QuestionHandler(){
 	if(correct_questions.length === 0){
-		for(var i=1; i<getRowCount(); i++){
-			correct_questions.push(i);
-			rand_answers.push(i);
+		// Check if the class 'my-class' exists
+		if(document.getElementsByClassName('selected-row').length > 0) {
+			for(var i=1; i<=getRowCount(); i++){
+				if(document.getElementById("row"+i).classList.contains('selected-row')){
+					correct_questions.push(i);
+				}
+			}
+		} 
+		else {
+			for(var i=1; i<=getRowCount(); i++){
+				correct_questions.push(i);
+			}	
 		}
-		shuffleArray(correct_questions);
-		shuffleArray(rand_answers);
 	}
 	else{
 		shuffleArray(correct_questions);
+	}
+	
+	if(rand_answers.length === 0){
+		for(var i=1; i<=getRowCount(); i++){
+			rand_answers.push(i);
+		}
+	}
+	else{
 		shuffleArray(rand_answers);
 	}
+	
 	shuffleArray(correct_questions);
 	shuffleArray(rand_answers);
 }
@@ -238,7 +319,7 @@ function generate_quiz(){
 	var randomQuestion = 0;
 	var currentQuestion = 0;
 	
-	var termCount = getRowCount()-1;
+	var termCount = getRowCount();
 	var qcount = 0;
 	
 	const questions = [];
@@ -281,7 +362,7 @@ function generate_quiz(){
 	QuestionHandler();
 	
 	//--------------------- Multiple choice --------------------------//
-	if(termCount<4){
+	if(termCount<3){
 		//set the mcquestions to 0
 		mcquestions = 0;
 	}
@@ -460,9 +541,6 @@ function generate_quiz(){
 		}
 	}
 	
-	
-	
-	
 	formforquiz.appendChild(document.createElement("br"));
 	formforquiz.appendChild(document.createElement("br"));
 	quiz.appendChild(submitbtn);
@@ -472,8 +550,8 @@ function generate_quiz(){
 }
 
 function quizCheck() {
-	var termCount = getRowCount()-1;
-    var total = totalQuestions;
+	var termCount = getRowCount();
+    var total = mcquestions+oequestions+tfquestions;
     var correctAnswered = 0;
 	var questionIterator = 0;
 	var iterator = 0;
@@ -510,108 +588,135 @@ function quizCheck() {
 	correctAnswered = correctAnswered/total*100;
     alert(`Correct answers: ${correctAnswered}` + "%");
 	enableSSaction();
+	
+	mcquestions = tempmcquestions;
+	oequestions = tempoequestions;
+	tfquestions = temptfquestions;
+}
+
+function mconly(){
+	mcquestions = 5;
+	oequestions = 0;
+	tfquestions = 0;
+	
+	generate_quiz();
+	document.getElementById(submitbtn).onclick = quizCheck;
+
+}
+
+function oeonly(){
+	mcquestions = 0;
+	oequestions = 5;
+	tfquestions = 0;
+	
+	generate_quiz();
+	document.getElementById(submitbtn).onclick = quizCheck;
+
+}
+
+function tfonly(){
+	mcquestions = 0;
+	oequestions = 0;
+	tfquestions = 5;
+	
+	generate_quiz();
+	document.getElementById(submitbtn).onclick = quizCheck;
+
 }
 
 // ------------ FLASH CARDS ------------ //
 
-function flashCards(){
-	
-	disableSSaction();
-	//used to keep track of the current question
-	var currentQuestion = 1;
-	var termCount = getRowCount();
-	fetchTerms();
-	//this div will check if there are any questions and generate the flashcard elements if there are.
-	if(termCount > 0){
-		
-		//this creates the exit button for the flashcards
-		var exitbtn = document.createElement("button");
-		exitbtn.id = "exitButton";
-		exitbtn.innerHTML = "Close Flashcards";
-		exitbtn.onclick = enableSSaction;
-		
-		//this creates the exit button for the flashcards
-		var nextbtn = document.createElement("button");
-		var backbtn = document.createElement("button");
-		nextbtn.id = "nextButton";
-		backbtn.id = "backButton";
-		nextbtn.innerHTML = "Next";
-		backbtn.innerHTML = "Back";
-		
-		
+function flashCards() {
+    disableSSaction();
 
-		//creates the flashcard div and adds the buttons to it
-		var flashcard = document.createElement("div");
-		flashcard.id = "Flashcards";
-		flashcard.appendChild(exitbtn);
-		flashcard.appendChild(backbtn);
-		flashcard.appendChild(nextbtn);
-		flashcard.style.opacity = '1';
-		
-		//creates the text div that will hold the questions and answers of the flashcards
-		var flashcardTextholder = document.createElement("div");
-		var flashCardtext = document.createElement("h3");
-		flashcardTextholder.id = "flashCardTextHolder";
-		flashCardtext.id = "flashcardText";
-		flashcard.appendChild(flashcardTextholder);
-		flashcardTextholder.appendChild(flashCardtext);
-		//This changes the text to the question text
-		flashCardtext.innerHTML = document.getElementById("question1").innerText;
-		
-		document.body.appendChild(flashcard);
-		
-		//adds the onclick function to the next button
-		document.getElementById("nextButton").onclick = function() {
-			currentQuestion++;
-			if(currentQuestion > termCount){
-				currentQuestion = 1;
-				flashCardtext.innerHTML = document.getElementById("question1").innerText;
-			}
-			else{
-				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
-			}
-			
-			if(flashcardTextholder.classList.contains('clicked')){
-				flashcardTextholder.classList.toggle('clicked');
-			}
-		}
-		
-		//adds the onclick function to the back button
-		document.getElementById("backButton").onclick = function() {
-			currentQuestion--;
-			if(currentQuestion < 1){
-				currentQuestion = termCount;
-				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
-			}
-			else{
-				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
-			}
-			if(flashcardTextholder.classList.contains('clicked')){
-				flashcardTextholder.classList.toggle('clicked');
-			}
-		}
-		
-		//this does the "flipping" of the flashcards
-		document.getElementById("flashCardTextHolder").onclick = function() {
-			if(flashCardtext.innerHTML == document.getElementById("question"+currentQuestion).innerText){
-				flashCardtext.innerHTML = document.getElementById("answer"+currentQuestion).innerText;
-			}
-			else{
-				flashCardtext.innerHTML = document.getElementById("question"+currentQuestion).innerText;
-			}
-			
-			// Toggle the 'clicked' class to change the background color
-            flashcardTextholder.classList.toggle('clicked');	
-		}
-	}
-	else{
-		alert("no StudySet Questions");
-		enableSSaction();
-	}
+    // Get rows with the class .selected-row
+    const selectedRows = document.querySelectorAll('#myTable tbody tr.selected-row');
+    const termCount = selectedRows.length;
+    let currentQuestion = 0;
+
+    // Check if there are selected rows to generate flashcards
+    if (termCount > 0) {
+        // Create exit button
+        const exitbtn = document.createElement("button");
+        exitbtn.id = "exitButton";
+        exitbtn.innerHTML = "Close Flashcards";
+        exitbtn.onclick = enableSSaction;
+
+        // Create navigation buttons
+        const nextbtn = document.createElement("button");
+        const backbtn = document.createElement("button");
+        nextbtn.id = "nextButton";
+        backbtn.id = "backButton";
+        nextbtn.innerHTML = "Next";
+        backbtn.innerHTML = "Back";
+
+        // Create flashcard div
+        const flashcard = document.createElement("div");
+        flashcard.id = "Flashcards";
+        flashcard.appendChild(exitbtn);
+        flashcard.appendChild(backbtn);
+        flashcard.appendChild(nextbtn);
+        flashcard.style.opacity = '1';
+
+        // Create text holder div for flashcards
+        const flashcardTextholder = document.createElement("div");
+        const flashCardtext = document.createElement("h3");
+        flashcardTextholder.id = "flashCardTextHolder";
+        flashCardtext.id = "flashcardText";
+        flashcard.appendChild(flashcardTextholder);
+        flashcardTextholder.appendChild(flashCardtext);
+
+        // Display the first term
+        const firstRow = selectedRows[currentQuestion];
+        const term = firstRow.querySelector('.question-cell').textContent.trim(); // Extract term
+        flashCardtext.innerHTML = term;
+
+        document.body.appendChild(flashcard);
+
+        // OnClick function for the next button
+        nextbtn.onclick = function () {
+            currentQuestion = (currentQuestion + 1) % termCount; // Loop back to the first term
+            const nextRow = selectedRows[currentQuestion];
+            const term = nextRow.querySelector('.question-cell').textContent.trim(); // Extract term
+            flashCardtext.innerHTML = term;
+
+            if (flashcardTextholder.classList.contains('clicked')) {
+                flashcardTextholder.classList.toggle('clicked');
+            }
+        };
+
+        // OnClick function for the back button
+        backbtn.onclick = function () {
+            currentQuestion = (currentQuestion - 1 + termCount) % termCount; // Loop back to the last term
+            const prevRow = selectedRows[currentQuestion];
+            const term = prevRow.querySelector('.question-cell').textContent.trim(); // Extract term
+            flashCardtext.innerHTML = term;
+
+            if (flashcardTextholder.classList.contains('clicked')) {
+                flashcardTextholder.classList.toggle('clicked');
+            }
+        };
+
+        // OnClick function for flipping the flashcards
+        flashcardTextholder.onclick = function () {
+            const currentRow = selectedRows[currentQuestion];
+            const term = currentRow.querySelector('.question-cell').textContent.trim(); // Extract term
+            const answer = currentRow.querySelector('.answer-cell').textContent.trim(); // Extract answer
+
+            if (flashCardtext.innerHTML === term) {
+                flashCardtext.innerHTML = answer;
+            } else {
+                flashCardtext.innerHTML = term;
+            }
+
+            flashcardTextholder.classList.toggle('clicked');
+        };
+    } else {
+        alert("No selected terms to create flashcards.");
+        enableSSaction();
+    }
 }
 
-// ------------ SETINGS ------------ //
-// WILL FILL IN LATER
 
 
 
@@ -639,11 +744,35 @@ function flashCards(){
         });
     }
 
+
+//selection buttons 
+function toggleSelection(selectAll) {
+    const checkboxes = document.querySelectorAll('.row-checkbox');
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = selectAll; // Update checkbox state
+        updateRowSelection(checkbox, selectAll); // Update row selection
+    });
+}
+document.getElementById('selectAllButton').addEventListener('click', () => toggleSelection(true));
+document.getElementById('selectNoneButton').addEventListener('click', () => toggleSelection(false));
+
+
+
+
     // Function to add a term to the table
     function addTermToTable(term, definition, termId) {
 		const row = tableBody.insertRow();
+		row.setAttribute('id', 'row' + count);
 		row.dataset.termId = termId; // Assign termId to the row for future reference
 	
+		// Checkbox cell
+		const checkboxCell = row.insertCell();
+		const checkbox = document.createElement('input');
+		checkbox.type = 'checkbox';
+		checkbox.classList.add('row-checkbox'); // Class for easier selection
+		checkbox.setAttribute('id', 'checkbox' + count);
+		checkboxCell.appendChild(checkbox);
+
 		const questionCell = row.insertCell();
 		questionCell.classList.add('question-cell');
 		questionCell.textContent = term;
@@ -764,17 +893,23 @@ function makeRowEditable(row) {
     questionCell.contentEditable = true;
     answerCell.contentEditable = true;
 
-    // Change "Edit" button to "Save" button
-    const editBtn = row.querySelector('button');
+    // Target the specific "Edit" button for this row
+    const editBtn = row.querySelector('.edit-button');
+    if (!editBtn) {
+        console.error('Error: Edit button not found');
+        return;
+    }
+
     editBtn.textContent = 'Save';
+    editBtn.classList.add('save-button');
+    editBtn.classList.remove('edit-button'); // Update the class
     editBtn.onclick = () => saveRowEdits(row, questionCell, answerCell);
-		//calls the saving function to save changes 
 }
 
 // Function to save row edits and update the database
 function saveRowEdits(row, questionCell, answerCell) {
-    const term = questionCell.textContent;
-    const definition = answerCell.textContent;
+    const term = questionCell.textContent.trim();
+    const definition = answerCell.textContent.trim();
     const termId = row.dataset.termId;
 
     fetch(`/terms/${termId}`, {
@@ -787,12 +922,21 @@ function saveRowEdits(row, questionCell, answerCell) {
     .then(response => response.json())
     .then(data => {
         alert('Term updated successfully');
+        
         // Disable content editing
         questionCell.contentEditable = false;
         answerCell.contentEditable = false;
-        // Change "Save" button back to "Edit" button
-        const saveBtn = row.querySelector('button');
+
+        // Target the specific "Save" button and revert it back to "Edit"
+        const saveBtn = row.querySelector('.save-button');
+        if (!saveBtn) {
+            console.error('Error: Save button not found');
+            return;
+        }
+
         saveBtn.textContent = 'Edit';
+        saveBtn.classList.add('edit-button');
+        saveBtn.classList.remove('save-button'); // Update the class
         saveBtn.onclick = () => makeRowEditable(row);
     })
     .catch(error => {
@@ -801,12 +945,12 @@ function saveRowEdits(row, questionCell, answerCell) {
 }
 
 
+
 /**
  * function to update the study set title header  
  */
 // Function to fetch study set details and update the title
 function updateStudySetTitle() {
-    const studySetId = new URLSearchParams(window.location.search).get('id');
     fetch(`/study-sets/${studySetId}`)
     .then(response => response.json())
     .then(data => {
@@ -817,8 +961,35 @@ function updateStudySetTitle() {
         console.error('Error fetching study set details:', error);
     });
 }
+//update the details 
+function fetchStudySetDetails() {
+	// Make a GET request to your route
+	fetch(`/study-set-info/${studySetId}`)
+		.then(response => response.json())
+		.then(data => {
+            // Format the date
+            const rawDate = new Date(data.created_at); // Convert to JavaScript Date object
+            const formattedDate = rawDate.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+            });
+
+            // Populate the details-section with formatted data
+            const detailsSection = document.querySelector('.details-section');
+            detailsSection.innerHTML = `
+                <p><strong>Date Created:</strong> ${formattedDate}</p>
+                <p><strong>Creator:</strong> ${data.username}</p>
+                <p><strong>Category:</strong> ${data.category}</p>
+            `;
+        })
+		.catch(error => {
+			console.error('Error:', error.message);
+		});
+}
 
 // Call the function to update the study set title when the page loads
 document.addEventListener('DOMContentLoaded', updateStudySetTitle);
+document.addEventListener('DOMContentLoaded', fetchStudySetDetails);
 
 

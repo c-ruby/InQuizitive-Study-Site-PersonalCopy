@@ -8,6 +8,25 @@
     margin-top: 6vh;
 }
 
+.subheader {
+    display: flex;
+    flex-direction: column; /* Ensures elements stack vertically */
+    align-items: start;    /* Aligns items to the left */
+    width: 80%;
+    margin: 5px auto;
+    
+}
+
+.details-section {
+    font-size: 14px;
+    color: #555; 
+    margin-top: 5px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd; 
+    padding: 10px;
+}
+
+
 
 #templink {
     color: black;
@@ -19,6 +38,12 @@
     padding: 10px;
     height: 100%;
     position:fixed left;
+}
+
+.StudySetOptionsHeader{
+	width:80%;
+	text-align: center;
+	color: white;
 }
 
 .StudySetOptions button {
@@ -47,7 +72,7 @@ td {
 
 
 
-#Quiz{
+#Quiz, #settings{
     width:50%;
     height: auto;
     background: #333;
@@ -151,6 +176,16 @@ td {
 	height: 100%;
 }
 
+
+#settings{
+	height: 100px;
+}
+
+/*
+#settingsHeader{
+	
+}
+*/
 
 #termForm, #myTable {
     

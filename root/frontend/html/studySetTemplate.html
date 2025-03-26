@@ -37,21 +37,44 @@
     <header id="SSheader">
         <div class="subheader" id="studySetName">
             <h1>Study Set Title</h1>
+            <div class="details-section">
+                <p><strong>Date Created:</strong> March 25, 2025</p>
+                <p><strong>Creator:</strong> Pappy</p>
+                <p><strong>Category:</strong> Educational</p>
+            </div>
         </div>
     </header>
     <div class="content" id="SScontent">
         <ul class="StudySetOptions">
+			<li><h3 class="StudySetOptionsHeader">Learn!</h3></li>
             <li><button id="flashcardbtn" class="studysetbutton" onclick="flashCards()">Flash Cards</button></li>
-            <li><button onclick="generate_quiz()" id="quizbtn" class="studysetbutton">Quiz</button></li>
-            <li><button id="settingsbtn" class="studysetbutton">Settings</button></li>
-            
+			<li><button onclick="mconly()" class="studysetbutton">Multiple Choice</button></li>
+			<li><button onclick="oeonly()" class="studysetbutton">Fill in the blank</button></li>
+			<li><button onclick="tfonly()" class="studysetbutton">True or False</button></li>
+			<li><h3 class="StudySetOptionsHeader">Test Yourself!</h3></li>
+            <li><button onclick="generate_quiz()" id="quizbtn" class="studysetbutton">Quiz</button></li>            
             <li><button onclick="cloneRow()" id="addrowbtn" class="studysetbutton">Add Row</button></li>
         </ul>
 
         <div class="StudySet-Container">
+            <div class="controls">
+                <button id="selectAllButton">Select All</button>
+                <button id="selectNoneButton">Select None</button>
+            </div>
             <table id="myTable">
-                <th>Questions</th><th>Answers</th>
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Questions</th>
+                        <th>Answers</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be dynamically added here -->
+                </tbody>
             </table>
+            
 
             <form id="termForm" class = "hidden">
                 <label for="term">Term:</label>
