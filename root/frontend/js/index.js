@@ -35,7 +35,7 @@ function fetchRecentStudySets() {
         
         data.forEach(set => {
             const listItem = document.createElement('li');
-            
+            listItem.classList.add('styled-list-item'); // Add a class to the list item
             // Create a span to hold the study set name
             const setNameSpan = document.createElement('span');
             setNameSpan.textContent = set.set_name;
