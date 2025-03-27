@@ -35,18 +35,27 @@
             <h1>Account Details</h1>
         </div>
 
-    <div class="content">
-        <div id ="Actions">
-        <button id="deleteAccountBtn">Delete Account</button>
-        <button id="changePasswordBtn">Change Password</button>
-        <button id="logoutBtn">Log Out</button>
+        <div class="content">
+            <!-- User Info Section -->
+            <div id="userInfo">
+                <h2>Welcome, <span id="userName">[User Name]</span></h2>
+                <p>Member since: <span id="userJoinDate">[Join Date]</span></p>
+            </div>
+
+            <!-- Actions Section -->
+            <div id="Actions">
+                <button id="deleteAccountBtn">Delete Account</button>
+                <button id="changePasswordBtn">Change Password</button>
+                <button id="logoutBtn">Log Out</button>
+            </div>
+
+        
+            <div id="passwordChangeContainer"></div>
+            <script src="../js/profile.js"></script>    
         </div>
-        <div id="passwordChangeContainer"></div>
-        <script src = "../js/profile.js"></script>    
-    </div>
-    
     </header>
     <footer></footer>
+    <script src="../js/profile.js"></script>
     <script src="../js/myscript.js"></script> 
     <script src="../js/searchBar.js"></script>
 </body>

@@ -72,4 +72,69 @@
         border-color: #d32f2f;
     }
 
+/* User Info Section */
+#userInfo {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 80%; /* Align width with other boxes */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center-align content */
+}
+
+#userInfo h2 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #333;
+}
+
+#userInfo p {
+    margin: 10px 0 0;
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* Recent Activity Section */
+#recentActivity {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 80%; /* Align width with other boxes */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: left; /* Left-align content */
+}
+
+#recentActivity h2 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+#activityList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#activityList li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.1em;
+    color: #555;
+}
+
+#activityList li:last-child {
+    border-bottom: none;
+}
+
+/* General Box Alignment */
+.content > div {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 }

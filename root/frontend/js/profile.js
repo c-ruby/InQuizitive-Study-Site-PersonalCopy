@@ -141,3 +141,57 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+//calls the history fetch function when the document loads, if the user is logged in 
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/check-auth')
+      .then(response => response.json())
+      .then(data => {
+        if (data.loggedIn) {
+          fetchRecentStudySets();
+        } else {
+          console.log('User is not logged in');
+        }
+      })
+      .catch(error => {
+        console.error('Error checking authentication:', error);
+      });
+  });
+
+async function fetchUserInfo() {
+    try {
+        const response = await fetch('/api/user/info'); // Replace with your backend endpoint
+        if (!response.ok) throw new Error('Failed to fetch user info');
+        const userInfo = await response.json();
+
+        // Populate user info
+        document.getElementById('userName').textContent = userInfo.name;
+        document.getElementById('userJoinDate').textContent = userInfo.joinDate;
+    } catch (error) {
+        console.error('Error fetching user info:', error);
+    }
+}
+document.addEventListener("DOMContentLoaded", function(){
+    loadRecentActivity();
+});
+
+function loadRecentActivity() {
+    const activityList = document.getElementById("activityList");
+
+    // Example: Fetch recent activity from an API or local storage
+    const recentActivities = [
+        "Completed Quiz: JavaScript Basics",
+        "Started Quiz: HTML Fundamentals",
+        "Achieved High Score in CSS Quiz",
+        "Reviewed Notes: React Components"
+    ];
+
+    // Clear existing items
+    activityList.innerHTML = "";
+
+    // Populate the list with recent activities
+    recentActivities.forEach(activity => {
+        const listItem = document.createElement("li");
+        listItem.textContent = activity;
+        activityList.appendChild(listItem);
+    });
+}
