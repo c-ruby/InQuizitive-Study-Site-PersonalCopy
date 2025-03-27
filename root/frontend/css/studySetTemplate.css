@@ -1,219 +1,344 @@
-/*Start of Template Page CSS*/
-.hidden {
-    display: none;
-}
+@media only screen and (min-width:600px) { 
 
-#studySetName{
-    margin: 5px auto;
-    margin-top: 6vh;
-}
+    /*Start of Template Page CSS*/
+    .hidden {
+        display: none;
+    }
 
-.subheader {
-    display: flex;
-    flex-direction: column; /* Ensures elements stack vertically */
-    align-items: start;    /* Aligns items to the left */
-    width: 80%;
-    margin: 5px auto;
+/* ------------------------ HEADER ------------------------ */
+
+    #SSheader, #SScontent, #SSfooter{
+        opacity: 1;
+        transition: opacity 2s;
+    }
+
+    /* Covers both #studySetName and subheader */
+    .subheader {
+        display: flex;
+        flex-direction: column;     /* Ensures elements stack vertically */
+        align-items: start;         /* Aligns items to the left */
+        width: 40%;
+        margin: auto;
+        margin-top: 40px;
+    }
+
+    /* Header details, i.e., date, creator, etc. */
+    .details-section {
+        font-size: 14px;
+        color: #555; 
+        margin-top: 5px;
+        padding-top: 10px;
+        border-top: 1px solid #ddd; 
+        padding: 10px;
+    }
+
+    .footer {
+        margin: auto;
+    }
+
+/* ------------------------ HEADER ------------------------ */
+
+
+
+
+/* ------------------------ RESOURCES ------------------------ */
+
+    /* Div containing buttons and headers for study resources */
+    .StudySetOptions {
+        align-self: center;
+        justify-content: center;
+        text-align: center;
+        width: 60%;
+        background: rgb(245, 245, 245);
+        color: rgb(40, 40, 40);
+        padding: 10px;
+        height: 10%;
+        display: flex;
+        list-style-type: none;
+        border-radius: 10px;
+    }
+    .StudySetOptions button {
+        border-color: #c2c2c2;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 5px;
+        transition: 0.3s;
+    }
+    .StudySetOptions button:hover {
+        background-color: #003d77;
+        border-color: #003d77;
+        color: white;
+    }
+
+    /* Learning Options Button/Header Div */
+    .learnOptions {
+        margin: auto;
+    }
+    .learnOptionsButtons {
+        display: flex;
+    }
+
+
+    /* Test Options Button/Header Div */
+    .testOptions {
+        margin: auto;
+    }
+    .testOptionsButtons {
+        display: flex;
+    }
+
+    /* Control Options Button/Header Div */
+    .controls {
+        margin: auto;
+    }
+    .controlButtons {
+        display: flex;
+    }
+    /* Edits control buttons specifically */
+    .controls #selectAllButton, #selectNoneButton {
+        border-color: #c2c2c2;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 5px;
+        transition: 0.3s;
+    }
+    .controls #selectAllButton:hover, #selectNoneButton:hover {
+        background-color: #003d77;
+        border-color: #003d77;
+        color: white;
+    }
+
+/* ------------------------ RESOURCES ------------------------ */
+
+
+
+
+/* ------------------------ STUDY SET TABLE / FORM ------------------------ */
+
+    .StudySet-Container {
+        display: flex;
+        flex-direction: column;
+        width: 60%;
+        gap: 20px;
+    }
+    #termForm, #myTable {
+        text-align: center;
+        max-width: 100%;
+        min-width: 100%;
+        box-sizing: border-box;
+        color: rgb(40, 40, 40);
+        background-color: rgb(245, 245, 245);
+        margin: auto;
+        padding: 10px;
+    }
+    #termForm {
+        position: relative;
+    }
+
+    /* Edits the input bars for set creator/editor */
+    #termForm input {
+        flex: 1;                    /* Input will take up the available space */
+        padding: 5px;
+        border-radius: 5px;
+        width: 100%;
+        align-items: center;
+        box-sizing: border-box;     /* Include padding and border in the element's total width and height */
+    }
+
+    /* Edits the "Add Term" button */
+    #termForm button {
+        border-color: #c2c2c2;
+        border-style: solid;
+        margin-top: -15px;
+        border-width: 2px;
+        border-radius: 10px;
+        padding: 10px;
+        transition: 0.3s;
+    }
+    #termForm button:hover {
+        background-color: #003d77;
+        border-color: #003d77;
+        color: white;
+    }
+
+    /* Edits each "Delete" button for a given term/def combo */
+    .delete-button {
+        border-color: rgb(218, 41, 28);
+        background-color: rgb(218, 41, 28);
+        color: white;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        padding: 10px;
+        margin-right: 10px;
+        transition: 0.3s;
+    }
+    .delete-button:hover {
+        border-color: rgb(173, 36, 36);
+        background-color: rgb(173, 36, 36);
+    }
+
+    /* Edits each "Edit" button for a given term/def combo */
+    .edit-button {
+        border-color: #c2c2c2;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        padding: 10px;
+        transition: 0.3s;
+    }
+    .edit-button:hover {
+        border-color: #c2c2c2;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        padding: 10px;
+        transition: 0.3s;
+    }
+
+    /* Edits the Checkboxes */
+    .row-checkbox {
+        width: 20px;
+        height: 20px;
+        background: #FFF;
+    }
+
+/* ------------------------ STUDY SET TABLE / FORM ------------------------ */
+
+
+
+
+/* ------------------------ QUIZZES ------------------------ */
     
-}
+    #Quiz, #settings{
+        width:50%;
+        height: auto;
+        background: #333;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 30%;
+        margin-inline: auto;
+        opacity: 0;
+        color: white;
+        transition: opacity 2s;
+        text-align: center;
+        border-radius: 15px;
+    }
 
-.details-section {
-    font-size: 14px;
-    color: #555; 
-    margin-top: 5px;
-    padding-top: 10px;
-    border-top: 1px solid #ddd; 
-    padding: 10px;
-}
+    #Quiz h1{
+        color: white;
+    }
 
+    #quiz-QA-selector{
+        padding: 15px;
+    }
 
-
-#templink {
-    color: black;
-}
-
-.StudySetOptions {
-    width: 10%;
-    background: #333;
-    padding: 10px;
-    height: 100%;
-    position:fixed left;
-}
-
-.StudySetOptionsHeader{
-	width:80%;
-	text-align: center;
-	color: white;
-}
-
-.StudySetOptions button {
-    width: 80%;
-    padding: 15px;
-    margin-top: 10px;
-}
-
-.StudySet-Container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    width: 80%;
-    margin: auto;
-    border: 5px;
-    border-radius: 5px;
-    box-sizing: border-box;
-    padding: 0;
-    margin-top: 0;
-}
-
-td {
-    padding: 10px;
-}
+/* ------------------------ QUIZZES ------------------------ */
 
 
 
-#Quiz, #settings{
-    width:50%;
-    height: auto;
-    background: #333;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 30%;
-    margin-inline: auto;
-    opacity: 0;
-    color: white;
-    transition: opacity 2s;
-    text-align: center;
-    border-radius: 15px;
-}
 
-#Quiz h1{
-	color: white;
-}
+/* ------------------------ FLASHCARDS ------------------------ */
 
-#quiz-QA-selector{
-    padding: 15px;
+    #Flashcards{
+        width:50%;
+        height: 50%;
+        background: #333;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 30%;
+        margin-inline: auto;
+        opacity: 0;
+        color: white;
+        transition: opacity 2s;
+        text-align: center;
+        border-radius: 15px;
+        color: white;
+    }
+
+    #flashcardText{
+        color: white;
+    }
+
+    /*the color that the card will change when you click it */
+
+    .clicked {
+        background-color: #535353; 
+    }
+
+    #exitButton{
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        padding: 5px;
+        border-radius: 0px 15px 0px 0px;
+        color: white;
+        background: #333;
+        border: none;
+    }
+
+
+    #nextButton, #backButton{
+        padding: 5px;
+        margin: 5px;
+        background: #333;
+        color: white;
+
+    }
+
+    #flashCardTextHolder{
+    	width: 100%;
+    	height: 90%;
+    }
+
+    #flashcardText{
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
+    	height: 100%;
+    }
+
+/* ------------------------ FLASHCARDS ------------------------ */
+
+
+
+
+/* ------------------------ OTHER BUTTONS ------------------------ */
     
-}
-
-#submitbtn{
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    margin: 5px;
-    padding: 15px;
-}
-
-#Flashcards{
-    width:50%;
-    height: 50%;
-    background: #333;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 30%;
-    margin-inline: auto;
-    opacity: 0;
-    color: white;
-    transition: opacity 2s;
-    text-align: center;
-    border-radius: 15px;
-	color: white;
-}
-
-#flashcardText{
-	color: white;
-}
-
-/*the color that the card will change when you click it */
-
-.clicked {
-    background-color: #535353; 
-}
-
-#exitButton{
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    padding: 5px;
-    border-radius: 0px 15px 0px 0px;
-    color: white;
-    background: #333;
-    border: none;
-}
+    #submitbtn{
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 5px;
+        padding: 15px;
+    }
 
 
-#nextButton, #backButton{
-    padding: 5px;
-    margin: 5px;
-    background: #333;
-    color: white;
-    
-}
-    
-
-#SSheader, #SScontent, #SSfooter{
-    opacity: 1;
-    transition: opacity 2s;
-    
-}
-
-.content{
-	align-items: normal;
-}
-
-#flashCardTextHolder{
-	width: 100%;
-	height: 90%;
-}
-
-#flashcardText{
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100%;
-}
+/* ------------------------ OTHER BUTTONS ------------------------ */
 
 
-#settings{
-	height: 100px;
-}
 
-/*
-#settingsHeader{
-	
-}
-*/
 
-#termForm, #myTable {
-    
-    box-sizing:border-box ;
-    color: white; 
-    margin: auto;
-    max-width: 100%;
-    min-width: 100%;
-    background-color: #333; 
-    padding: 30px; 
-    border-radius: 15px;
+
+
+
+/* I have no idea what these are */
+
+    td {
+        padding: 5px;
+    }
+
+
+    #templink {
+        color: black;
+    }
 
 }
-
-#termForm {
-    position: relative;
-}
-#termForm input {
-    flex: 1; /* Input will take up the available space */
-    padding: 5px;
-    border-radius: 5px;
-    width: 100%;
-    align-items: stretch;
-    box-sizing: border-box; /* Include padding and border in the element's total width and height */
-}
-
-#termForm, a {
-    text-align: left;
-}
-
 

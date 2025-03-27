@@ -9,10 +9,6 @@
     <link rel="stylesheet" href="../css/responsive/responsiveIndex.css">
     <link rel="icon" type="image/png" href="../images/fav.png">
 	<style>
-        /* Hide the elements initially 
-        
-            the reason I hide both is to stop the website from flashing "login/signup" when switching tabs
-        */
         #login_signup, #user-info {
             display: none;
         }
@@ -25,7 +21,7 @@
             <li><a href="explore.html">Explore</a></li>
             <li><a href="about.html">About</a></li>
         </ul>
-        <input type="text" placeholder="search.." id="searchbar" onkeypress="clickPress(event)">
+        <input type="text" placeholder="search..." id="searchbar" onkeypress="clickPress(event)">
         <a id="login_signup" href="login.html">Login / Sign-Up</a>
         <span id="user-info" href="profile.html" style="display: none;"></span> <!-- invisible userInfo -->
     </nav>
@@ -46,36 +42,34 @@
     </header>
     <div class="content" id="SScontent">
         <ul class="StudySetOptions">
-			<li><h3 class="StudySetOptionsHeader">Learn!</h3></li>
-            <li><button id="flashcardbtn" class="studysetbutton" onclick="flashCards()">Flash Cards</button></li>
-			<li><button onclick="mconly()" class="studysetbutton">Multiple Choice</button></li>
-			<li><button onclick="oeonly()" class="studysetbutton">Fill in the blank</button></li>
-			<li><button onclick="tfonly()" class="studysetbutton">True or False</button></li>
-			<li><h3 class="StudySetOptionsHeader">Test Yourself!</h3></li>
-            <li><button onclick="generate_quiz()" id="quizbtn" class="studysetbutton">Quiz</button></li>            
-            <li><button onclick="cloneRow()" id="addrowbtn" class="studysetbutton">Add Row</button></li>
+            <div class="controls">
+                <h3>Controls</h3>
+                <div class="controlButtons">
+                    <button id="selectAllButton">Select All</button>
+                    <button id="selectNoneButton">Select None</button>                    
+                </div>
+            </div>
+            <div class="learnOptions">
+                <h3>Learn!</h3>
+                <div class="learnOptionsButtons">
+                    <li><button id="flashcardbtn" class="studysetbutton" onclick="flashCards()">Flash Cards</button></li>
+                    <li><button onclick="mconly()" class="studysetbutton">Multiple Choice</button></li>
+                    <li><button onclick="oeonly()" class="studysetbutton">Fill in the blank</button></li>
+                    <li><button onclick="tfonly()" class="studysetbutton">True or False</button></li>                    
+                </div>
+            </div>
+            <div class="testOptions">
+                <h3>Test Yourself!</h3>
+                <div class="testOptionsButtons">
+                    <li><button onclick="generate_quiz()" id="quizbtn" class="studysetbutton">Quiz</button></li>            
+                    <li><button onclick="cloneRow()" id="addrowbtn" class="studysetbutton">Add Row</button></li>                    
+                </div>
+
+            </div>
+
         </ul>
 
         <div class="StudySet-Container">
-            <div class="controls">
-                <button id="selectAllButton">Select All</button>
-                <button id="selectNoneButton">Select None</button>
-            </div>
-            <table id="myTable">
-                <thead>
-                    <tr>
-                        <th>Select</th>
-                        <th>Questions</th>
-                        <th>Answers</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Rows will be dynamically added here -->
-                </tbody>
-            </table>
-            
-
             <form id="termForm" class = "hidden">
                 <label for="term">Term:</label>
                 <input type="text" id="term" name="term" required><br><br>
@@ -83,6 +77,20 @@
                 <input type="text" id="definition" name="definition" required><br><br>
                 <button type="submit">Add term</button>
             </form>
+
+            <table id="myTable">
+                <thead>
+                    <tr>
+                        <th>Select</th>
+                        <th>Term(s)</th>
+                        <th>Definition(s)</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Rows will be dynamically added here -->
+                </tbody>
+            </table>
         </div>
     </div>
     <footer id="SSfooter"></footer>

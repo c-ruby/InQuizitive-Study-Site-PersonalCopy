@@ -1,155 +1,75 @@
-body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f4f4f4;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    margin: 0;
-    color: #333;
-}
+@media only screen and (min-width:600px) { 
 
-nav {
-    background-color: linear-gradient(135deg, #d32f2f, #b71c1c);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 75px;
-    border-radius: 10px;
-}
+    .subheader {
+        margin:auto;
+        margin-top: 6vh;
+        background-color: rgb(218, 41, 28);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        border: none;
+    }
+    .subheader h1{
+        color:white;
+        padding: 10px;
+    }
 
-nav ul {
-    list-style-type: none;
-    display: flex;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-}
+    .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px;
+    }
 
-nav ul li {
-    margin: 0 15px;
-}
+    #Actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        margin-top: 20px;
+    }
 
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    padding: 12px 18px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-}
+    #Actions button {
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        background: #d32f2f;
+        color: white;
+        cursor: pointer;
+        font-size: 18px;
+        transition: all 0.3s ease-in-out;
+    }
+    #Actions button:hover {
+        background: #b71c1c;
+        transform: scale(1.1);
+    }
 
-nav a:hover {
-    background-color: rgb(173, 36, 36);
-    transform: scale(1.1);
-}
+    #passwordChangeContainer {
+        background: #333;
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        width: 50%;
+        text-align: center;
+        margin-top: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
 
-.logoContainer img {
-    width: 85px;
-    height: auto;
-}
+    #passwordChangeContainer form {
+       display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
 
-header {
-    width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
-}
+    #passwordChangeContainer input {
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #bbb;
+        font-size: 16px;
+    }
 
-.subheader {
-    background: #222;
-    color: white;
-    padding: 25px;
-    border-radius: 12px;
-    margin: 20px auto;
-    width: 50%;
-    font-size: 20px;
-    font-weight: 500;
-    text-transform: uppercase;
-}
+    #passwordChangeContainer input:focus {
+        outline: none;
+        border-color: #d32f2f;
+    }
 
-.content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 30px;
-}
-
-#user-info-box {
-    background-color: #222;
-    color: white;
-    padding: 25px;
-    border-radius: 12px;
-    width: 50%;
-    text-align: center;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-
-}
-
-#Actions {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-    margin-top: 20px;
-}
-
-#Actions button {
-    padding: 12px 24px;
-    border-radius: 8px;
-    border: none;
-    background: #d32f2f;
-    color: white;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    text-transform: uppercase;
-    transition: all 0.3s ease-in-out;
-}
-
-#Actions button:hover {
-    background: #b71c1c;
-    transform: scale(1.1);
-}
-
-#passwordChangeContainer {
-    background: #222;
-    color: white;
-    padding: 25px;
-    border-radius: 12px;
-    width: 50%;
-    text-align: center;
-    margin-top: 25px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-#passwordChangeContainer form {
-   display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-#passwordChangeContainer input {
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #bbb;
-    font-size: 16px;
-}
-
-#passwordChangeContainer input:focus {
-    outline: none;
-    border-color: #d32f2f;
-}
-
-footer {
-    background-color: #b0bec5;
-    width: 100%;
-    text-align: center;
-    padding: 20px;
-    font-size: 16px;
-    font-weight: 500;
-    position: relative;
-    bottom: 0;
 }

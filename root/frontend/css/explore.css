@@ -1,17 +1,25 @@
 @media only screen and (min-width:600px){ 
 
-
     .subheader {
         margin:auto;
         margin-top: 6vh;
+        background-color: rgb(218, 41, 28);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        border: none;
     }
+
+    .subheader h1{
+		color:white;
+		padding: 10px;
+	}
 
     footer {
         background-color: #c2c2c2;		
         text-align: center;
-        position: relative;
+        position:static;
         margin-top: 5%;
-        height: 150px;
+        margin-bottom: 0%;
+        height: 450px;
         width: 100%;
     }
 
