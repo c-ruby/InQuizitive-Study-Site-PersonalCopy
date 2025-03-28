@@ -403,9 +403,9 @@ function generate_quiz(){
 				
 				//pushes the corrent generated answers to array, this is only used to check if the correct answer is in the options
 				selectedAnswers.push(rand_answers.at(i));
-					
-				formforquiz.appendChild(answerLbl);
+				
 				formforquiz.appendChild(questionAnswer);
+				formforquiz.appendChild(answerLbl);
 				
 				formforquiz.appendChild(document.createElement("br"));
 				
@@ -445,6 +445,7 @@ function generate_quiz(){
 			questionLbl.innerHTML = "term: " + document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML + '&nbsp';
 			questionLbl.id = "OE"+qcount;
 			formforquiz.appendChild(questionLbl);
+			formforquiz.appendChild(document.createElement("br"));
 			
 			//generates the actual radio input
 			questionAnswer = document.createElement("input");

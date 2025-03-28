@@ -12,6 +12,17 @@
         transition: opacity 2s;
     }
 
+    /* DO NOT DELETE -- We have a weird bug... */
+    nav #user-info a {
+		color: white;		
+		text-decoration: none;
+		margin-right: 30px;
+		font-size: 18px;	
+		padding: 20px;
+		display: block;
+		transition: 0.3s;
+    }
+
     /* Covers both #studySetName and subheader */
     .subheader {
         display: flex;
@@ -33,7 +44,8 @@
     }
 
     .footer {
-        margin: auto;
+        position: absolute;
+        margin-bottom: 50px;
     }
 
 /* ------------------------ HEADER ------------------------ */
@@ -138,6 +150,11 @@
     #termForm {
         position: relative;
     }
+    /* Edits individual entries in a table */
+    td {
+        padding: 5px;
+        border-top: 1px solid #ddd; 
+    }
 
     /* Edits the input bars for set creator/editor */
     #termForm input {
@@ -192,12 +209,23 @@
         transition: 0.3s;
     }
     .edit-button:hover {
+        background-color: #003d77;
+        border-color: #003d77;
+        color: white;
+    }
+
+    .save-button {
         border-color: #c2c2c2;
         border-style: solid;
         border-width: 2px;
         border-radius: 10px;
         padding: 10px;
         transition: 0.3s;
+    }
+    .save-button:hover {
+        background-color: #003d77;
+        border-color: #003d77;
+        color: white;
     }
 
     /* Edits the Checkboxes */
@@ -215,27 +243,27 @@
 /* ------------------------ QUIZZES ------------------------ */
     
     #Quiz, #settings{
-        width:50%;
+        width: 40%;
         height: auto;
-        background: #333;
         position: absolute;
-        left: 0;
-        right: 0;
-        top: 30%;
-        margin-inline: auto;
+        margin-top: 90px;
+        gap: 15%;
+        align-self: center;
+        text-align: center;
         opacity: 0;
+        background: #333;
         color: white;
         transition: opacity 2s;
-        text-align: center;
-        border-radius: 15px;
+        border-radius: 10px;
     }
-
-    #Quiz h1{
+    #Quiz .details-section {
         color: white;
     }
 
-    #quiz-QA-selector{
-        padding: 15px;
+    #quiz-QA-selector {
+        padding: 10px;
+        text-align: left;
+        
     }
 
 /* ------------------------ QUIZZES ------------------------ */
@@ -312,33 +340,26 @@
 /* ------------------------ OTHER BUTTONS ------------------------ */
     
     #submitbtn{
-        position: absolute;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        margin: 5px;
-        padding: 15px;
+        border-color: #c2c2c2;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        margin: auto;
+        margin-bottom: 20px;
+        padding: 10px;
+        transition: 0.3s;
     }
-
 
 /* ------------------------ OTHER BUTTONS ------------------------ */
 
 
 
-
-
-
-
-/* I have no idea what these are */
-
-    td {
-        padding: 5px;
-    }
-
-
+/* I have no idea what this is */
+/*
     #templink {
         color: black;
     }
+*/
 
 }
 

@@ -72,6 +72,7 @@
 
 	/* Edits unordered list that stores the links in the navbar*/
 	nav ul {
+
 		margin-left: 15px;
 		list-style-type: none;
 		display:flex;
@@ -123,8 +124,8 @@
 	}
 
     nav #user-info a {
-        color: white;
-		text-decoration: none;	
+		color: white;		
+		text-decoration: none;
     }
 
 	/*this is for the div that contains the searchbar*/
