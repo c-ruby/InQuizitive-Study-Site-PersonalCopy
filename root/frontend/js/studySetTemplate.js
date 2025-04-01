@@ -258,10 +258,10 @@ mcquestions = multiple choice
 oequestions = open ended/fill in the blank
 tfquestions = true or false questions
 */
-var mcquestions = 5;
-var oequestions = 5;
-var tfquestions = 5;
-var totalQuestions = mcquestions + oequestions + tfquestions;
+var mcquestions = 0;
+var oequestions = 0;
+var tfquestions = 0;
+var totalQuestions = 0;
 
 
 var tempmcquestions = mcquestions;
@@ -276,9 +276,18 @@ const rand_answers = [];
 
 //used to fill the question array and randomize it
 function QuestionHandler(){
+	//this will be used to select a random question type to get extra question
+	var randomUnevenQuestionType = 0;
+	//this will hold the number of questions per type used later in function
+	var questionHolder = 0;
+	//this will not be 0 if the total questions cannot be divided evenly
+	var extraFlag = 0
+	
+	//if the correct_questions array is empty
 	if(correct_questions.length === 0){
-		// Check if the class 'my-class' exists
+		// Check if the class 'selected-row' exists
 		if(document.getElementsByClassName('selected-row').length > 0) {
+			//if selected row exists this for loop will go through each row and only push the row's that are selected to the question array
 			for(var i=1; i<=getRowCount(); i++){
 				if(document.getElementById("row"+i).classList.contains('selected-row')){
 					correct_questions.push(i);
@@ -286,26 +295,79 @@ function QuestionHandler(){
 			}
 		} 
 		else {
+			//this will push all rows into the correct_questions array
 			for(var i=1; i<=getRowCount(); i++){
 				correct_questions.push(i);
 			}	
 		}
 	}
 	else{
+		//this will randomize the array
 		shuffleArray(correct_questions);
 	}
-	
+	//if the rand_answers array is empty
 	if(rand_answers.length === 0){
+		//this for loop will fill it
 		for(var i=1; i<=getRowCount(); i++){
 			rand_answers.push(i);
 		}
 	}
 	else{
+		//this will randomize the array
 		shuffleArray(rand_answers);
 	}
 	
+	//randomizes both arrays to make sure the answer is truly random
 	shuffleArray(correct_questions);
 	shuffleArray(rand_answers);
+	
+	/*------------------- quiz length portion of quizHandler ----------------------*/
+	
+	//sets the total questions to the length of the correct_questions array g
+	totalQuestions = correct_questions.length;
+	
+	//if the user is just doing multiple choice questions
+	if(mcquestions == 1 && oequestions == 0 && tfquestions == 0){
+		mcquestions = correct_questions.length;
+	}
+	//if the user is just doing open ended questions
+	else if(mcquestions == 0 && oequestions == 1 && tfquestions == 0){
+		oequestions = correct_questions.length;
+	}
+	//if the user is just doing true false questions
+	else if(mcquestions == 0 && oequestions == 0 && tfquestions == 1){
+		tfquestions = correct_questions.length;
+	}
+	//if the user is doing a quiz
+	else{
+		//questionHolder will be the length of correct_questions/3 rounded down
+		questionHolder = Math.floor(correct_questions.length / 3);
+		
+		//will assign each length of section
+		mcquestions = questionHolder * 1;
+		oequestions = questionHolder * 2;
+		tfquestions = questionHolder * 3;
+
+		//the extraFlag will tell the program if there is a remainder
+		extraFlag = correct_questions.length % 3;
+		if(extraFlag != 0){
+			//will get a random number between 1 and 3
+			randomUnevenQuestionType = getRandomNumber(1,3);
+			//if random number is 1 it will add the extra to the mcquestions
+			if(randomUnevenQuestionType == 1){
+				mcquestions++;
+			}
+			//if the random number is 2 it will add one to the oequestions 
+			else if(randomUnevenQuestionType == 2){
+				oequestions++;
+			}
+			//if the random number is 3 it will add one to the tfquestions
+			else{
+				tfquestions++;
+			}
+		}
+	}
+	
 }
 
 //generates the quiz
@@ -367,14 +429,13 @@ function generate_quiz(){
 		mcquestions = 0;
 	}
 	else{
-		while(qcount != mcquestions){
+		while(qcount < mcquestions){
 			
-			randomQuestion = getRandomNumber(0, correct_questions.length-1);
-			currentQuestion = correct_questions.at(randomQuestion);
+			currentQuestion = correct_questions.at(qcount);
 	
 			//adds question label and answer buttons
 			questionLbl = document.createElement("label");
-			questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML;
+			questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(qcount)).innerHTML;
 			questionLbl.id = "MC"+qcount;
 			formforquiz.appendChild(questionLbl);
 			formforquiz.appendChild(document.createElement("br"));
@@ -414,7 +475,7 @@ function generate_quiz(){
 				}
 			}
 			
-			if(selectedAnswers.includes(currentQuestion) == false){
+			if(selectedAnswers.includes(correct_questions.at(qcount)) == false){
 				document.getElementById("MC"+qcount+"LB"+correctAnswer).innerText =  document.getElementById("answer" + currentQuestion).innerText;
 				document.getElementById("MC"+qcount+"A"+correctAnswer).classList.add("correct_response");
 			}
@@ -426,23 +487,16 @@ function generate_quiz(){
 			
 			qcount++;
 		}
-		qcount = 0;
 	}
 	
 	//--------------------- Open Ended Question generation --------------------------//
-	
-	//randomizes the quiz questions
-	QuestionHandler();
 
 	if(termCount>0){
-		while(qcount != oequestions){
-			
-			randomQuestion = getRandomNumber(0, correct_questions.length-1);
-			
+		while(qcount < oequestions){
 			
 			//adds question label and text input
 			questionLbl = document.createElement("label");
-			questionLbl.innerHTML = "term: " + document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML + '&nbsp';
+			questionLbl.innerHTML = "term: " + document.getElementById("question"+correct_questions.at(qcount)).innerHTML + '&nbsp';
 			questionLbl.id = "OE"+qcount;
 			formforquiz.appendChild(questionLbl);
 			formforquiz.appendChild(document.createElement("br"));
@@ -458,22 +512,18 @@ function generate_quiz(){
 			formforquiz.appendChild(document.createElement("br"));
 			formforquiz.appendChild(document.createElement("br"));
 				
-			oe_questions.push(document.getElementById("answer"+correct_questions.at(randomQuestion)));	
+			oe_questions.push(document.getElementById("answer"+correct_questions.at(qcount)));	
 			
 			qcount++;
 		}
 	}
 	
-	qcount = 0;
-	
 	//--------------------- True or False Question generation --------------------------//
 	
-	QuestionHandler();
 	
 	if(termCount>0){
-			while(qcount != tfquestions){
-			randomQuestion = getRandomNumber(0, correct_questions.length-1);
-			currentQuestion = correct_questions.at(randomQuestion);
+		while(qcount < tfquestions){
+			currentQuestion = correct_questions.at(qcount);
 			tfflag = getRandomNumber(0, 1);
 			
 			//adds term label
@@ -482,7 +532,7 @@ function generate_quiz(){
 			formforquiz.appendChild(questionLbl);
 			
 			questionLbl = document.createElement("label");
-			questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML;
+			questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(qcount)).innerHTML;
 			questionLbl.id = "TFT"+qcount;
 			formforquiz.appendChild(questionLbl);
 			formforquiz.appendChild(document.createElement("br"));
@@ -547,7 +597,6 @@ function generate_quiz(){
 	quiz.appendChild(submitbtn);
 	
 	
-	mcquestions = tempmcquestions;
 }
 
 function quizCheck() {
@@ -555,7 +604,7 @@ function quizCheck() {
     var total = mcquestions+oequestions+tfquestions;
     var correctAnswered = 0;
 	var questionIterator = 0;
-	var iterator = 0;
+	var iterator = mcquestions+1;
 	
 	if(termCount == 0){
 		enableSSaction();
@@ -577,14 +626,13 @@ function quizCheck() {
 		
 		//open ended check
 		while(iterator != oequestions){
-			if(document.getElementById("OE"+iterator+"A").value === oe_questions[iterator].textContent){
+			if(document.getElementById("OE"+iterator+"A").value === oe_questions[questionIterator].textContent){
 				correctAnswered++;
 			}
-			iterator++
+			iterator++;
+			questionIterator++
 		}
 	}
-   
-	
     
 	correctAnswered = correctAnswered/total*100;
     alert(`Correct answers: ${correctAnswered}` + "%");
