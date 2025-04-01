@@ -675,12 +675,14 @@ function quizCheck() {
 		});
 		
 		//open ended check
-		while(iterator != oequestions){
-			if(document.getElementById("OE"+iterator+"A").value === oe_questions[questionIterator].textContent){
-				correctAnswered++;
+		if(oequestions < 0){
+			while(iterator != oequestions){
+				if(document.getElementById("OE"+iterator+"A").value === oe_questions[questionIterator].textContent){
+					correctAnswered++;
+				}
+				iterator++;
+				questionIterator++
 			}
-			iterator++;
-			questionIterator++
 		}
 	}
     
@@ -694,33 +696,38 @@ function quizCheck() {
 }
 
 function mconly(){
-	mcquestions = 5;
+	mcquestions = 1;
 	oequestions = 0;
 	tfquestions = 0;
 	
 	generate_quiz();
 	document.getElementById(submitbtn).onclick = quizCheck;
+	
+	mcquestions = 0;
 
 }
 
 function oeonly(){
 	mcquestions = 0;
-	oequestions = 5;
+	oequestions = 1;
 	tfquestions = 0;
 	
 	generate_quiz();
 	document.getElementById(submitbtn).onclick = quizCheck;
 
+	oequestions = 0;
 }
 
 function tfonly(){
 	mcquestions = 0;
 	oequestions = 0;
-	tfquestions = 5;
+	tfquestions = 1;
 	
 	generate_quiz();
 	document.getElementById(submitbtn).onclick = quizCheck;
 
+
+	tfquestions=0;
 }
 
 // ------------ FLASH CARDS ------------ //
