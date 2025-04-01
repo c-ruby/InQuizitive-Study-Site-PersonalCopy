@@ -31,6 +31,11 @@ module.exports = function(app, db)
     }
   });
 
+  //just get current username 
+  app.get('/current-user', (req, res) => {
+    const currentUser = req.session?.user || null; // Retrieve user or return null
+    res.json({ user: currentUser });
+});
 
 
   // Route to check for the presence of a user account in the database

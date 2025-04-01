@@ -5,6 +5,17 @@ study set templates and their features
 should be placed in this file
 */
 
+//initialize page 
+document.addEventListener('DOMContentLoaded', async () => {
+    await checkEditAuth(); // Wait for user and authorization setup to complete
+    await fetchTerms(); // Populate the table and learning status after auth check
+});
+
+
+
+
+
+
 //-------user-auth---------//
 let auth = false; // Authorization flag
 let studySetUser = null; // creator of current study set 
@@ -112,6 +123,28 @@ function updateVisibility() {
     })
 }
 
+function fetchCurrentUser() {
+    let CURRENT_USER = null; // Default to null
+
+    fetch('/current-user')
+        .then(response => response.json())
+        .then(data => {
+            if (data.user) {
+                CURRENT_USER = data.user; // Set the current user
+                console.log("Current user:", CURRENT_USER);
+            } else {
+                console.warn("No user logged in.");
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching current user:", error);
+        });
+
+    return CURRENT_USER; // Note: This will initially return null because fetch is asynchronous
+}
+
+
+
 
 
 
@@ -162,37 +195,80 @@ table.addEventListener('change', (event) => {
 });
 
 //Learning status funcitons
-function toggleLearningStatus(cell) {
-    const statusBubble = cell.querySelector('.status-bubble'); // Access the bubble element
-    if (statusBubble.textContent === "unknown") {
-        statusBubble.textContent = "known";
-        statusBubble.classList.remove('unknown');
-        statusBubble.classList.add('known');
-    } else {
-        statusBubble.textContent = "unknown";
-        statusBubble.classList.remove('known');
-        statusBubble.classList.add('unknown');
+async function toggleLearningStatus(termId, username, statusBubble) {
+    const newStatus = statusBubble.textContent === "unknown" ? 1 : 0;
+
+    // Update the UI immediately for smoother experience
+    statusBubble.textContent = newStatus === 1 ? "known" : "unknown";
+    statusBubble.classList.toggle('unknown', newStatus === 0);
+    statusBubble.classList.toggle('known', newStatus === 1);
+
+    // Send the status update to the backend
+    try {
+        const response = await fetch('/update-term-status', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                termId: termId,
+                username: username,
+                status: newStatus,
+            }),
+        });
+
+        const result = await response.json();
+        if (!response.ok) {
+            console.error("Failed to update status in database:", result.message);
+        }
+    } catch (error) {
+        console.error("Error while updating status:", error);
     }
 }
 
-function addLearningStatusCell(row) {
+
+
+async function addLearningStatusCell(row, termId, username) {
     const statusCell = row.insertCell();
     
+    // Create the status bubble
     const statusBubble = document.createElement('span');
-    statusBubble.textContent = "unknown"; // Default text
-    statusBubble.classList.add('status-bubble', 'unknown'); // Default class
+    statusBubble.textContent = "Loading..."; // Placeholder text
+    statusBubble.classList.add('status-bubble'); // Initial class
     statusCell.appendChild(statusBubble);
+
+    // Fetch term status from the backend
+    try {
+        const response = await fetch(`/get-term-status?username=${username}&termId=${termId}`);
+        const data = await response.json();
+
+        // Set status based on the response
+        const statusValue = data.status; // Assuming the backend returns a numeric `status` field
+        if (statusValue > 0) {
+            statusBubble.textContent = "known";
+            statusBubble.classList.add('known'); // Apply appropriate CSS class
+        } else {
+            statusBubble.textContent = "unknown";
+            statusBubble.classList.add('unknown'); // Apply appropriate CSS class
+        }
+    } catch (error) {
+        console.error("Error fetching term status:", error);
+        statusBubble.textContent = "error"; // Indicate fetching error
+        statusBubble.classList.add('error'); // Apply error class
+    }
 
     console.log("Status bubble added:", statusBubble); // Debugging check
     
+    // Add toggle button
     const toggleButton = document.createElement('button');
     toggleButton.textContent = "Toggle Status";
     toggleButton.classList.add('toggle-button');
     toggleButton.addEventListener('click', () => {
-        toggleLearningStatus(statusCell); // Pass the entire cell to the function
+        toggleLearningStatus(termId, currentUser, statusBubble); // Pass required info to toggle
     });
     statusCell.appendChild(toggleButton);
 }
+
 
 
 
@@ -935,14 +1011,18 @@ document.getElementById('selectUnknownButton').addEventListener('click', () => t
 
 		row.appendChild(actionCell);
 		
-	
+		
 		//learning status
-		addLearningStatusCell(row);
-		console.log("Row after adding learning status:", row);
+		
+		if(currentUser != null){
+			addLearningStatusCell(row, termId, currentUser);
+			console.log("Row after adding learning status:", row);
+		}
+		
 
 
     }
-fetchTerms();
+
 
 /* 
 	script to handle form submission and save term to database 

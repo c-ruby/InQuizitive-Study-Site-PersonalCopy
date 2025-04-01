@@ -219,5 +219,50 @@ app.post('/study-sets', (req, res) => {
           res.status(200).send('Visit history updated');
       });
     });
+
+
+
+//-----learning status routes---------
+    //get status for specific term and user 
+    app.get('/get-term-status', (req, res) => {
+        const { username, termId } = req.query;
+        const query = `
+            SELECT status
+            FROM TermStatus
+            WHERE username = ? AND term_id = ?;
+        `;
+        db.query(query, [username, termId], (err, results) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send({ message: 'Error retrieving term status' });
+            } else if (results.length > 0) {
+                res.send({ status: results[0].status });
+            } else {
+                res.send({ status: 0 }); // Default to 'unknown'
+            }
+        });
+    });
+
+    app.post('/update-term-status', (req, res) => {
+        const { termId, username, status } = req.body;
+    
+        const query = `
+            INSERT INTO TermStatus (username, term_id, status)
+            VALUES (?, ?, ?)
+            ON DUPLICATE KEY UPDATE status = VALUES(status);
+        `;
+    
+        db.query(query, [username, termId, status], (err) => {
+            if (err) {
+                console.error('Error updating term status:', err);
+                res.status(500).send({ message: 'Failed to update term status' });
+            } else {
+                res.send({ message: 'Term status updated successfully' });
+            }
+        });
+    });
+    
+    
+    
 };
   
