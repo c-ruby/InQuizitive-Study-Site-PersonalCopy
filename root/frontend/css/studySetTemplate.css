@@ -235,6 +235,47 @@
         background: #FFF;
     }
 
+    /* Learning Status Column Styles */
+    .learning-status {
+        display: inline-block;
+        padding: 5px 10px;
+        margin: 5px; /* Adds a small margin around the box */
+        border-radius: 10px; /* Rounds the corners */
+        color: white;
+        font-size: 12px;
+        text-align: center;
+    }
+    
+    .known {
+        background-color: green;
+        padding: 5px 10px; /* Adds spacing inside the bubble */
+        margin: 5px; /* Adds a small margin around the text */
+        border-radius: 10px; /* Rounds the corners around the text */
+        color: white; /* Text color */
+        display: inline-block; /* Keeps the styling contained to the text */
+        font-size: 12px;
+        text-align: center;
+    }
+    
+    .unknown {
+        background-color: red;
+        padding: 5px 10px; /* Adds spacing inside the bubble */
+        margin: 5px; /* Adds a small margin around the text */
+        border-radius: 10px; /* Rounds the corners around the text */
+        color: white; /* Text color */
+        display: inline-block; /* Keeps the styling contained to the text */
+        font-size: 12px;
+        text-align: center;
+    }
+    
+    
+    
+    .toggle-button {
+        margin-left: 10px;
+    }
+    
+
+
 /* ------------------------ STUDY SET TABLE / FORM ------------------------ */
 
 

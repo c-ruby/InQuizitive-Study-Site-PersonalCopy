@@ -161,6 +161,41 @@ table.addEventListener('change', (event) => {
     }
 });
 
+//Learning status funcitons
+function toggleLearningStatus(cell) {
+    const statusBubble = cell.querySelector('.status-bubble'); // Access the bubble element
+    if (statusBubble.textContent === "unknown") {
+        statusBubble.textContent = "known";
+        statusBubble.classList.remove('unknown');
+        statusBubble.classList.add('known');
+    } else {
+        statusBubble.textContent = "unknown";
+        statusBubble.classList.remove('known');
+        statusBubble.classList.add('unknown');
+    }
+}
+
+function addLearningStatusCell(row) {
+    const statusCell = row.insertCell();
+    
+    const statusBubble = document.createElement('span');
+    statusBubble.textContent = "unknown"; // Default text
+    statusBubble.classList.add('status-bubble', 'unknown'); // Default class
+    statusCell.appendChild(statusBubble);
+
+    console.log("Status bubble added:", statusBubble); // Debugging check
+    
+    const toggleButton = document.createElement('button');
+    toggleButton.textContent = "Toggle Status";
+    toggleButton.classList.add('toggle-button');
+    toggleButton.addEventListener('click', () => {
+        toggleLearningStatus(statusCell); // Pass the entire cell to the function
+    });
+    statusCell.appendChild(toggleButton);
+}
+
+
+
 
 //allows for random numbers within a certain range
 function getRandomNumber(min, max) {
@@ -805,6 +840,30 @@ function toggleSelection(selectAll) {
 document.getElementById('selectAllButton').addEventListener('click', () => toggleSelection(true));
 document.getElementById('selectNoneButton').addEventListener('click', () => toggleSelection(false));
 
+function toggleStatusSelection(filterClass) {
+    const rows = document.querySelectorAll('#myTable tbody tr');
+    rows.forEach((row) => {
+        const checkbox = row.querySelector('.row-checkbox'); // Locate the checkbox in the row
+        const statusBubble = row.querySelector('.status-bubble'); // Locate the bubble element
+
+        // Ensure the bubble exists and matches the filter class
+        if (statusBubble?.classList.contains(filterClass)) {
+            checkbox.checked = true; // Select the checkbox
+            console.log("Checkbox selected for row:", row);
+        } else if (checkbox) {
+            checkbox.checked = false; // Deselect the checkbox
+            console.log("Checkbox deselected for row:", row);
+        }
+
+		updateRowSelection(row, checkbox.checked);
+    });
+}
+
+
+document.getElementById('selectKnownButton').addEventListener('click', () => toggleStatusSelection('known'));
+document.getElementById('selectUnknownButton').addEventListener('click', () => toggleStatusSelection('unknown'));
+
+
 
 
 
@@ -852,13 +911,14 @@ document.getElementById('selectNoneButton').addEventListener('click', () => togg
 		editBtn.onclick = () => makeRowEditable(row);
 		actionCell.appendChild(editBtn);
 
-		
-		
-		
-
 		row.appendChild(actionCell);
 		
 	
+		//learning status
+		addLearningStatusCell(row);
+		console.log("Row after adding learning status:", row);
+
+
     }
 fetchTerms();
 
