@@ -385,21 +385,36 @@ function QuestionHandler(){
 
 		//the extraFlag will tell the program if there is a remainder
 		extraFlag = correct_questions.length % 3;
-		if(extraFlag != 0){
+		while(extraFlag > 0){
 			//will get a random number between 1 and 3
 			randomUnevenQuestionType = getRandomNumber(1,3);
-			//if random number is 1 it will add the extra to the mcquestions
-			if(randomUnevenQuestionType == 1){
-				mcquestions++;
-			}
-			//if the random number is 2 it will add one to the oequestions 
-			else if(randomUnevenQuestionType == 2){
-				oequestions++;
-			}
-			//if the random number is 3 it will add one to the tfquestions
-			else{
+			if(extraFlag == 1){
+				//if random number is 1 it will add the extra to the mcquestions
+				if(randomUnevenQuestionType == 1){
+					mcquestions++;
+					oequestions++;
+				}
+				//if the random number is 2 it will add one to the oequestions 
+				if(randomUnevenQuestionType == 2){
+					oequestions++;
+				}
 				tfquestions++;
 			}
+			
+			if(extraFlag == 2){
+				//if random number is 1 it will add the extra to the mcquestions
+				if(randomUnevenQuestionType == 1){
+					mcquestions++;
+					oequestions++;
+				}
+				//if the random number is 2 it will add one to the oequestions 
+				if(randomUnevenQuestionType == 2){
+					oequestions++;
+				}
+				
+				tfquestions++;
+			}
+			extraFlag--;
 		}
 	}
 	
