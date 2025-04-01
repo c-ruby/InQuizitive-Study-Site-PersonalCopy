@@ -219,5 +219,45 @@ app.post('/study-sets', (req, res) => {
           res.status(200).send('Visit history updated');
       });
     });
+
+   
+
+// API endpoint to share a study set
+app.post("/api/share-studyset", async (req, res) => {
+    const username = req.session.user.username;
+    const { shareStudySet } = require("./controllers/studySetController");
+    const { studySetId, shareWith } = req.body;
+
+    if (!studySetId || !shareWith) {
+        return res.status(400).json({ error: "Missing required fields." });
+    }
+
+    try {
+        const result = await shareStudySet(studySetId, shareWith);
+        res.status(200).json({ message: "Study set shared successfully.", result });
+    } catch (error) {
+        console.error("Error sharing study set:", error);
+        res.status(500).json({ error: "Failed to share study set." });
+    }
+});
+
+const db = require("../db"); // Replace with your database connection
+
+// Function to share a study set
+async function shareStudySet(studySetId, shareWith) {
+    // Check if the user exists
+    const user = await db.query("SELECT * FROM users WHERE username = $1 OR email = $1", [shareWith]);
+    if (user.rowCount === 0) {
+        throw new Error("User not found.");
+    }
+
+    // Add the sharing record to the database
+    await db.query(
+        "INSERT INTO shared_studysets (studyset_id, user_id) VALUES ($1, $2)",
+        [studySetId, user.rows[0].id]
+    );
+
+    return { studySetId, sharedWith: shareWith };
+}
 };
   
