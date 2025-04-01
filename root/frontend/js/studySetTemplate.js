@@ -651,10 +651,11 @@ function generate_quiz(){
 
 function quizCheck() {
 	var termCount = getRowCount();
-    var total = mcquestions+oequestions+tfquestions;
+    var total = totalQuestions;
     var correctAnswered = 0;
 	var questionIterator = 0;
-	var iterator = mcquestions+1;
+	var iterator = mcquestions;
+	var score = 0;
 	
 	if(termCount == 0){
 		enableSSaction();
@@ -675,7 +676,10 @@ function quizCheck() {
 		});
 		
 		//open ended check
-		if(oequestions < 0){
+		if(oequestions > 0){
+			if(mcquestions == 0){
+				iterator = 0;
+			}
 			while(iterator != oequestions){
 				if(document.getElementById("OE"+iterator+"A").value === oe_questions[questionIterator].textContent){
 					correctAnswered++;
@@ -686,8 +690,9 @@ function quizCheck() {
 		}
 	}
     
-	correctAnswered = correctAnswered/total*100;
-    alert(`Correct answers: ${correctAnswered}` + "%");
+	score = correctAnswered/total*100;
+	score = score.toFixed(2);
+    alert(`Correct answers: ${score}` + "%");
 	enableSSaction();
 	
 	mcquestions = tempmcquestions;
