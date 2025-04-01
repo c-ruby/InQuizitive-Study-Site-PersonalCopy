@@ -1102,3 +1102,51 @@ document.addEventListener('DOMContentLoaded', updateStudySetTitle);
 document.addEventListener('DOMContentLoaded', fetchStudySetDetails);
 
 
+document.addEventListener("DOMContentLoaded", () => {
+    const shareButton = document.getElementById("shareStudySetButton");
+    const shareOptions = document.getElementById("shareOptions");
+    const confirmShareButton = document.getElementById("confirmShareButton");
+    const shareWithUserInput = document.getElementById("shareWithUser");
+    const shareMessage = document.getElementById("shareMessage");
+
+    // Show the share options when the "Share" button is clicked
+    shareButton.addEventListener("click", () => {
+        shareOptions.style.display = "block";
+    });
+
+    // Handle sharing the study set
+    confirmShareButton.addEventListener("click", async () => {
+        const usernameOrEmail = shareWithUserInput.value.trim();
+        if (!usernameOrEmail) {
+            alert("Please enter a username or email to share with.");
+            return;
+        }
+
+        // Send the share request to the backend
+        try {
+            const response = await fetch("/api/share-studyset", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    studySetId: "12345", // Replace with the actual study set ID
+                    shareWith: usernameOrEmail,
+                }),
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                shareMessage.textContent = `Study set shared successfully with ${usernameOrEmail}.`;
+                shareMessage.style.display = "block";
+            } else {
+                shareMessage.textContent = `Failed to share study set: ${result.error}`;
+                shareMessage.style.display = "block";
+            }
+        } catch (error) {
+            console.error("Error sharing study set:", error);
+            shareMessage.textContent = "An error occurred while sharing the study set.";
+            shareMessage.style.display = "block";
+        }
+    });
+});

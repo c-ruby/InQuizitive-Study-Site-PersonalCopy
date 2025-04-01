@@ -80,6 +80,15 @@
                 <input type="text" id="definition" name="definition" required><br><br>
                 <button type="submit">Add term</button>
             </form>
+            <div class="share-container">
+                <button id="shareStudySetButton">Share Study Set</button>
+                <div id="shareOptions" style="display: none;">
+                    <label for="shareWithUser">Share with:</label>
+                    <input type="text" id="shareWithUser" placeholder="Enter username or email">
+                    <button id="confirmShareButton">Share</button>
+                </div>
+                <p id="shareMessage" style="display: none;"></p>
+            </div>
 
             <table id="myTable">
                 <thead>
