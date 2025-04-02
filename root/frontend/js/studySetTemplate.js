@@ -98,27 +98,33 @@ function updateVisibility() {
         }
     });
 
-	//update visibility for action column
+	//update visibility for action and learning status column for non-account users
 	const rows = document.querySelectorAll('#myTable tbody tr');
 	const actionsHeader = document.querySelector('#myTable thead th:last-child');
+    const statusHeader = document.querySelector('#myTable thead th:nth-child(4)');
     if (auth) {
         actionsHeader.classList.remove('hidden');
+        statusHeader.classList.remove('hidden');
     }
 	else
 	{
 		actionsHeader.classList.add('hidden');
+        statusHeader.classList.add('hidden');
 	}
 
-
     rows.forEach(row => {
-        // Reference the "Action" cell (last cell in the row)
+        // Reference the Action and Status cells
         const actionCell = row.lastElementChild;
+        const statusCell = row.cells[4];
 
         // Add or remove the 'hidden' class based on the flag
         if (auth) {
             actionCell.classList.remove('hidden');
+            statusCell.classList.remove('hidden');
+
         } else {
             actionCell.classList.add('hidden');
+            statusCell.classList.add('hidden');
         }
     })
 }
@@ -245,10 +251,10 @@ async function addLearningStatusCell(row, termId, username) {
         // Set status based on the response
         const statusValue = data.status; // Assuming the backend returns a numeric `status` field
         if (statusValue > 0) {
-            statusBubble.textContent = "known";
+            statusBubble.textContent = " ";      // Simply apply color indicators instead
             statusBubble.classList.add('known'); // Apply appropriate CSS class
         } else {
-            statusBubble.textContent = "unknown";
+            statusBubble.textContent = " ";        // Simply apply color indicators instead
             statusBubble.classList.add('unknown'); // Apply appropriate CSS class
         }
     } catch (error) {

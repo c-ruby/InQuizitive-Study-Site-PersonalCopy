@@ -1,3 +1,9 @@
+// Script to update user-info on profile page
+document.getElementById("userName").innerHTML = userInfo.name;
+document.getElementById("userJoinDate").innerHTML = userInfo.joinDate;
+
+
+
 //script to handle logging out 
 document.addEventListener('DOMContentLoaded', (event) => {
     const deleteAccountBtn = document.getElementById('logoutBtn');
