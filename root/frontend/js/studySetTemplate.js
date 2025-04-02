@@ -5,6 +5,13 @@ study set templates and their features
 should be placed in this file
 */
 
+
+
+
+
+
+
+
 //initialize page 
 document.addEventListener('DOMContentLoaded', async () => {
     await checkEditAuth(); // Wait for user and authorization setup to complete
@@ -725,6 +732,24 @@ function generate_quiz(){
 	
 }
 
+async function checkAnswer(userInput, correctAnswer) {
+    try {
+        const response = await fetch('/check-answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userInput, correctAnswer }),
+        });
+
+        const result = await response.json();
+        console.log(result.message); // Display the response message
+    } catch (error) {
+        console.error("Error checking answer:", error);
+    }
+}
+
+
+
+
 function quizCheck() {
 	var termCount = getRowCount();
     var total = totalQuestions;
@@ -757,7 +782,7 @@ function quizCheck() {
 				iterator = 0;
 			}
 			while(iterator != oequestions){
-				if(document.getElementById("OE"+iterator+"A").value === oe_questions[questionIterator].textContent){
+				if(checkAnswer(document.getElementById("OE"+iterator+"A").value, oe_questions[questionIterator].textContent)){
 					correctAnswered++;
 				}
 				iterator++;
@@ -794,7 +819,13 @@ function oeonly(){
 	tfquestions = 0;
 	
 	generate_quiz();
-	document.getElementById(submitbtn).onclick = quizCheck;
+
+	
+	document.getElementById(submitbtn).onclick = quizCheck;	
+	
+	
+
+	
 
 	oequestions = 0;
 }

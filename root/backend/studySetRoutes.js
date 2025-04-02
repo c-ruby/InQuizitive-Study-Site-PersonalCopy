@@ -1,5 +1,21 @@
 module.exports = function(app, db) 
 {
+//-----check answer route-----
+    app.post('/check-answer', (req, res) => {
+        const { userInput, correctAnswer } = req.body; // Expect user input and correct answer in the request body
+
+        // Compute Levenshtein distance
+        const distance = levenshtein.get(userInput, correctAnswer);
+        const threshold = 2; // Adjust this value based on desired tolerance
+
+        if (distance <= threshold) {
+            res.json({ success: true, message: "Close enough! Correct answer." });
+        } else {
+            res.json({ success: false, message: "Not quite. Try again!" });
+        }
+    });
+
+
     // Route to get study sets for the current user
     app.get('/study-sets', (req, res) => {
       const username = req.session.user.username;

@@ -13,6 +13,8 @@ const session = require('express-session'); //allows for 'sessions'
 const bcrypt = require('bcrypt'); //for password hashing
 const express = require('express');  //middle-ware: serves front, handles communication to back 
 const mysql = require('mysql2');  //database features
+const levenshtein = require('fast-levenshtein');
+
 
 //create instances and constants
 const bodyParser = require('body-parser'); 
