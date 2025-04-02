@@ -650,7 +650,7 @@ function generate_quiz(){
 	if(termCount>0){
 		while(qcount < tfquestions){
 			currentQuestion = correct_questions.at(qcount);
-			tfflag = getRandomNumber(0, 1);
+			tfflag =  getRandomNumber(0, 1);
 			
 			//adds term label
 			questionLbl = document.createElement("label");
@@ -666,8 +666,11 @@ function generate_quiz(){
 			tf_questions.push(currentQuestion);
 			
 			if(tfflag == 0){
-				randomQuestion = getRandomNumber(0, correct_questions.length-1);
-				currentQuestion = correct_questions.at(randomQuestion);
+				randomQuestion = getRandomNumber(0, rand_answers.length-1);
+				while(rand_answers.at(randomQuestion) == currentQuestion){
+					randomQuestion = getRandomNumber(0, rand_answers.length-1);
+				}
+				currentQuestion = rand_answers.at(randomQuestion);
 			}
 			
 			//adds definition label
@@ -676,7 +679,7 @@ function generate_quiz(){
 			formforquiz.appendChild(questionLbl);
 			
 			questionLbl = document.createElement("label");
-			questionLbl.innerHTML = document.getElementById("answer"+correct_questions.at(randomQuestion)).innerHTML;
+			questionLbl.innerHTML = document.getElementById("answer"+rand_answers.at(randomQuestion)).innerHTML;
 			questionLbl.id = "TFD"+qcount;
 			formforquiz.appendChild(questionLbl);
 			formforquiz.appendChild(document.createElement("br"));
@@ -704,7 +707,7 @@ function generate_quiz(){
 			}
 			
 				
-			if(document.getElementById("TFT"+qcount).innerHTML == document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML){
+			if(document.getElementById("TFT"+qcount).innerHTML == document.getElementById("question"+rand_answers.at(randomQuestion)).innerHTML){
 				document.getElementById("TF"+qcount+"A"+0).classList.add("correct_response");
 			}
 			else{
@@ -782,7 +785,6 @@ function mconly(){
 	tfquestions = 0;
 	
 	generate_quiz();
-	document.getElementById(submitbtn).onclick = quizCheck;
 	
 	mcquestions = 0;
 
@@ -794,7 +796,6 @@ function oeonly(){
 	tfquestions = 0;
 	
 	generate_quiz();
-	document.getElementById(submitbtn).onclick = quizCheck;
 
 	oequestions = 0;
 }
@@ -805,8 +806,6 @@ function tfonly(){
 	tfquestions = 1;
 	
 	generate_quiz();
-	document.getElementById(submitbtn).onclick = quizCheck;
-
 
 	tfquestions=0;
 }
