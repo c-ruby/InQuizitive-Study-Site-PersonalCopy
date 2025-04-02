@@ -5,13 +5,6 @@ study set templates and their features
 should be placed in this file
 */
 
-
-
-
-
-
-
-
 //initialize page 
 document.addEventListener('DOMContentLoaded', async () => {
     await checkEditAuth(); // Wait for user and authorization setup to complete
@@ -657,7 +650,7 @@ function generate_quiz(){
 	if(termCount>0){
 		while(qcount < tfquestions){
 			currentQuestion = correct_questions.at(qcount);
-			tfflag = getRandomNumber(0, 1);
+			tfflag =  getRandomNumber(0, 1);
 			
 			//adds term label
 			questionLbl = document.createElement("label");
@@ -673,8 +666,11 @@ function generate_quiz(){
 			tf_questions.push(currentQuestion);
 			
 			if(tfflag == 0){
-				randomQuestion = getRandomNumber(0, correct_questions.length-1);
-				currentQuestion = correct_questions.at(randomQuestion);
+				randomQuestion = getRandomNumber(0, rand_answers.length-1);
+				while(rand_answers.at(randomQuestion) == currentQuestion){
+					randomQuestion = getRandomNumber(0, rand_answers.length-1);
+				}
+				currentQuestion = rand_answers.at(randomQuestion);
 			}
 			
 			//adds definition label
@@ -683,7 +679,7 @@ function generate_quiz(){
 			formforquiz.appendChild(questionLbl);
 			
 			questionLbl = document.createElement("label");
-			questionLbl.innerHTML = document.getElementById("answer"+correct_questions.at(randomQuestion)).innerHTML;
+			questionLbl.innerHTML = document.getElementById("answer"+rand_answers.at(randomQuestion)).innerHTML;
 			questionLbl.id = "TFD"+qcount;
 			formforquiz.appendChild(questionLbl);
 			formforquiz.appendChild(document.createElement("br"));
@@ -711,7 +707,7 @@ function generate_quiz(){
 			}
 			
 				
-			if(document.getElementById("TFT"+qcount).innerHTML == document.getElementById("question"+correct_questions.at(randomQuestion)).innerHTML){
+			if(document.getElementById("TFT"+qcount).innerHTML == document.getElementById("question"+rand_answers.at(randomQuestion)).innerHTML){
 				document.getElementById("TF"+qcount+"A"+0).classList.add("correct_response");
 			}
 			else{
@@ -731,24 +727,6 @@ function generate_quiz(){
 	
 	
 }
-
-async function checkAnswer(userInput, correctAnswer) {
-    try {
-        const response = await fetch('/check-answer', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ userInput, correctAnswer }),
-        });
-
-        const result = await response.json();
-        console.log(result.message); // Display the response message
-    } catch (error) {
-        console.error("Error checking answer:", error);
-    }
-}
-
-
-
 
 function quizCheck() {
 	var termCount = getRowCount();
@@ -782,7 +760,7 @@ function quizCheck() {
 				iterator = 0;
 			}
 			while(iterator != oequestions){
-				if(checkAnswer(document.getElementById("OE"+iterator+"A").value, oe_questions[questionIterator].textContent)){
+				if(document.getElementById("OE"+iterator+"A").value === oe_questions[questionIterator].textContent){
 					correctAnswered++;
 				}
 				iterator++;
@@ -807,7 +785,6 @@ function mconly(){
 	tfquestions = 0;
 	
 	generate_quiz();
-	document.getElementById(submitbtn).onclick = quizCheck;
 	
 	mcquestions = 0;
 
@@ -820,13 +797,6 @@ function oeonly(){
 	
 	generate_quiz();
 
-	
-	document.getElementById(submitbtn).onclick = quizCheck;	
-	
-	
-
-	
-
 	oequestions = 0;
 }
 
@@ -836,8 +806,6 @@ function tfonly(){
 	tfquestions = 1;
 	
 	generate_quiz();
-	document.getElementById(submitbtn).onclick = quizCheck;
-
 
 	tfquestions=0;
 }
