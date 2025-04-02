@@ -1,6 +1,8 @@
 module.exports = function(app, db) 
 {
 //-----check answer route-----
+const levenshtein = require('fast-levenshtein');
+
     app.post('/check-answer', (req, res) => {
         const { userInput, correctAnswer } = req.body; // Expect user input and correct answer in the request body
 
@@ -9,9 +11,9 @@ module.exports = function(app, db)
         const threshold = 2; // Adjust this value based on desired tolerance
 
         if (distance <= threshold) {
-            res.json({ success: true, message: "Close enough! Correct answer." });
+            res.json({ success: true, message: "true" });
         } else {
-            res.json({ success: false, message: "Not quite. Try again!" });
+            res.json({ success: false, message: "false" });
         }
     });
 

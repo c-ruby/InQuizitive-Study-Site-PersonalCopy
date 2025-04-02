@@ -455,9 +455,11 @@ function QuestionHandler(){
 		questionHolder = Math.floor(correct_questions.length / 3);
 		
 		//will assign each length of section
+
 		mcquestions = questionHolder * 1;
 		oequestions = questionHolder * 2;
 		tfquestions = questionHolder * 3;
+
 
 		//the extraFlag will tell the program if there is a remainder
 		extraFlag = correct_questions.length % 3;
@@ -728,56 +730,113 @@ function generate_quiz(){
 	
 }
 
-function quizCheck() {
-	var termCount = getRowCount();
+//check answer with fuzzy input 
+async function checkAnswer(userInput, correctAnswer) {
+	console.log("user input: ", userInput, "\ncorrect answer: ", correctAnswer);
+
+    try {
+        const response = await fetch('/check-answer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ userInput, correctAnswer }),
+        });
+
+        const result = await response.json();
+        console.log(result.message); // Display the response message
+
+		if(result.success == true)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+
+    } catch (error) {
+        console.error("Error checking answer:", error);
+    }
+}
+
+
+
+
+
+async function quizCheck() {
+    console.log("Checking quiz...");
+
+    console.log("oe questions: ", oequestions);
+    console.log("tf questions: ", tfquestions);
+    console.log("mc questions: ", mcquestions);
+
+    var termCount = getRowCount();
     var total = totalQuestions;
     var correctAnswered = 0;
-	var questionIterator = 0;
-	var iterator = mcquestions;
-	var score = 0;
-	
-	if(termCount == 0){
-		enableSSaction();
-	}
-	else{
-		 // Select all input elements with the class 'quizOption'
-		const inputs = document.querySelectorAll('.quizOption');
-		let selected = false;
+    var questionIterator = 0;
+    var iterator = mcquestions;
+    var score = 0;
 
-		// Iterate through each input element and check if it is selected
-		inputs.forEach(input => {
-			if (input.checked) {
-				selected = true;
-				if (input.classList.contains("correct_response")) {
-					correctAnswered++;
-				}
-			}
-		});
-		
-		//open ended check
-		if(oequestions > 0){
-			if(mcquestions == 0){
-				iterator = 0;
-			}
-			while(iterator != oequestions){
-				if(document.getElementById("OE"+iterator+"A").value === oe_questions[questionIterator].textContent){
-					correctAnswered++;
-				}
-				iterator++;
-				questionIterator++
-			}
-		}
-	}
-    
-	score = correctAnswered/total*100;
-	score = score.toFixed(2);
-    alert(`Correct answers: ${score}` + "%");
-	enableSSaction();
-	
-	mcquestions = tempmcquestions;
-	oequestions = tempoequestions;
-	tfquestions = temptfquestions;
+    if (termCount === 0) {
+        enableSSaction();
+        return; // Exit if no terms are found
+    } else {
+        // Select all input elements with the class 'quizOption'
+        const inputs = document.querySelectorAll('.quizOption');
+        let selected = false;
+
+        // Iterate through each input element and check if it is selected
+        inputs.forEach(input => {
+            if (input.checked) {
+                selected = true;
+                if (input.classList.contains("correct_response")) {
+                    correctAnswered++;
+                }
+            }
+        });
+
+        // Open-ended questions check
+        if (oequestions > 0) {
+            console.log("if oe questions");
+
+            if (mcquestions === 0) {
+                iterator = 0;
+            }
+
+            // Process questions sequentially using an async loop
+            while (iterator !== oequestions) {
+                console.log("got into the while loop");
+
+                try {
+                    const isCorrect = await checkAnswer(
+                        document.getElementById("OE" + iterator + "A").value,
+                        oe_questions[questionIterator].textContent
+                    );
+                    console.log("right after check function");
+                    console.log(isCorrect);
+
+                    if (isCorrect) {
+                        correctAnswered++;
+                        console.log(correctAnswered);
+                    }
+
+                    iterator++;
+                    questionIterator++;
+                } catch (error) {
+                    console.error("Error during question processing:", error);
+                }
+            }
+        }
+    }
+
+    console.log(correctAnswered);
+    score = (correctAnswered / total) * 100;
+    score = score.toFixed(2);
+
+    alert(`Correct answers: ${score}%`);
+    enableSSaction();
 }
+
 
 function mconly(){
 	mcquestions = 1;
@@ -786,8 +845,6 @@ function mconly(){
 	
 	generate_quiz();
 	
-	mcquestions = 0;
-
 }
 
 function oeonly(){
@@ -797,7 +854,6 @@ function oeonly(){
 	
 	generate_quiz();
 
-	oequestions = 0;
 }
 
 function tfonly(){
@@ -807,7 +863,6 @@ function tfonly(){
 	
 	generate_quiz();
 
-	tfquestions=0;
 }
 
 // ------------ FLASH CARDS ------------ //
