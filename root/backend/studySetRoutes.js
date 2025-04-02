@@ -8,7 +8,7 @@ const levenshtein = require('fast-levenshtein');
 
         // Compute Levenshtein distance
         const distance = levenshtein.get(userInput, correctAnswer);
-        const threshold = 2; // Adjust this value based on desired tolerance
+        const threshold = Math.floor(correctAnswer.length/100 * 80); // Adjust this value based on desired tolerance
 
         if (distance <= threshold) {
             res.json({ success: true, message: "true" });
