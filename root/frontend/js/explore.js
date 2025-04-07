@@ -166,3 +166,47 @@ document.addEventListener('DOMContentLoaded', () => {
         popupOverlay.style.display = 'none'; // Close popup after applying
     });
 });
+
+async function fetchExploreStudySets(searchTerm) {
+    try {
+        const response = await fetch('/study-sets/explore', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ set_name: searchTerm }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to fetch study sets');
+        }
+
+        const studySets = await response.json();
+        displayExploreStudySets(studySets);
+    } catch (error) {
+        console.error('Error fetching study sets:', error);
+    }
+}
+
+function displayExploreStudySets(studySets) {
+    const exploreContainer = document.getElementById('explore-container');
+    exploreContainer.innerHTML = ''; // Clear previous results
+
+    if (studySets.length === 0) {
+        exploreContainer.innerHTML = '<p>No study sets found.</p>';
+        return;
+    }
+
+    studySets.forEach((set) => {
+        const setElement = document.createElement('div');
+        setElement.className = 'study-set';
+
+        setElement.innerHTML = `
+            <h3>${set.set_name}</h3>
+            <p>${set.description}</p>
+            <p><strong>Created by:</strong> ${set.username}</p>
+        `;
+
+        exploreContainer.appendChild(setElement);
+    });
+}
