@@ -351,6 +351,7 @@
         color: white;
         transition: opacity 2s;
         border-radius: 10px;
+		opacity: 1;
     }
     #Quiz .details-section {
         color: white;

@@ -365,9 +365,10 @@ function enableSSaction(){
 
     // Enable buttons
     document.getElementById('flashcardbtn').disabled = false;
-    document.getElementById('quizbtn').disabled = false;
-    //document.getElementById('settingsbtn').disabled = false;
-    
+    document.getElementById('quizbtn').disabled = false;    
+	document.getElementById('mconlybtn').disabled = false;
+	document.getElementById('oeonlybtn').disabled = false;
+	document.getElementById('tfonlybtn').disabled = false;
     document.getElementById('addrowbtn').disabled = false;
 }
 
@@ -380,8 +381,9 @@ function disableSSaction(){
 	//These disable all of the buttons on the side when the quiz is generated
 	document.getElementById('flashcardbtn').disabled = true;
 	document.getElementById('quizbtn').disabled = true;
-	//document.getElementById('settingsbtn').disabled = true;
-
+	document.getElementById('mconlybtn').disabled = true;
+	document.getElementById('oeonlybtn').disabled = true;
+	document.getElementById('tfonlybtn').disabled = true;
 	document.getElementById('addrowbtn').disabled = true;
 }
 
@@ -413,45 +415,31 @@ const rand_answers = [];
 
 //used to fill the question array and randomize it
 function QuestionHandler(){
-	//this will be used to select a random question type to get extra question
-	var randomUnevenQuestionType = 0;
-	//this will hold the number of questions per type used later in function
-	var questionHolder = 0;
-	//this will not be 0 if the total questions cannot be divided evenly
-	var extraFlag = 0
+	var randomUnevenQuestionType = 0; 															//randomUnevenQuestionType will be used to select a random question type to get extra question
+	var questionHolder = 0; 																	//questionHolder will hold the number of questions per type used later in function
+	var extraFlag = 0																			//extraFlag will not be 0 if the total questions cannot be divided evenly, else it will be a 1 or 2 depeding on amount of extra questions
 	
-	//if the correct_questions array is empty
-	if(correct_questions.length === 0){
-		// Check if the class 'selected-row' exists
-		if(document.getElementsByClassName('selected-row').length > 0) {
-			//if selected row exists this for loop will go through each row and only push the row's that are selected to the question array
-			for(var i=1; i<=getRowCount(); i++){
-				if(document.getElementById("row"+i).classList.contains('selected-row')){
+	if(correct_questions.length === 0){															//if the correct_questions array is empty
+		if(document.getElementsByClassName('selected-row').length > 0) {						// Check if the class 'selected-row' exists
+			for(var i=1; i<=getRowCount(); i++){												//if selected row exists this for loop will go through each row and only push the row's that are selected to the question array
+				if(document.getElementById("row"+i).classList.contains('selected-row')){		//the actual if statement that checks if the 
 					correct_questions.push(i);
 				}
 			}
 		} 
-		else {
-			//this will push all rows into the correct_questions array
+		else {																					//this else will fill the array will all terms if the user has not selected any
 			for(var i=1; i<=getRowCount(); i++){
 				correct_questions.push(i);
 			}	
 		}
 	}
-	else{
-		//this will randomize the array
-		shuffleArray(correct_questions);
-	}
+	
 	//if the rand_answers array is empty
 	if(rand_answers.length === 0){
 		//this for loop will fill it
 		for(var i=1; i<=getRowCount(); i++){
 			rand_answers.push(i);
 		}
-	}
-	else{
-		//this will randomize the array
-		shuffleArray(rand_answers);
 	}
 	
 	//randomizes both arrays to make sure the answer is truly random
@@ -460,7 +448,7 @@ function QuestionHandler(){
 	
 	/*------------------- quiz length portion of quizHandler ----------------------*/
 	
-	//sets the total questions to the length of the correct_questions array g
+	//sets the total questions to the length of the correct_questions array
 	totalQuestions = correct_questions.length;
 	
 	//if the user is just doing multiple choice questions
@@ -477,18 +465,18 @@ function QuestionHandler(){
 	}
 	//if the user is doing a quiz
 	else{
-		//questionHolder will be the length of correct_questions/3 rounded down
+		//questionHolder will be the length of correct_questions/3 rounded down, this is used to determine how many each questions should be in each type initially 
 		questionHolder = Math.floor(correct_questions.length / 3);
 		
 		//will assign each length of section
-
 		mcquestions = questionHolder * 1;
 		oequestions = questionHolder * 2;
 		tfquestions = questionHolder * 3;
 
-
 		//the extraFlag will tell the program if there is a remainder
 		extraFlag = correct_questions.length % 3;
+		
+		//while the extraFlag is greater than zero this loop will go through and distribute the extra questions making the appropriate adjustments to each size
 		while(extraFlag > 0){
 			//will get a random number between 1 and 3
 			randomUnevenQuestionType = getRandomNumber(1,3);
@@ -502,6 +490,7 @@ function QuestionHandler(){
 				if(randomUnevenQuestionType == 2){
 					oequestions++;
 				}
+				//true or false questions will go up regardless of question type to keep the initial amount of questions the same
 				tfquestions++;
 			}
 			
@@ -515,7 +504,7 @@ function QuestionHandler(){
 				if(randomUnevenQuestionType == 2){
 					oequestions++;
 				}
-				
+				//true or false questions will go up regardless of quesiton type to keep the initial amount of questions the same 
 				tfquestions++;
 			}
 			extraFlag--;
@@ -526,76 +515,93 @@ function QuestionHandler(){
 
 //generates the quiz
 function generate_quiz(){
-	
+	//this will zero out each array everytime a quiz is generated to assure its different everytime
 	correct_questions.length = 0;
 	oe_questions.length = 0;
 	rand_answers.length = 0;
 	tf_questions.length = 0;
 	
+	//randomQuestion is used later in the true and false to grab a random question if the tfflag is set to 0
 	var randomQuestion = 0;
+	
+	//currentQuestion is used to hold the current question at(qcount) in the correct_questions array 
 	var currentQuestion = 0;
 	
+	//termCount is used to hold table length
 	var termCount = getRowCount();
+	
+	//qcount is used to hold the current question count
 	var qcount = 0;
 	
-	const questions = [];
+	//selectedAnswers is used to keep track of the multiple choice answers to insure the correct answer is one of the selections
 	const selectedAnswers = [];
 	
-	var tempmcquestions = mcquestions;
-	
+	//tfflag is the true or false flag, 0 = false, 1 = true
 	var tfflag = 0;
 	
+	//disableSSaction call to prevent the user from generating more than one quiz
 	disableSSaction();
 	
-	//this adds the name of the study set to the top of the test
-	var studySetName = document.getElementById("studySetName").innerHTML;
-	var quiz = document.createElement("div");
-	studySetName.id = "StudySetName"
-	quiz.id = "Quiz";
-	quiz.innerHTML = studySetName;
-	document.body.appendChild(quiz);
-	quiz.style.opacity = '1';
+	//this block of code will generate the quiz div 
+	var quiz = document.createElement("div");												//creates the quiz div
+	quiz.id = "Quiz";																		//sets the quiz id
+	document.body.appendChild(quiz);														//attaches the quiz to the HTML body
+	
+	//this block of code will create the study set name
+	var studySetName = document.getElementById("studySetName").innerHTML;					//grabs study set name
+	studySetName.id = "StudySetName"														//sets the studySetName id 
+	quiz.innerHTML = studySetName;															//adds the studySetName to the quiz
 	
 	//this adds the submit button to the bottom of the quiz div
-	var submitbtn = document.createElement("button");
-    submitbtn.id = "submitbtn";
-    submitbtn.innerHTML = "Submit";
-	submitbtn.onclick = quizCheck;
+	var submitbtn = document.createElement("button");										//submitbtn creates the html element button
+    submitbtn.id = "submitbtn";																//assigns the id submitbtn to submitbtn
+    submitbtn.innerHTML = "Submit";															//adds the text "Submit" to the button
+	submitbtn.onclick = quizCheck;															//assigns the onlick of the button to call the function quizCheck()
+		
 		
 	//This code is what generates the quiz questions and answers	
-	var formforquiz = document.createElement("form");
-	var questionLbl = document.createElement("label");
-	var answerLbl = document.createElement("label");
-	var questionAnswer = document.createElement("input");
+	var formforquiz = document.createElement("form");										//formforquiz creates the html element form
+	var questionLbl = document.createElement("label");										//questionLbl creates the html element label
+	var answerLbl = document.createElement("label");										//answerLbl creates the html element label
+	var questionAnswer = document.createElement("input");									//questionAnswer creates the html element label
 	
 	//gives the form an id
 	formforquiz.id = "quiz-QA-selector"
 	
-	//adds the form to the div
+	//adds the form to the quiz div
 	quiz.appendChild(formforquiz);
 	
 	//randomizes the quiz questions
 	QuestionHandler();
 	
 	//--------------------- Multiple choice --------------------------//
-	if(termCount<3){
+	/*
+		this if statement is currently used for proper multiple choice question generation
+		if there are less than 4 terms in the table it wont generate the correct amount of answers
+		will fix at somepoint this was just an easy fix to the problem for the time being
+		this will currently not allow any multiple choice questions if there are less than 4 terms
+		quiz will current not function properly if it goes into said if statement
+	*/
+	if(termCount<4){
 		//set the mcquestions to 0
 		mcquestions = 0;
 	}
 	else{
+		//while loop will go through generating the multiple choice questions until the qcount is at the mcquestions number
 		while(qcount < mcquestions){
 			
+			//sets the currentQuestions to the value that is at correct_questions.at(qcount)
 			currentQuestion = correct_questions.at(qcount);
 	
 			//adds question label and answer buttons
-			questionLbl = document.createElement("label");
-			questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(qcount)).innerHTML;
-			questionLbl.id = "MC"+qcount;
-			formforquiz.appendChild(questionLbl);
-			formforquiz.appendChild(document.createElement("br"));
-			formforquiz.appendChild(document.createElement("br"));
+			questionLbl = document.createElement("label");																		//questionLbl will create the HTML element label
+			questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(qcount)).innerHTML;					//questionLbl text will become the question that is in the correct_questions.at(qcount)
+			questionLbl.id = "MC"+qcount;																						//questionLbl will get the id ""MC"+qcount"
+			formforquiz.appendChild(questionLbl);																				//adds the questionLbl to the quiz form
+			formforquiz.appendChild(document.createElement("br"));																//creates a linebreak for better spacing
+			formforquiz.appendChild(document.createElement("br"));																//creates a linebreak for better spacing
 				
-			//selects correct answer and which answer selection it is randomly if needed
+			//the correctAnswer variable is used to pick a random number for the answer selection if the right answer isnt already an option
 			var correctAnswer = getRandomNumber(0, 3);
 			
 			//will randomize answers
@@ -603,27 +609,30 @@ function generate_quiz(){
 			
 			//this for loop will generate all of the quiz multiple choice answers
 			for (var i = 0; i<4; i++){	
-				//generates the actual radio input
-				questionAnswer = document.createElement("input");
-				questionAnswer.type = 'radio';
-				questionAnswer.name = 'Answer' + qcount;
-				questionAnswer.id = "MC"+qcount+"A"+i;
-				questionAnswer.classList.add("quizOption");
+				//this block of code will generate the buttons for each answer
+				questionAnswer = document.createElement("input");																//questionAnswer creates the HTML element input
+				questionAnswer.type = 'radio';																					//questionAnswer becomes the input type radio
+				questionAnswer.name = 'Answer' + qcount;																		//questionAnswer gets set to the name ""answer"+qcount" so that the user can only select one multiple choice answer in the set
+				questionAnswer.id = "MC"+qcount+"A"+i;																			//questionAnswer gets a unique id of ""MC"+ qcount + "A"+ i"
+				questionAnswer.classList.add("quizOption");																		//questionAnswer gets the class "quizOption"
 					
-				//generates the label for each input
-				answerLbl = document.createElement("label");
-				answerLbl.htmlFor = "MC"+qcount+"A"+i;
-				answerLbl.id = "MC"+qcount+"LB"+i;
-				answerLbl.innerHTML = document.getElementById("answer" + rand_answers.at(i)).innerText;
+				//generates the label for each answer
+				answerLbl = document.createElement("label");																	//answerLbl creates the HTML element label
+				answerLbl.htmlFor = "MC"+qcount+"A"+i;																			//answerLbl is set to be for its specific radio button
+				answerLbl.id = "MC"+qcount+"LB"+i;																				//answerLbl gets a unique id of ""MC" + qcount + "LB" + i"
+				answerLbl.innerHTML = document.getElementById("answer" + rand_answers.at(i)).innerText;							//answerLbl becomes the answer that is in rand_answers.at(i)
 				
 				//pushes the corrent generated answers to array, this is only used to check if the correct answer is in the options
 				selectedAnswers.push(rand_answers.at(i));
 				
+				//adds the radio button and the label for each radio button to the quiz
 				formforquiz.appendChild(questionAnswer);
 				formforquiz.appendChild(answerLbl);
 				
+				//adds a line break after each answer
 				formforquiz.appendChild(document.createElement("br"));
 				
+				//this if will check if the correct question 
 				if(rand_answers.at(i) == currentQuestion){
 					document.getElementById("MC"+qcount+"A"+i).classList.add("correct_response");
 				}
@@ -674,7 +683,7 @@ function generate_quiz(){
 	
 	//--------------------- True or False Question generation --------------------------//
 	
-	
+	var tfquestiontracker = 0;
 	if(termCount>0){
 		while(qcount < tfquestions){
 			currentQuestion = correct_questions.at(qcount);
@@ -693,21 +702,28 @@ function generate_quiz(){
 			
 			tf_questions.push(currentQuestion);
 			
+			
+			
+			//adds definition label
+			questionLbl = document.createElement("label");
+			questionLbl.innerHTML = "Defintion: ";
+			formforquiz.appendChild(questionLbl);
+			questionLbl = document.createElement("label");
+			
 			if(tfflag == 0){
 				randomQuestion = getRandomNumber(0, rand_answers.length-1);
 				while(rand_answers.at(randomQuestion) == currentQuestion){
 					randomQuestion = getRandomNumber(0, rand_answers.length-1);
 				}
 				currentQuestion = rand_answers.at(randomQuestion);
+				questionLbl.innerHTML = document.getElementById("answer"+rand_answers.at(randomQuestion)).innerHTML;
+			}
+			else{
+				questionLbl.innerHTML = document.getElementById("answer"+correct_questions.at(qcount)).innerHTML;
 			}
 			
-			//adds definition label
-			questionLbl = document.createElement("label");
-			questionLbl.innerHTML = "Defintion: ";
-			formforquiz.appendChild(questionLbl);
 			
-			questionLbl = document.createElement("label");
-			questionLbl.innerHTML = document.getElementById("answer"+rand_answers.at(randomQuestion)).innerHTML;
+			
 			questionLbl.id = "TFD"+qcount;
 			formforquiz.appendChild(questionLbl);
 			formforquiz.appendChild(document.createElement("br"));
@@ -735,7 +751,7 @@ function generate_quiz(){
 			}
 			
 				
-			if(document.getElementById("TFT"+qcount).innerHTML == document.getElementById("question"+rand_answers.at(randomQuestion)).innerHTML){
+			if(document.getElementById("TFD"+qcount).innerHTML == document.getElementById("answer"+tf_questions.at(tfquestiontracker)).innerHTML){
 				document.getElementById("TF"+qcount+"A"+0).classList.add("correct_response");
 			}
 			else{
@@ -746,6 +762,7 @@ function generate_quiz(){
 			formforquiz.appendChild(document.createElement("br"));
 			
 			qcount++;
+			tfquestiontracker++;
 		}
 	}
 	
