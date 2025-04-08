@@ -19,7 +19,7 @@ const levenshtein = require('fast-levenshtein');
 //create instances and constants
 const bodyParser = require('body-parser'); 
 const app = express();
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3001;
 
 // create MySQL Connection from environment variables
 const db = mysql.createPool({
