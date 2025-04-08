@@ -22,13 +22,16 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 // create MySQL Connection from environment variables
-const db = mysql.createConnection({
+const db = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  connectTimeout: 30000
+  waitForConnections: true,
+  connectionLimit: 10, // Adjust based on your app's needs
+  queueLimit: 0
 });
+
 
 
 // Use sessions to track user login status
@@ -77,13 +80,19 @@ app.use(express.static(path.join(__dirname, '../frontend/js')));
 */  
 
 // Connect to MySQL
-db.connect(err => {
+db.getConnection((err, connection) => {
   if (err) {
     console.error('Error connecting to the database:', err);
-    return;
+  } else {
+    console.log('MySQL Connected...');
+    connection.release(); // Release the connection back to the pool
   }
-  console.log('MySQL Connected...');
 });
+
+db.on('error', (err) => {
+  console.error('Database error:', err);
+});
+
 
 
 

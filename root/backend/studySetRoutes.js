@@ -1,5 +1,45 @@
 module.exports = function(app, db) 
 {
+//transaction helper function 
+const executeTransaction = (db, callback) => {
+    db.getConnection((err, connection) => {
+        if (err) {
+            console.error('Error getting connection from pool:', err);
+            return callback(err);
+        }
+
+        connection.beginTransaction((err) => {
+            if (err) {
+                connection.release();
+                console.error('Error starting transaction:', err);
+                return callback(err);
+            }
+
+            callback(null, connection, (commitErr) => {
+                if (commitErr) {
+                    return connection.rollback(() => {
+                        connection.release();
+                        console.error('Transaction rolled back:', commitErr);
+                    });
+                }
+
+                connection.commit((err) => {
+                    connection.release();
+                    if (err) {
+                        console.error('Error committing transaction:', err);
+                        return callback(err);
+                    }
+                    console.log('Transaction committed successfully');
+                });
+            });
+        });
+    });
+};
+
+
+
+
+
 //-----check answer route-----
 const levenshtein = require('fast-levenshtein');
 
@@ -152,42 +192,33 @@ app.post('/study-sets', (req, res) => {
   
     // Route to delete a study set and associated terms
     app.delete('/study-sets/:set_id', (req, res) => {
-      const { set_id } = req.params;
-  
-      // Start a transaction to ensure both deletions happen atomically
-      db.beginTransaction(err => {
-          if (err) {
-              return res.status(500).json({ error: err.message });
-          }
-  
-          const deleteTermsQuery = 'DELETE FROM Terms WHERE set_id = ?';
-          db.query(deleteTermsQuery, [set_id], (err, result) => {
-              if (err) {
-                  return db.rollback(() => {
-                      res.status(500).json({ error: err.message });
-                  });
-              }
-  
-              const deleteStudySetQuery = 'DELETE FROM StudySets WHERE set_id = ?';
-              db.query(deleteStudySetQuery, [set_id], (err, result) => {
-                  if (err) {
-                      return db.rollback(() => {
-                          res.status(500).json({ error: err.message });
-                      });
-                  }
-  
-                  db.commit(err => {
-                      if (err) {
-                          return db.rollback(() => {
-                              res.status(500).json({ error: err.message });
-                          });
-                      }
-                      res.status(200).json({ message: 'Study set and associated terms deleted successfully' });
-                  });
-              });
-          });
-      });
+        const { set_id } = req.params;
+    
+        executeTransaction(db, (err, connection, finalizeTransaction) => {
+            if (err) {
+                return res.status(500).json({ error: 'Database connection error' });
+            }
+    
+            const deleteTermsQuery = 'DELETE FROM Terms WHERE set_id = ?';
+            connection.query(deleteTermsQuery, [set_id], (err, result) => {
+                if (err) {
+                    return finalizeTransaction(err);
+                }
+    
+                const deleteStudySetQuery = 'DELETE FROM StudySets WHERE set_id = ?';
+                connection.query(deleteStudySetQuery, [set_id], (err, result) => {
+                    if (err) {
+                        return finalizeTransaction(err);
+                    }
+    
+                    // If all queries succeed, finalize the transaction
+                    finalizeTransaction(null);
+                    res.status(200).json({ message: 'Study set and associated terms deleted successfully' });
+                });
+            });
+        });
     });
+    
   
     // Route to get recent study sets for the current user
     app.get('/recent-study-sets', (req, res) => {
