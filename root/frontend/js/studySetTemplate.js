@@ -635,17 +635,22 @@ function generate_quiz(){
 			document.getElementById("MC"+qcount+"A"+correctAnswer).classList.add("correct_response");
 		}
 		
+		//will clear the selectedAnswers array to ensure no bad data when the while loop goes through again
 		selectedAnswers.length = 0;
 		
+		//adds two line breaks for styling
 		formforquiz.appendChild(document.createElement("br"));
 		formforquiz.appendChild(document.createElement("br"));
 		
+		//increments the qcount variable
 		qcount++;
 	}
 	
 	//--------------------- Open Ended Question generation --------------------------//
 
 	if(termCount>0){
+		
+		//this while loop will increase go until the qcount variable is equal to the oequestions
 		while(qcount < oequestions){
 			
 			//adds question label and text input
@@ -655,7 +660,7 @@ function generate_quiz(){
 			formforquiz.appendChild(questionLbl);
 			formforquiz.appendChild(document.createElement("br"));
 			
-			//generates the actual radio input
+			//generates the text input boxes and assigns all of the appropriate values to them
 			questionAnswer = document.createElement("input");
 			questionAnswer.type = 'text';
 			questionAnswer.name = 'OE' + qcount;
@@ -663,44 +668,65 @@ function generate_quiz(){
 			questionAnswer.classList.add("quizOption");
 			formforquiz.appendChild(questionAnswer);
 				
+			//adds line breaks for styling purposes
 			formforquiz.appendChild(document.createElement("br"));
 			formforquiz.appendChild(document.createElement("br"));
-				
+			
+			//pushes the correct answer into the oe_questions array for checking later
 			oe_questions.push(document.getElementById("answer"+correct_questions.at(qcount)));	
 			
+			//increments the qcount 
 			qcount++;
 		}
 	}
 	
 	//--------------------- True or False Question generation --------------------------//
 	
+	//tfquestiontracker is used to keep track of it the text should be T: or F: later in the true and false generation
 	var tfquestiontracker = 0;
+	
 	if(termCount>0){
+		//this while loop will go until qcount is equal to tfquestions
 		while(qcount < tfquestions){
+			//currentQuestion will grab the current question from the correct_questions array
 			currentQuestion = correct_questions.at(qcount);
+			
+			//tfflag is used to hold whether or not the answer should be true or false, 0 for false, 1 for true
 			tfflag =  getRandomNumber(0, 1);
 			
-			//adds term label
+			//if there is only 1 term in the entire study set the answer will always be true
+			if(termCount == 1){
+				tfflag = 1;
+			}
+			
+			//adds the "term: " label
 			questionLbl = document.createElement("label");
 			questionLbl.innerHTML = "Term: ";
 			formforquiz.appendChild(questionLbl);
 			
+			//this block of code is what grabes the actual term and adds the appropriate values to it
 			questionLbl = document.createElement("label");
 			questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(qcount)).innerHTML;
 			questionLbl.id = "TFT"+qcount;
 			formforquiz.appendChild(questionLbl);
 			formforquiz.appendChild(document.createElement("br"));
 			
+			//pushes the currentQuestion to the tf_question array for checking later
 			tf_questions.push(currentQuestion);
 			
 			
 			
-			//adds definition label
+			//adds "Definition: " label
 			questionLbl = document.createElement("label");
 			questionLbl.innerHTML = "Defintion: ";
 			formforquiz.appendChild(questionLbl);
 			questionLbl = document.createElement("label");
 			
+			/*
+				this if else statement will check if the tfflag is 0
+				if the tfflag is 0 it will grab a random question from the answer Array
+				if the tfflag is 1 it will grab the correct answer f
+			*/
 			if(tfflag == 0){
 				randomQuestion = getRandomNumber(0, rand_answers.length-1);
 				while(rand_answers.at(randomQuestion) == currentQuestion){
@@ -713,14 +739,13 @@ function generate_quiz(){
 				questionLbl.innerHTML = document.getElementById("answer"+correct_questions.at(qcount)).innerHTML;
 			}
 			
-			
-			
+			//this will add the appropriate id and add the label to the quiz
 			questionLbl.id = "TFD"+qcount;
 			formforquiz.appendChild(questionLbl);
 			formforquiz.appendChild(document.createElement("br"));
 			
+			//this for loop will generate the true and false labels
 			for(var i=0; i<2; i++){
-				
 				//adds question label
 				questionLbl = document.createElement("label");
 				if(i==0){
@@ -741,7 +766,7 @@ function generate_quiz(){
 				formforquiz.appendChild(questionAnswer);
 			}
 			
-				
+			//this if else statement will add the correct_response class to the true or false radio buttons depending on if its true or false
 			if(document.getElementById("TFD"+qcount).innerHTML == document.getElementById("answer"+tf_questions.at(tfquestiontracker)).innerHTML){
 				document.getElementById("TF"+qcount+"A"+0).classList.add("correct_response");
 			}
@@ -749,6 +774,7 @@ function generate_quiz(){
 				document.getElementById("TF"+qcount+"A"+1).classList.add("correct_response");
 			}
 			
+			//adds line breaks for format purposes
 			formforquiz.appendChild(document.createElement("br"));
 			formforquiz.appendChild(document.createElement("br"));
 			
@@ -756,12 +782,12 @@ function generate_quiz(){
 			tfquestiontracker++;
 		}
 	}
+	//adds line breaks for format purposes
+	formforquiz.appendChild(document.createElement("br"));
+	formforquiz.appendChild(document.createElement("br"));
 	
-	formforquiz.appendChild(document.createElement("br"));
-	formforquiz.appendChild(document.createElement("br"));
+	//adds the submit button to the quiz
 	quiz.appendChild(submitbtn);
-	
-	
 }
 
 //check answer with fuzzy input 
@@ -796,25 +822,27 @@ async function checkAnswer(userInput, correctAnswer) {
 
 
 
-
+//this function checks the quiz answers
 async function quizCheck() {
+	//these console logs are for debugging purposes
     console.log("Checking quiz...");
-
     console.log("oe questions: ", oequestions);
     console.log("tf questions: ", tfquestions);
     console.log("mc questions: ", mcquestions);
 
-    var termCount = getRowCount();
-    var total = totalQuestions;
-    var correctAnswered = 0;
-    var questionIterator = 0;
-    var iterator = mcquestions;
-    var score = 0;
+    var termCount = getRowCount();			//termCount is used to hold the number of terms in a study set
+    var total = totalQuestions;				//total is used to hold the total number of questions
+    var correctAnswered = 0;				//correctAnswered is used to hold how many questions were answered correctly
+    var questionIterator = 0;				//questionIterator is used to grab correct fill in the blank questions during the fill in the blank check
+    var iterator = mcquestions;				//this iterator is used to grab the correct fill in the blank quesion during the fil in the blank check
+    var score = 0;							//score is used to hold the users score on the quiz
 
+	//if there are no terms in the study set it will skip the checking portion 
     if (termCount === 0) {
         enableSSaction();
         return; // Exit if no terms are found
-    } else {
+    } 
+	else {
         // Select all input elements with the class 'quizOption'
         const inputs = document.querySelectorAll('.quizOption');
         let selected = false;
@@ -862,12 +890,19 @@ async function quizCheck() {
             }
         }
     }
-
+	//console log used for debug purposes
     console.log(correctAnswered);
+	
+	//makes the score correct by dividing the correctAnswered by the total and multiplying by 100
     score = (correctAnswered / total) * 100;
+	
+ 	//score.toFixed(2) is just there to round the score to two decimal places
     score = score.toFixed(2);
-
+	
+	//will do an alert displaying the correct score of the user on this quiz
     alert(`Correct answers: ${score}%`);
+	
+	//calls the enableSSaction function
     enableSSaction();
 }
 
