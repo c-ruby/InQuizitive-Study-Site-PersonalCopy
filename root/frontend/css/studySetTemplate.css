@@ -11,6 +11,60 @@
         opacity: 1;
         transition: opacity 2s;
     }
+    #SSheader {
+        display: flex;
+        align-items: stretch; /* Align items to the top */
+        justify-content: center; /* Center the header and its contents */
+        margin: auto;
+        padding: 10px;
+        background-color: #f4f4f4;
+        gap: 1px;
+    }
+    
+    .horizontal-bar {
+        width: 100%; /* Makes the bar span the width of the header */
+        height: 2px; /* Adjust thickness */
+        background-color: #33333367; /* Bar color */
+        margin-top: 10px; /* Optional spacing */
+    }
+    
+
+    .button-container {
+        display: flex;
+        flex-direction: column; /* Arrange buttons vertically */
+        gap: 1px; /* Space between buttons */
+        margin-top: 0; /* Remove any unwanted spacing */
+        align-self: flex-start; /* Align the buttons to the top of the header */
+        margin-top: 40px;
+        height: 100%;
+        justify-content: center; /* Align buttons vertically within the container */
+        height: auto; /* Automatically stretch to match the height of the subheader */
+        align-self: stretch; /
+    }
+    .button-container.hidden {
+        display: none !important;
+    }
+    
+
+    .header-btn{
+        background-color: #f4f4f4;
+        border-color: #c2c2c2;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        padding: 10px 15px;
+        cursor: pointer;
+        font-size: 14px; 
+        flex-grow: 1; /* Make each button grow to fill available space */
+        display: flex;
+        align-items: center; /* Center the button content vertically */
+        justify-content: center; /* Center the button content horizontally */
+    }
+    .header-btn:hover{
+        background-color: #003e77;
+        border-color: #003d77;
+        color: white;
+    }
 
     /* DO NOT DELETE -- We have a weird bug... */
     nav #user-info a {
@@ -28,7 +82,7 @@
         flex-direction: column;     /* Ensures elements stack vertically */
         align-items: start;         /* Aligns items to the left */
         width: 40%;
-        margin: auto;
+       
         margin-top: 40px;
     }
 
@@ -148,6 +202,7 @@
     }
     #termForm {
         position: relative;
+        margin-top: 20px;
     }
     /* Edits individual entries in a table */
     td {

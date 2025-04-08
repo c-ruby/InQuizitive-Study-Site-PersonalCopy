@@ -65,6 +65,7 @@ function updateVisibility() {
     const deleteButtons = document.querySelectorAll('button.delete-button'); // Select all delete buttons
     const editButtons = document.querySelectorAll('button.edit-button'); // Select all edit buttons
 
+
     // Update visibility for term form
     if (termForm) {
         if (auth) {
@@ -97,6 +98,25 @@ function updateVisibility() {
             console.log("We're trying to hide the edit button");
         }
     });
+
+
+    //update visibility for header buttons 
+    const headerButtonContainer = document.querySelector('.button-container');
+    
+
+    if(currentUser != null)
+    {
+        // Remove the 'hidden' class from both buttons
+        headerButtonContainer.classList.remove('hidden');;
+        
+    }
+    else
+    {
+        headerButtonContainer.classList.add('hidden');
+        
+    }
+    
+
 
 	//update visibility for action and learning status column for non-account users
 	const rows = document.querySelectorAll('#myTable tbody tr');
