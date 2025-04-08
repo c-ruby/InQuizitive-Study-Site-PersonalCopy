@@ -19,7 +19,7 @@ const levenshtein = require('fast-levenshtein');
 //create instances and constants
 const bodyParser = require('body-parser'); 
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 80;
 
 // create MySQL Connection from environment variables
 const db = mysql.createPool({
@@ -31,6 +31,17 @@ const db = mysql.createPool({
   connectionLimit: 10, // Adjust based on your app's needs
   queueLimit: 0
 });
+
+/*
+
+//will ping server and keep it alive if needed: 'heartbeat' 
+setInterval(() => {
+  db.query('SELECT 1', (err) => {
+      if (err) console.error('Database heartbeat failed:', err);
+  });
+}, 60000); // Ping every 60 seconds
+
+*/
 
 
 
