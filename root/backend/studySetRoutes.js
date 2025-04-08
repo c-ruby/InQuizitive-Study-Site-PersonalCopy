@@ -8,7 +8,7 @@ const levenshtein = require('fast-levenshtein');
 
         // Compute Levenshtein distance
         const distance = levenshtein.get(userInput, correctAnswer);
-        const threshold = Math.floor(correctAnswer.length/100 * 80); // Adjust this value based on desired tolerance
+        const threshold = Math.floor(correctAnswer.length/100 * 80); // tolerance set at ~80% character length
 
         if (distance <= threshold) {
             res.json({ success: true, message: "true" });
@@ -281,6 +281,71 @@ app.post('/study-sets', (req, res) => {
     });
     
     
+//----copy study set------
+app.post('/copy-study-set', (req, res) => {
+    const username = req.session.user?.username;
+    const { set_id } = req.body;
+
+    if (!username || !set_id) {
+        return res.status(400).json({ error: 'Bad Request' });
+    }
+
+    // Fetch the original study set details
+    const getOriginalSetQuery = 'SELECT set_name, category FROM StudySets WHERE set_id = ?';
+    db.query(getOriginalSetQuery, [set_id], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: err.message });
+        }
+
+        if (results.length === 0) {
+            return res.status(404).json({ error: 'Study set not found' });
+        }
+
+        const originalSet = results[0];
+        const newSetName = `${originalSet.set_name} (${username}'s copy)`;
+
+        // Insert a new study set for the current user
+        const createNewSetQuery = 'INSERT INTO StudySets (username, set_name, category) VALUES (?, ?, ?)';
+        db.query(createNewSetQuery, [username, newSetName, originalSet.category], (err, result) => {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+
+            const newSetId = result.insertId;
+
+            // Fetch terms from the original set
+            const getTermsQuery = 'SELECT term, definition FROM Terms WHERE set_id = ?';
+            db.query(getTermsQuery, [set_id], (err, terms) => {
+                if (err) {
+                    return res.status(500).json({ error: err.message });
+                }
+
+                if (terms.length === 0) {
+                    return res.status(200).json({
+                        message: 'Study set copied successfully!',
+                        newSetId
+                    });
+                }
+
+                // Insert terms into the new study set
+                const insertTermsQuery = 'INSERT INTO Terms (set_id, term, definition) VALUES ?';
+                const termsValues = terms.map(term => [newSetId, term.term, term.definition]);
+
+                db.query(insertTermsQuery, [termsValues], (err) => {
+                    if (err) {
+                        return res.status(500).json({ error: err.message });
+                    }
+
+                    res.status(200).json({
+                        message: 'Study set copied successfully!',
+                        newSetId
+                    });
+                });
+            });
+        });
+    });
+});
+
     
 };
   

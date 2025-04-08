@@ -1011,6 +1011,41 @@ function flashCards() {
         });
     }
 
+//copy study set button
+document.getElementById('copy-Btn').addEventListener('click', async () => {
+    const studySetId = new URLSearchParams(window.location.search).get('id');
+    const currentUser = 'currentUser'; // Replace this with the actual way you're retrieving the username
+
+    if (!studySetId || !currentUser) {
+        alert('Missing required data: studySetId or currentUser');
+        return;
+    }
+
+    try {
+        // Make the POST request to the server
+        const response = await fetch('/copy-study-set', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ set_id: studySetId })
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            alert(`Study set copied successfully! New set ID: ${data.newSetId}`);
+        } else {
+            const errorData = await response.json();
+            alert(`Error: ${errorData.error}`);
+        }
+    } catch (error) {
+        console.error('Error copying study set:', error);
+        alert('An error occurred while copying the study set.');
+    }
+});
+
+
+
 
 //selection buttons 
 function toggleSelection(selectAll) {
