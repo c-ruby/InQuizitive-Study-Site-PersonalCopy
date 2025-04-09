@@ -62,8 +62,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // Update visibility for protected elements
 function updateVisibility() {
     const termForm = document.getElementById('termForm'); // Select the term form element
-    const deleteButtons = document.querySelectorAll('button.delete-button'); // Select all delete buttons
-    const editButtons = document.querySelectorAll('button.edit-button'); // Select all edit buttons
+    const deleteButtons = document.querySelectorAll('button.delete-button'); 		// Select all delete buttons
+    const editButtons = document.querySelectorAll('button.edit-button'); 			// Select all edit buttons
+	const knownButton = document.querySelector('button.selectKnownButton');			// Select the Known Button
+	const unknownButton = document.querySelector('button.selectUnknownButton');		// Select the Unknown Button
 
 
     // Update visibility for term form
@@ -263,10 +265,10 @@ async function addLearningStatusCell(row, termId, username) {
         // Set status based on the response
         const statusValue = data.status; // Assuming the backend returns a numeric `status` field
         if (statusValue > 0) {
-            statusBubble.textContent = " ";      // Simply apply color indicators instead
+            statusBubble.textContent = "known";      // Simply apply color indicators instead
             statusBubble.classList.add('known'); // Apply appropriate CSS class
         } else {
-            statusBubble.textContent = " ";        // Simply apply color indicators instead
+            statusBubble.textContent = "unknown";        // Simply apply color indicators instead
             statusBubble.classList.add('unknown'); // Apply appropriate CSS class
         }
     } catch (error) {
