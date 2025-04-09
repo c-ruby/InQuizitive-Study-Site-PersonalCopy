@@ -1208,133 +1208,150 @@ function mconly(){
 	
 }
 
-function oeonly(){
-	
-	//this will zero out each array everytime a quiz is generated to assure its different everytime
-	correct_questions.length = 0;
-	oe_questions.length = 0;
-	rand_answers.length = 0;
-	tf_questions.length = 0;
-	
-	//disableSSaction call to prevent the user from generating more than one quiz
-	disableSSaction();
-	
-	QuestionHandler();
-	
-	var questionTracker = 0;
-	var currentQuestion = 0;
-	var termCount = getRowCount();
-	var tempquestionHolder = 0;
-	
-	// Creates the learning tool div
-	var learningtool = document.createElement("div");
-	learningtool.id = "learningTool";
-	learningtool.style.opacity = '1';
-	
-	// Creates the question-container div
-	var questioncontainer = document.createElement("div");
-	questioncontainer.id = "question-container";
-	
-	//creates the learning-tool-options div
-	var learningtooloptions = document.createElement("div");
-	learningtooloptions.id = "learning-tool-options";
-	
-	//adds the divs to the learningtool div and appends the learntool to the body
-	learningtool.appendChild(questioncontainer);
-	learningtool.appendChild(learningtooloptions);
-	document.body.appendChild(learningtool);
-	
-	
-	var formforquiz = document.createElement("form");										//formforquiz creates the html element form
-	var submitbtn = document.createElement("button");
-	var nextbtn = document.createElement("button");
-	var exitbtn = document.createElement("button");
-	
-	
-	submitbtn.id = "submitbutton";
-	nextbtn.id = "nextbutton";
-	exitbtn.id = "exitbutton";
-	
-	submitbtn.innerHTML = "check";
-	nextbtn.innerHTML = "next";
-	exitbtn.innerHTML = "exit";
-	
-	questioncontainer.appendChild(formforquiz);
-	learningtooloptions.appendChild(exitbtn);
-	learningtooloptions.appendChild(submitbtn);
-	learningtooloptions.appendChild(nextbtn);
-	
-	exitbtn.onclick = enableSSaction;
-	
-	nextbtn.onclick = function () {
-		questionTracker++;
-		
-		if(questionTracker == correct_questions.length){
-			tempquestionHolder = correct_questions.at(questionTracker-1);
-			
-			questionTracker = 0;
-			QuestionHandler();
-			
-			if(correct_questions.at(questionTracker) == tempquestionHolder){
-				questionTracker++;
-			}
-		}
-		document.getElementById("OE").innerHTML = "term: " + document.getElementById("question"+correct_questions.at(questionTracker)).innerHTML;
-	};
-	
-	/*------------------------------------------------------------------------------------------------------
-		Need to get the checking done still for open ended check with fuzzy input for just the learning tool 
-	--------------------------------------------------------------------------------------------------------*/
-	/*
-	submitbtn.onclick = function () {
-		
-		try {
-			const isCorrect = await checkAnswer(
-				document.getElementById("OEA").value,
-				//document.getElementById("answer"+currentQuestion).textContent;
-			);
-			console.log("right after check function");
-			console.log(isCorrect);
+function oeonly() {
+    // Reset arrays each time a quiz is generated to ensure it's different each time
+    correct_questions.length = 0;
+    oe_questions.length = 0;
+    rand_answers.length = 0;
+    tf_questions.length = 0;
 
-			if (isCorrect) {
-				alert("Correct!");
-			}
-			else{
-				alert("Incorrect");
-			}
+    // Prevent generating more than one quiz
+    disableSSaction();
 
-		} catch (error) {
-			console.error("Error during question processing:", error);
-		}
-	};
-	*/
-	
-	if(termCount>0){
-		currentQuestion = correct_questions.at(questionTracker);
-		
-		//adds question label and text input
-		questionLbl = document.createElement("label");
-		questionLbl.innerHTML = "term: " + document.getElementById("question"+correct_questions.at(questionTracker)).innerHTML + '&nbsp';
-		questionLbl.id = "OE";
-		formforquiz.appendChild(questionLbl);
-		formforquiz.appendChild(document.createElement("br"));
-		
-		//generates the text input boxes and assigns all of the appropriate values to them
-		questionAnswer = document.createElement("input");
-		questionAnswer.type = 'text';
-		questionAnswer.name = 'OE';
-		questionAnswer.id = "OEA";
-		questionAnswer.classList.add("quizOption");
-		formforquiz.appendChild(questionAnswer);
-			
-		//adds line breaks for styling purposes
-		formforquiz.appendChild(document.createElement("br"));
-		formforquiz.appendChild(document.createElement("br"));
-		
-		
-		
-	}
+    QuestionHandler();
+
+    var questionTracker = 0;
+    var currentQuestion = 0;
+    var termCount = getRowCount();
+    var tempquestionHolder = 0;
+
+    // Create the learning tool container
+    var learningtool = document.createElement("div");
+    learningtool.id = "learningTool";
+    learningtool.style.opacity = "1";
+
+    var questioncontainer = document.createElement("div");
+    questioncontainer.id = "question-container";
+
+    var learningtooloptions = document.createElement("div");
+    learningtooloptions.id = "learning-tool-options";
+
+    // Add containers to the DOM
+    learningtool.appendChild(questioncontainer);
+    learningtool.appendChild(learningtooloptions);
+    document.body.appendChild(learningtool);
+
+    var formforquiz = document.createElement("form");
+    var submitbtn = document.createElement("button");
+    var nextbtn = document.createElement("button");
+    var exitbtn = document.createElement("button");
+
+    submitbtn.id = "submitbutton";
+    nextbtn.id = "nextbutton";
+    exitbtn.id = "exitbutton";
+
+    submitbtn.innerHTML = "check";
+    nextbtn.innerHTML = "next";
+    exitbtn.innerHTML = "exit";
+
+    questioncontainer.appendChild(formforquiz);
+    learningtooloptions.appendChild(exitbtn);
+    learningtooloptions.appendChild(submitbtn);
+    learningtooloptions.appendChild(nextbtn);
+
+    exitbtn.onclick = enableSSaction;
+
+    nextbtn.onclick = function () {
+        advanceQuestion();
+    };
+
+    submitbtn.onclick = async function (e) {
+        e.preventDefault();
+
+        // Get user input and the correct answer
+        const userInput = document.getElementById("OEA").value.trim();
+        const correctAnswer = document.getElementById("answer" + correct_questions.at(questionTracker)).textContent.trim();
+
+        if (!userInput) {
+            alert("Please enter an answer!");
+            return;
+        }
+
+        try {
+            // Send a POST request to the server to check the answer
+            const response = await fetch('/check-answer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userInput, correctAnswer }),
+            });
+
+            const result = await response.json();
+
+            // Display result and advance question
+            if (result.success) {
+                alert("Correct!");
+            } else {
+                alert(`Incorrect. The correct answer is: \n\n${correctAnswer}`);
+            }
+
+            // Clear the input field
+            document.getElementById("OEA").value = "";
+
+            // Advance to the next question
+            advanceQuestion();
+        } catch (error) {
+            console.error("Error while checking the answer:", error);
+        }
+    };
+
+    function advanceQuestion() {
+        questionTracker++;
+
+        if (questionTracker == correct_questions.length) {
+            tempquestionHolder = correct_questions.at(questionTracker - 1);
+
+            questionTracker = 0;
+            QuestionHandler();
+
+            if (correct_questions.at(questionTracker) == tempquestionHolder) {
+                questionTracker++;
+            }
+        }
+
+        // Update question
+        document.getElementById("OE").innerHTML =
+            "term: " + document.getElementById("question" + correct_questions.at(questionTracker)).innerHTML;
+
+        // Update current question
+        currentQuestion = correct_questions.at(questionTracker);
+    }
+
+    if (termCount > 0) {
+        currentQuestion = correct_questions.at(questionTracker);
+
+        // Add question label and input field
+        var questionLbl = document.createElement("label");
+        questionLbl.innerHTML =
+            "term: " + document.getElementById("question" + correct_questions.at(questionTracker)).innerHTML + "&nbsp";
+        questionLbl.id = "OE";
+        formforquiz.appendChild(questionLbl);
+        formforquiz.appendChild(document.createElement("br"));
+
+        var questionAnswer = document.createElement("input");
+        questionAnswer.type = "text";
+        questionAnswer.name = "OE";
+        questionAnswer.id = "OEA";
+        questionAnswer.classList.add("quizOption");
+        formforquiz.appendChild(questionAnswer);
+
+        // Add line breaks for styling
+        formforquiz.appendChild(document.createElement("br"));
+        formforquiz.appendChild(document.createElement("br"));
+    }
 }
+
 
 function tfonly(){
 	//this will zero out each array everytime a quiz is generated to assure its different everytime
@@ -1444,23 +1461,71 @@ function tfonly(){
 	};
 	
 	submitbtn.onclick = function () {
-			// Select all input elements with the class 'quizOption'
-			const inputs = document.querySelectorAll('.quizOption');
-			let selected = false;
-
-			// Iterate through each input element and check if it is selected
-			inputs.forEach(input => {
-				if (input.checked) {
-					selected = true;
-					if (input.classList.contains("correct_response")) {
-						alert("Correct!");
-					}
-					else{
-						alert("incorrect answer");
-					}
+		// Select all input elements with the class 'quizOption'
+		const inputs = document.querySelectorAll('.quizOption');
+		let selected = false;
+	
+		// Iterate through each input element and check if it is selected
+		inputs.forEach(input => {
+			if (input.checked) {
+				selected = true;
+				if (input.classList.contains("correct_response")) {
+					alert("Correct!");
+				} else {
+					alert("Incorrect answer.");
 				}
-			});
-		};
+			}
+	
+			// Uncheck all radio buttons
+			input.checked = false;
+		});
+	
+		if (!selected) {
+			alert("Please select an answer!");
+			return; // Prevent advancing if no selection is made
+		}
+	
+		// Advance to the next question
+		questionTracker++;
+	
+		if (questionTracker == correct_questions.length) {
+			questionTracker = 0;
+			QuestionHandler();
+	
+			if (correct_questions.at(questionTracker) == tempquestionHolder) {
+				questionTracker++;
+			}
+		}
+	
+		document.getElementById("TFT").innerHTML = document.getElementById("question" + correct_questions.at(questionTracker)).innerHTML;
+	
+		currentQuestion = correct_questions.at(questionTracker);
+		tfflag = getRandomNumber(0, 1);
+	
+		if (termCount == 1) {
+			tfflag = 1;
+		}
+	
+		for (var i = 0; i < 2; i++) {
+			if (document.getElementById("TFA" + i).classList.contains("correct_response")) {
+				document.getElementById("TFA" + i).classList.remove("correct_response");
+			}
+		}
+	
+		if (tfflag == 0) {
+			randomQuestion = getRandomNumber(0, rand_answers.length - 1);
+			while (rand_answers.at(randomQuestion) == currentQuestion) {
+				randomQuestion = getRandomNumber(0, rand_answers.length - 1);
+			}
+			currentQuestion = rand_answers.at(randomQuestion);
+			document.getElementById("TFD").innerHTML = document.getElementById("answer" + rand_answers.at(randomQuestion)).innerHTML;
+			document.getElementById("TFA1").classList.add("correct_response");
+		} else {
+			document.getElementById("TFD").innerHTML = document.getElementById("answer" + correct_questions.at(questionTracker)).innerHTML;
+			document.getElementById("TFA0").classList.add("correct_response");
+		}
+	};
+	
 
 	if(termCount>0){
 			//currentQuestion will grab the current question from the correct_questions array
