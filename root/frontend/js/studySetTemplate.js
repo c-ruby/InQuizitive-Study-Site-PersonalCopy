@@ -828,6 +828,7 @@ async function checkAnswer(userInput, correctAnswer) {
 
 
 
+
 //this function checks the quiz answers
 async function quizCheck() {
 	//these console logs are for debugging purposes
@@ -1042,20 +1043,84 @@ function mconly(){
 			// Select all input elements with the class 'quizOption'
 			const inputs = document.querySelectorAll('.quizOption');
 			let selected = false;
-
+		
 			// Iterate through each input element and check if it is selected
 			inputs.forEach(input => {
 				if (input.checked) {
 					selected = true;
 					if (input.classList.contains("correct_response")) {
-						alert("correct answer");
+						alert("Correct!");
+					} else {
+						const correctAnswer = document.querySelector(`label[for="${document.querySelector('.correct_response').id}"]`).innerText;
+						alert(`Incorrect answer. The correct answer is: \n\n${correctAnswer}`);
 					}
-					else{
-						alert("incorrect answer");
+		
+					input.checked = false;
+
+					// Advance the question after checking the answer
+					questionTracker++;
+					correctAnswer = getRandomNumber(0, 3);
+					shuffleArray(rand_answers);
+		
+					if (questionTracker == correct_questions.length) {
+						tempquestionHolder = correct_questions.at(questionTracker - 1);
+						questionTracker = 0;
+		
+						QuestionHandler();
+		
+						// Handle repeating questions from the end to the start of the next array
+						if (correct_questions.at(questionTracker) == tempquestionHolder) {
+							questionTracker++;
+						}
 					}
+		
+					document.getElementById("question").innerHTML = document.getElementById("question" + correct_questions.at(questionTracker)).innerHTML;
+		
+					for (var i = 0; i < 4; i++) {
+						currentQuestion = correct_questions.at(questionTracker);
+						correctAnswer = getRandomNumber(0, 3);
+		
+						document.getElementById("MCLB" + i).innerHTML = document.getElementById("answer" + rand_answers.at(i)).innerText;
+		
+						// Pushes the current generated answers to the array for validation
+						selectedAnswers.push(rand_answers.at(i));
+		
+						if (document.getElementById("MCA" + i).classList.contains('correct_response')) {
+							document.getElementById("MCA" + i).classList.remove('correct_response');
+						}
+		
+						if (rand_answers.at(i) == currentQuestion) {
+							document.getElementById("MCA" + i).classList.add("correct_response");
+						}
+		
+						// Adjust i if termCount is less than 4 to prevent crashing
+						if (termCount == 3 && i == 2) {
+							i = 3;
+						}
+						if (termCount == 2 && i == 1) {
+							i = 3;
+						}
+						if (termCount == 1 && i == 0) {
+							i = 3;
+						}
+					}
+		
+					// Ensure the correct answer is part of the options if missing
+					if (!selectedAnswers.includes(correct_questions.at(questionTracker))) {
+						document.getElementById("MCLB" + correctAnswer).innerText = document.getElementById("answer" + currentQuestion).innerText;
+						document.getElementById("MCA" + correctAnswer).classList.add("correct_response");
+					}
+		
+					selectedAnswers.length = 0;
 				}
 			});
+		
+			if (!selected) {
+				alert("Please select an answer!");
+			}
 		};
+		
+		
 		
 		/*-------------EVERYTHING UNDER IS MULTIPLE CHOICE GENERATION ------------*/
 		
@@ -1388,7 +1453,7 @@ function tfonly(){
 				if (input.checked) {
 					selected = true;
 					if (input.classList.contains("correct_response")) {
-						alert("correct answer");
+						alert("Correct!");
 					}
 					else{
 						alert("incorrect answer");
