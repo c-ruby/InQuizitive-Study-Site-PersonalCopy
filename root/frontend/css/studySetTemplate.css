@@ -451,12 +451,47 @@
 
 
 
-/* I have no idea what this is */
-/*
-    #templink {
-        color: black;
-    }
-*/
+/* ------------------------ LEARNING TOOLS ----------------------- */
 
+#learningTool{
+		width:50%;
+        height: 50%;
+        background: #333;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 30%;
+        margin-inline: auto;
+        opacity: 0;
+        color: white;
+        transition: opacity 2s;
+        text-align: center;
+        border-radius: 15px;
+        color: white;
 }
+
+#question-container{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+}
+
+#learning-tool-options{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 20%;
+}
+
+#submitbutton, #nextbutton, #exitbutton{
+	border-color: #c2c2c2;
+    border-style: solid;
+    border-width: 2px;
+	margin: auto;
+	padding: 10px;
+}
+/* ------------------------ LEARNING TOOLS ----------------------- */
+
+
 

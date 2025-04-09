@@ -359,6 +359,12 @@ function enableSSaction(){
         flashcard.parentNode.removeChild(flashcard);
     }
 
+	//this learningtool variable is used to hold the learningTool div, then if the div exists it will delete the div
+	var learningtool = document.getElementById("learningTool");
+	if(learningtool){
+		learningtool.parentNode.removeChild(learningtool);
+	}
+	
     // Enable buttons
     document.getElementById('flashcardbtn').disabled = false;
     document.getElementById('quizbtn').disabled = false;    
@@ -452,7 +458,7 @@ function QuestionHandler(){
 		//sets the total questions to the length of the correct_questions array
 		totalQuestions = correct_questions.length;
 		
-		//questionHolder will be the length of correct_questions/3 rounded down, this is used to determine how many each questions should be in each type initially 
+		//questionHolder will be the lengt   h of correct_questions/3 rounded down, this is used to determine how many each questions should be in each type initially 
 		questionHolder = Math.floor(correct_questions.length / 3);
 			
 		//will assign each length of section
@@ -908,30 +914,576 @@ async function quizCheck() {
 
 
 function mconly(){
-	mcquestions = 1;
-	oequestions = 0;
-	tfquestions = 0;
 	
-	generate_quiz();
+	//the correctAnswer variable is used to pick a random number for the answer selection if the right answer isnt already an option
+	var correctAnswer = getRandomNumber(0, 3);
+	
+	//this will zero out each array everytime a quiz is generated to assure its different everytime
+	correct_questions.length = 0;
+	oe_questions.length = 0;
+	rand_answers.length = 0;
+	tf_questions.length = 0;
+	
+	//disableSSaction call to prevent the user from generating more than one quiz
+	disableSSaction();
+	
+	QuestionHandler();
+	
+	var questionTracker = 0;
+	var currentQuestion = 0;
+	var termCount = getRowCount();
+	var tempquestionHolder = 0;
+	
+	//selectedAnswers is used to keep track of the multiple choice answers to insure the correct answer is one of the selections
+	const selectedAnswers = [];
+	
+	if(termCount>0){
+		// Creates the learning tool div
+		var learningtool = document.createElement("div");
+		learningtool.id = "learningTool";
+        learningtool.style.opacity = '1';
+		
+		// Creates the question-container div
+		var questioncontainer = document.createElement("div");
+		questioncontainer.id = "question-container";
+		
+		//creates the learning-tool-options div
+		var learningtooloptions = document.createElement("div");
+		learningtooloptions.id = "learning-tool-options";
+		
+		//adds the divs to the learningtool div and appends the learntool to the body
+		learningtool.appendChild(questioncontainer);
+		learningtool.appendChild(learningtooloptions);
+		document.body.appendChild(learningtool);
+		
+		var submitbtn = document.createElement("button");
+		var nextbtn = document.createElement("button");
+		var exitbtn = document.createElement("button");
+		
+		
+		submitbtn.id = "submitbutton";
+		nextbtn.id = "nextbutton";
+		exitbtn.id = "exitbutton";
+		
+		submitbtn.innerHTML = "check";
+		nextbtn.innerHTML = "next";
+		exitbtn.innerHTML = "exit";
+		
+		learningtooloptions.appendChild(exitbtn);
+		learningtooloptions.appendChild(submitbtn);
+		learningtooloptions.appendChild(nextbtn);
+		
+		
+		
+		exitbtn.onclick = enableSSaction;
+		
+		nextbtn.onclick = function () {
+            questionTracker++;
+			correctAnswer = getRandomNumber(0, 3);
+			
+			shuffleArray(rand_answers);
+			
+			if(questionTracker == correct_questions.length){
+				tempquestionHolder = correct_questions.at(questionTracker-1);
+				questionTracker = 0;
+				
+				QuestionHandler();
+				
+				//this if is to handle repeating questions from the end of the array to the start of the next array
+				if(correct_questions.at(questionTracker) == tempquestionHolder){
+					questionTracker++;
+				}
+				
+			}
+			
+			document.getElementById("question").innerHTML = document.getElementById("question"+correct_questions.at(questionTracker)).innerHTML;
+			
+			for(var i=0; i<4; i++){
+				currentQuestion = correct_questions.at(questionTracker);
+				
+				correctAnswer = getRandomNumber(0, 3);
+				
+				document.getElementById("MCLB"+i).innerHTML = document.getElementById("answer" + rand_answers.at(i)).innerText;	
+				
+				//pushes the corrent generated answers to array, this is only used to check if the correct answer is in the options
+				selectedAnswers.push(rand_answers.at(i));
+				
+				if(document.getElementById("MCA"+i).classList.contains('correct_response')){
+					document.getElementById("MCA"+i).classList.remove('correct_response');
+				}
+				
+				if(rand_answers.at(i) == currentQuestion){
+					document.getElementById("MCA"+i).classList.add("correct_response");
+				}
+
+				//these three if statments will check if there are less than 4 questions in the study set, and adjust i to display the correct amount without crashing
+				//it will set i to 3 to insure the program leaves the for loop without crashing
+				if(termCount == 3 && i == 2){
+					i = 3;
+				}
+				if(termCount == 2 && i == 1){
+					i = 3;
+				}
+				if(termCount == 1 && i == 0){
+					i = 3;
+				}
+			}
+			//this if will check if the selectedAnswers array has the correct_questions answer, if it does not it will randomly add the correct answer to the 4 selected questions
+			if(selectedAnswers.includes(correct_questions.at(questionTracker)) == false){
+				document.getElementById("MCLB"+correctAnswer).innerText =  document.getElementById("answer" + currentQuestion).innerText;
+				document.getElementById("MCA"+correctAnswer).classList.add("correct_response");
+			}
+			
+			
+			selectedAnswers.length = 0;
+        };
+		
+		submitbtn.onclick = function () {
+			// Select all input elements with the class 'quizOption'
+			const inputs = document.querySelectorAll('.quizOption');
+			let selected = false;
+
+			// Iterate through each input element and check if it is selected
+			inputs.forEach(input => {
+				if (input.checked) {
+					selected = true;
+					if (input.classList.contains("correct_response")) {
+						alert("correct answer");
+					}
+					else{
+						alert("incorrect answer");
+					}
+				}
+			});
+		};
+		
+		/*-------------EVERYTHING UNDER IS MULTIPLE CHOICE GENERATION ------------*/
+		
+		
+		
+		//This code is what generates the quiz questions and answers	
+		var formforquiz = document.createElement("form");										//formforquiz creates the html element form
+		var questionLbl = document.createElement("label");										//questionLbl creates the html element label
+		var answerLbl = document.createElement("label");										//answerLbl creates the html element label
+		var questionAnswer = document.createElement("input");									//questionAnswer creates the html element label
+		
+		formforquiz.id = "multipleChoiceQuestion";
+		
+		questioncontainer.appendChild(formforquiz);
+		questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(questionTracker)).innerHTML;		//questionLbl text will become the question that is in the correct_questions.at(questionTracker)
+		questionLbl.id = "question";
+		formforquiz.appendChild(questionLbl);																				//adds the questionLbl to the quiz form
+		formforquiz.appendChild(document.createElement("br"));																//creates a linebreak for better spacing
+		formforquiz.appendChild(document.createElement("br"));																//creates a linebreak for better spacing
+		
+		for(var i=0; i<4; i++){
+			
+			currentQuestion = correct_questions.at(questionTracker);
+			
+			correctAnswer = getRandomNumber(0, 3);
+			
+			//this block of code will generate the buttons for each answer
+			questionAnswer = document.createElement("input");																//questionAnswer creates the HTML element input
+			questionAnswer.type = 'radio';																					//questionAnswer becomes the input type radio
+			questionAnswer.name = 'Answer' + questionTracker;																//questionAnswer gets set to the name ""answer"+qcount" so that the user can only select one multiple choice answer in the set
+			questionAnswer.id = "MCA"+i;																					//questionAnswer gets a unique id of ""MC"+ qcount + "A"+ i"
+			questionAnswer.classList.add("quizOption");																		//questionAnswer gets the class "quizOption"
+				
+			//generates the label for each answer
+			answerLbl = document.createElement("label");																	//answerLbl creates the HTML element label
+			answerLbl.htmlFor = "MCA"+i;																			//answerLbl is set to be for its specific radio button
+			answerLbl.id = "MCLB"+i;																				//answerLbl gets a unique id of ""MC" + qcount + "LB" + i"
+			answerLbl.innerHTML = document.getElementById("answer" + rand_answers.at(i)).innerText;							//answerLbl becomes the answer that is in rand_answers.at(i)
+			
+			//pushes the corrent generated answers to array, this is only used to check if the correct answer is in the options
+			selectedAnswers.push(rand_answers.at(i));
+			
+			//adds the radio button and the label for each radio button to the quiz
+			formforquiz.appendChild(questionAnswer);
+			formforquiz.appendChild(answerLbl);
+			
+			//adds a line break after each answer
+			formforquiz.appendChild(document.createElement("br"));
+			
+			//this if will check if the correct question 
+			if(rand_answers.at(i) == currentQuestion){
+				document.getElementById("MCA"+i).classList.add("correct_response");
+			}
+			
+			//these three if statments will check if there are less than 4 questions in the study set, and adjust i to display the correct amount without crashing
+			//it will set i to 3 to insure the program leaves the for loop without crashing
+			if(termCount == 3 && i == 2){
+				i = 3;
+			}
+			if(termCount == 2 && i == 1){
+				i = 3;
+			}
+			if(termCount == 1 && i == 0){
+				i = 3;
+			}
+		}
+		//this if will check if the selectedAnswers array has the correct_questions answer, if it does not it will randomly add the correct answer to the 4 selected questions
+		if(selectedAnswers.includes(correct_questions.at(questionTracker)) == false){
+			document.getElementById("MCLB"+correctAnswer).innerText =  document.getElementById("answer" + currentQuestion).innerText;
+			document.getElementById("MCA"+correctAnswer).classList.add("correct_response");
+		}
+		
+		//will clear the selectedAnswers array to ensure no bad data when the while loop goes through again
+		selectedAnswers.length = 0;
+		
+		//adds two line breaks for styling
+		formforquiz.appendChild(document.createElement("br"));
+		formforquiz.appendChild(document.createElement("br"));
+		
+	}
+	else{
+		alert("not enough terms");
+		enableSSaction();
+	}
 	
 }
 
 function oeonly(){
-	mcquestions = 0;
-	oequestions = 1;
-	tfquestions = 0;
 	
-	generate_quiz();
+	//this will zero out each array everytime a quiz is generated to assure its different everytime
+	correct_questions.length = 0;
+	oe_questions.length = 0;
+	rand_answers.length = 0;
+	tf_questions.length = 0;
+	
+	//disableSSaction call to prevent the user from generating more than one quiz
+	disableSSaction();
+	
+	QuestionHandler();
+	
+	var questionTracker = 0;
+	var currentQuestion = 0;
+	var termCount = getRowCount();
+	var tempquestionHolder = 0;
+	
+	// Creates the learning tool div
+	var learningtool = document.createElement("div");
+	learningtool.id = "learningTool";
+	learningtool.style.opacity = '1';
+	
+	// Creates the question-container div
+	var questioncontainer = document.createElement("div");
+	questioncontainer.id = "question-container";
+	
+	//creates the learning-tool-options div
+	var learningtooloptions = document.createElement("div");
+	learningtooloptions.id = "learning-tool-options";
+	
+	//adds the divs to the learningtool div and appends the learntool to the body
+	learningtool.appendChild(questioncontainer);
+	learningtool.appendChild(learningtooloptions);
+	document.body.appendChild(learningtool);
+	
+	
+	var formforquiz = document.createElement("form");										//formforquiz creates the html element form
+	var submitbtn = document.createElement("button");
+	var nextbtn = document.createElement("button");
+	var exitbtn = document.createElement("button");
+	
+	
+	submitbtn.id = "submitbutton";
+	nextbtn.id = "nextbutton";
+	exitbtn.id = "exitbutton";
+	
+	submitbtn.innerHTML = "check";
+	nextbtn.innerHTML = "next";
+	exitbtn.innerHTML = "exit";
+	
+	questioncontainer.appendChild(formforquiz);
+	learningtooloptions.appendChild(exitbtn);
+	learningtooloptions.appendChild(submitbtn);
+	learningtooloptions.appendChild(nextbtn);
+	
+	exitbtn.onclick = enableSSaction;
+	
+	nextbtn.onclick = function () {
+		questionTracker++;
+		
+		if(questionTracker == correct_questions.length){
+			tempquestionHolder = correct_questions.at(questionTracker-1);
+			
+			questionTracker = 0;
+			QuestionHandler();
+			
+			if(correct_questions.at(questionTracker) == tempquestionHolder){
+				questionTracker++;
+			}
+		}
+		document.getElementById("OE").innerHTML = "term: " + document.getElementById("question"+correct_questions.at(questionTracker)).innerHTML;
+	};
+	
+	/*------------------------------------------------------------------------------------------------------
+		Need to get the checking done still for open ended check with fuzzy input for just the learning tool 
+	--------------------------------------------------------------------------------------------------------*/
+	/*
+	submitbtn.onclick = function () {
+		
+		try {
+			const isCorrect = await checkAnswer(
+				document.getElementById("OEA").value,
+				//document.getElementById("answer"+currentQuestion).textContent;
+			);
+			console.log("right after check function");
+			console.log(isCorrect);
 
+			if (isCorrect) {
+				alert("Correct!");
+			}
+			else{
+				alert("Incorrect");
+			}
+
+		} catch (error) {
+			console.error("Error during question processing:", error);
+		}
+	};
+	*/
+	
+	if(termCount>0){
+		currentQuestion = correct_questions.at(questionTracker);
+		
+		//adds question label and text input
+		questionLbl = document.createElement("label");
+		questionLbl.innerHTML = "term: " + document.getElementById("question"+correct_questions.at(questionTracker)).innerHTML + '&nbsp';
+		questionLbl.id = "OE";
+		formforquiz.appendChild(questionLbl);
+		formforquiz.appendChild(document.createElement("br"));
+		
+		//generates the text input boxes and assigns all of the appropriate values to them
+		questionAnswer = document.createElement("input");
+		questionAnswer.type = 'text';
+		questionAnswer.name = 'OE';
+		questionAnswer.id = "OEA";
+		questionAnswer.classList.add("quizOption");
+		formforquiz.appendChild(questionAnswer);
+			
+		//adds line breaks for styling purposes
+		formforquiz.appendChild(document.createElement("br"));
+		formforquiz.appendChild(document.createElement("br"));
+		
+		
+		
+	}
 }
 
 function tfonly(){
-	mcquestions = 0;
-	oequestions = 0;
-	tfquestions = 1;
+	//this will zero out each array everytime a quiz is generated to assure its different everytime
+	correct_questions.length = 0;
+	oe_questions.length = 0;
+	rand_answers.length = 0;
+	tf_questions.length = 0;
 	
-	generate_quiz();
+	//disableSSaction call to prevent the user from generating more than one quiz
+	disableSSaction();
+	
+	QuestionHandler();
+	
+	var questionTracker = 0;
+	var currentQuestion = 0;
+	var termCount = getRowCount();
+	var tempquestionHolder = 0;
+	var tfflag = 0;
+	
+	// Creates the learning tool div
+	var learningtool = document.createElement("div");
+	learningtool.id = "learningTool";
+	learningtool.style.opacity = '1';
+	
+	// Creates the question-container div
+	var questioncontainer = document.createElement("div");
+	questioncontainer.id = "question-container";
+	
+	//creates the learning-tool-options div
+	var learningtooloptions = document.createElement("div");
+	learningtooloptions.id = "learning-tool-options";
+	
+	//adds the divs to the learningtool div and appends the learntool to the body
+	learningtool.appendChild(questioncontainer);
+	learningtool.appendChild(learningtooloptions);
+	document.body.appendChild(learningtool);
+	
+	
+	var formforquiz = document.createElement("form");										//formforquiz creates the html element form
+	var submitbtn = document.createElement("button");
+	var nextbtn = document.createElement("button");
+	var exitbtn = document.createElement("button");
+	
+	
+	submitbtn.id = "submitbutton";
+	nextbtn.id = "nextbutton";
+	exitbtn.id = "exitbutton";
+	
+	submitbtn.innerHTML = "check";
+	nextbtn.innerHTML = "next";
+	exitbtn.innerHTML = "exit";
+	
+	questioncontainer.appendChild(formforquiz);
+	learningtooloptions.appendChild(exitbtn);
+	learningtooloptions.appendChild(submitbtn);
+	learningtooloptions.appendChild(nextbtn);
+	
+	exitbtn.onclick = enableSSaction;
 
+	nextbtn.onclick = function () {
+		questionTracker++;
+		
+		if(questionTracker == correct_questions.length){
+			
+			questionTracker = 0;
+			QuestionHandler();
+			
+			if(correct_questions.at(questionTracker) == tempquestionHolder){
+				questionTracker++;
+			}
+		}
+		document.getElementById("TFT").innerHTML = document.getElementById("question"+correct_questions.at(questionTracker)).innerHTML;
+		
+		currentQuestion = correct_questions.at(questionTracker);
+		tfflag = getRandomNumber(0, 1);
+		
+		if(termCount == 1){
+			tfflag = 1;
+		}
+		
+		for(var i=0; i<2; i++){
+			if(document.getElementById("TFA"+i).classList.contains('correct_response')){
+				document.getElementById("TFA"+i).classList.remove('correct_response');
+			}
+		}
+		
+		/*
+			this if else statement will check if the tfflag is 0
+			if the tfflag is 0 it will grab a random question from the answer Array
+			if the tfflag is 1 it will grab the correct answer f
+		*/
+		if(tfflag == 0){
+			randomQuestion = getRandomNumber(0, rand_answers.length-1);
+			while(rand_answers.at(randomQuestion) == currentQuestion){
+				randomQuestion = getRandomNumber(0, rand_answers.length-1);
+			}
+			currentQuestion = rand_answers.at(randomQuestion);
+			document.getElementById("TFD").innerHTML = document.getElementById("answer"+rand_answers.at(randomQuestion)).innerHTML;
+			document.getElementById("TFA1").classList.add("correct_response");
+		}
+		else{
+			document.getElementById("TFD").innerHTML = document.getElementById("answer"+correct_questions.at(questionTracker)).innerHTML;
+			document.getElementById("TFA0").classList.add("correct_response");
+		}
+		
+		
+	};
+	
+	submitbtn.onclick = function () {
+			// Select all input elements with the class 'quizOption'
+			const inputs = document.querySelectorAll('.quizOption');
+			let selected = false;
+
+			// Iterate through each input element and check if it is selected
+			inputs.forEach(input => {
+				if (input.checked) {
+					selected = true;
+					if (input.classList.contains("correct_response")) {
+						alert("correct answer");
+					}
+					else{
+						alert("incorrect answer");
+					}
+				}
+			});
+		};
+
+	if(termCount>0){
+			//currentQuestion will grab the current question from the correct_questions array
+			currentQuestion = correct_questions.at(questionTracker);
+			
+			//tfflag is used to hold whether or not the answer should be true or false, 0 for false, 1 for true
+			tfflag =  getRandomNumber(0, 1);
+			
+			//if there is only 1 term in the entire study set the answer will always be true
+			if(termCount == 1){
+				tfflag = 1;
+			}
+			
+			//adds the "term: " label
+			questionLbl = document.createElement("label");
+			questionLbl.innerHTML = "Term: ";
+			formforquiz.appendChild(questionLbl);
+			
+			//this block of code is what grabes the actual term and adds the appropriate values to it
+			questionLbl = document.createElement("label");
+			questionLbl.innerHTML = document.getElementById("question"+correct_questions.at(questionTracker)).innerHTML;
+			questionLbl.id = "TFT";
+			formforquiz.appendChild(questionLbl);
+			formforquiz.appendChild(document.createElement("br"));
+			
+			
+			//adds "Definition: " label
+			questionLbl = document.createElement("label");
+			questionLbl.innerHTML = "Defintion: ";
+			formforquiz.appendChild(questionLbl);
+			questionLbl = document.createElement("label");
+			
+			/*
+				this if else statement will check if the tfflag is 0
+				if the tfflag is 0 it will grab a random question from the answer Array
+				if the tfflag is 1 it will grab the correct answer f
+			*/
+			if(tfflag == 0){
+				randomQuestion = getRandomNumber(0, rand_answers.length-1);
+				while(rand_answers.at(randomQuestion) == currentQuestion){
+					randomQuestion = getRandomNumber(0, rand_answers.length-1);
+				}
+				currentQuestion = rand_answers.at(randomQuestion);
+				questionLbl.innerHTML = document.getElementById("answer"+rand_answers.at(randomQuestion)).innerHTML;
+			}
+			else{
+				questionLbl.innerHTML = document.getElementById("answer"+correct_questions.at(questionTracker)).innerHTML;
+			}
+			
+			//this will add the appropriate id and add the label to the quiz
+			questionLbl.id = "TFD";
+			formforquiz.appendChild(questionLbl);
+			formforquiz.appendChild(document.createElement("br"));
+			
+			//this for loop will generate the true and false labels
+			for(var i=0; i<2; i++){
+				//adds question label
+				questionLbl = document.createElement("label");
+				if(i==0){
+					questionLbl.innerHTML = "T: ";
+				}
+				else{
+					questionLbl.innerHTML = "F: ";
+				}
+				
+				formforquiz.appendChild(questionLbl);
+				
+				//generates the actual radio input
+				questionAnswer = document.createElement("input");
+				questionAnswer.type = 'radio';
+				questionAnswer.name = 'TF';
+				questionAnswer.id = "TFA"+i;
+				questionAnswer.classList.add("quizOption");
+				formforquiz.appendChild(questionAnswer);
+			}
+			
+			//this if else statement will add the correct_response class to the true or false radio buttons depending on if its true or false
+			if(document.getElementById("TFD").innerHTML == document.getElementById("answer"+correct_questions.at(questionTracker)).innerHTML){
+				document.getElementById("TFA"+0).classList.add("correct_response");
+			}
+			else{
+				document.getElementById("TFA"+1).classList.add("correct_response");
+			}
+			
+			//adds line breaks for format purposes
+			formforquiz.appendChild(document.createElement("br"));
+			formforquiz.appendChild(document.createElement("br"));
+	}
 }
 
 // ------------ FLASH CARDS ------------ //
