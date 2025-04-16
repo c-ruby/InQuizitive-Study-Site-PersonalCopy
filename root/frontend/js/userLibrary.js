@@ -11,18 +11,18 @@ document.addEventListener('DOMContentLoaded', function() {
             studySetsList.innerHTML = '';
             data.forEach(set => {
                 const listItem = document.createElement('li');
+                listItem.style.display = 'flex'; // Enables flexbox for alignment
+                listItem.style.justifyContent = 'space-between'; // Pushes items apart
+                listItem.style.alignItems = 'center'; // Keeps vertical alignment consistent
                 
                 // Create a span to hold the study set name
                 const setNameSpan = document.createElement('span');
                 setNameSpan.textContent = set.set_name;
                 setNameSpan.style.cursor = 'pointer';
                 setNameSpan.onclick = () => {
-                    // Send request to update visit history
                     fetch('/update-visit-history', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
+                        headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ set_id: set.set_id })
                     }).then(() => {
                         window.location.href = `studySetTemplate.html?id=${set.set_id}`;
@@ -30,23 +30,23 @@ document.addEventListener('DOMContentLoaded', function() {
                         console.error('Error updating visit history:', error);
                     });
                 };
-
+            
                 // Create a delete button
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = 'Delete';
                 deleteBtn.classList.add('deleteBtn'); // Use a class instead of an ID
-                deleteBtn.style.marginLeft = '10px'; // Add some space between the name and the button
                 deleteBtn.onclick = () => {
                     if (confirm(`Are you sure you want to delete the study set: ${set.set_name}?`)) {
                         deleteStudySet(set.set_id);
                     }
                 };
-
+            
                 // Append the span and button to the list item
                 listItem.appendChild(setNameSpan);
-                listItem.appendChild(deleteBtn);
+                listItem.appendChild(deleteBtn); // Right-aligned due to `space-between`
                 studySetsList.appendChild(listItem);
             });
+            
         })
         .catch(error => {
             console.error('Error fetching study sets:', error);
