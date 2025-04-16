@@ -102,6 +102,39 @@ app.post('/study-sets', (req, res) => {
     });
 });
 
+    //route to modify set name 
+    app.put('/study-sets/:setId', (req, res) => {
+        const username = req.session?.user?.username; // Avoid undefined errors
+        if (!username) {
+            console.error("Unauthorized request: No username found.");
+            return res.status(401).json({ error: 'Unauthorized' });
+        }
+    
+        const { set_name } = req.body;
+        const { setId } = req.params;
+    
+        if (!set_name?.trim()) {
+            console.error("Invalid input: Empty study set name.");
+            return res.status(400).json({ error: 'Set name cannot be empty' });
+        }
+    
+        const query = 'UPDATE StudySets SET set_name = ? WHERE set_id = ? AND username = ?';
+        db.query(query, [set_name, setId, username], (err, result) => {
+            if (err) {
+                console.error("Database error:", err);
+                return res.status(500).json({ error: err.message });
+            }
+    
+            if (result.affectedRows === 0) {
+                console.error(`Update failed: Study set ${setId} not found or unauthorized.`);
+                return res.status(404).json({ error: 'Study set not found or unauthorized' });
+            }
+    
+            res.json({ success: true, set_name });
+        });
+    });
+    
+    
   
     // Route to add terms to a set
     app.post('/study-sets/:set_id/terms', (req, res) => {

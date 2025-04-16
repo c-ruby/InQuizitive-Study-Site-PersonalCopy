@@ -9,49 +9,155 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             const studySetsList = document.getElementById('studySets');
             studySetsList.innerHTML = '';
+    
             data.forEach(set => {
                 const listItem = document.createElement('li');
-                listItem.style.display = 'flex'; // Enables flexbox for alignment
-                listItem.style.justifyContent = 'space-between'; // Pushes items apart
-                listItem.style.alignItems = 'center'; // Keeps vertical alignment consistent
-                
-                // Create a span to hold the study set name
+                listItem.style.display = 'flex';
+                listItem.style.justifyContent = 'space-between';
+                listItem.style.alignItems = 'center';
+            
+                // Create a span for the study set name
                 const setNameSpan = document.createElement('span');
                 setNameSpan.textContent = set.set_name;
                 setNameSpan.style.cursor = 'pointer';
+            
+                // Ensure the link works again
                 setNameSpan.onclick = () => {
-                    fetch('/update-visit-history', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ set_id: set.set_id })
-                    }).then(() => {
-                        window.location.href = `studySetTemplate.html?id=${set.set_id}`;
-                    }).catch(error => {
-                        console.error('Error updating visit history:', error);
-                    });
+                    if (!setNameSpan.isContentEditable) { // Only navigate if NOT editing
+                        fetch('/update-visit-history', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ set_id: set.set_id })
+                        }).then(() => {
+                            window.location.href = `studySetTemplate.html?id=${set.set_id}`;
+                        }).catch(error => {
+                            console.error('Error updating visit history:', error);
+                        });
+                    }
                 };
             
-                // Create a delete button
+                // Create a container for the buttons
+                const buttonContainer = document.createElement('div');
+                buttonContainer.style.display = 'flex';
+                buttonContainer.style.justifyContent = 'flex-end';
+                buttonContainer.style.gap = '10px';
+            
+                // Create an Edit button
+                const editBtn = document.createElement('button');
+                editBtn.textContent = 'Edit';
+                editBtn.classList.add('edit-button');
+                editBtn.onclick = () => makeSetEditable(listItem, setNameSpan, editBtn, set.set_id);
+            
+                // Create a Delete button
                 const deleteBtn = document.createElement('button');
                 deleteBtn.textContent = 'Delete';
-                deleteBtn.classList.add('deleteBtn'); // Use a class instead of an ID
+                deleteBtn.classList.add('deleteBtn');
                 deleteBtn.onclick = () => {
                     if (confirm(`Are you sure you want to delete the study set: ${set.set_name}?`)) {
                         deleteStudySet(set.set_id);
                     }
                 };
             
-                // Append the span and button to the list item
+                // Append buttons to the container
+                buttonContainer.appendChild(editBtn);
+                buttonContainer.appendChild(deleteBtn);
+            
+                // Append elements to the list item
                 listItem.appendChild(setNameSpan);
-                listItem.appendChild(deleteBtn); // Right-aligned due to `space-between`
+                listItem.appendChild(buttonContainer);
                 studySetsList.appendChild(listItem);
             });
             
+            
+    
         })
         .catch(error => {
             console.error('Error fetching study sets:', error);
         });
     }
+
+//edit name helper functions 
+function makeSetEditable(row, setNameSpan, editBtn, setId) {
+    setNameSpan.contentEditable = "true";
+    setNameSpan.focus();
+
+    // Add editing class
+    setNameSpan.classList.add("editing-mode");
+
+    // Prevent Enter key from adding a new line; instead, trigger save
+    setNameSpan.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Stop new line creation
+            saveSetEdits(row, setNameSpan, setId); // Save changes instead
+        }
+    });
+
+    // Change button to "Save"
+    editBtn.textContent = 'Save';
+    editBtn.classList.add('save-button');
+    editBtn.classList.remove('edit-button');
+
+    editBtn.onclick = () => saveSetEdits(row, setNameSpan, setId);
+}
+
+
+
+function saveSetEdits(row, setNameSpan, setId) {
+    const updatedName = setNameSpan.textContent.trim();
+
+    if (!updatedName) {
+        alert("Set name cannot be empty!");
+        setNameSpan.focus();
+        return;
+    }
+
+    fetch(`/study-sets/${setId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ set_name: updatedName })
+    })
+    .then(response => response.json())
+    .then(() => {
+        alert('Study set updated successfully');
+
+        // Disable editing after saving
+        setNameSpan.contentEditable = "false";
+        setNameSpan.classList.remove("editing-mode");
+
+        // Clear text selection
+        window.getSelection().removeAllRanges();
+
+        // Restore click behavior after editing
+        row.onclick = () => {
+            window.location.href = `studySetTemplate.html?id=${setId}`;
+        };
+
+        // Revert Save button to Edit
+        const saveBtn = row.querySelector('.save-button');
+        if (!saveBtn) {
+            console.error('Error: Save button not found');
+            return;
+        }
+
+        saveBtn.textContent = 'Edit';
+        saveBtn.classList.add('edit-button');
+        saveBtn.classList.remove('save-button');
+        saveBtn.onclick = () => makeSetEditable(row, setNameSpan, saveBtn, setId);
+    })
+    .catch(error => {
+        console.error('Error updating study set:', error);
+    });
+}
+
+
+
+
+
+
+
+    
 
     // Function to delete a study set
     function deleteStudySet(set_id) {
