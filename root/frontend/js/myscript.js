@@ -10,12 +10,18 @@ document.addEventListener("DOMContentLoaded", () => {
         .then(response => response.json())
         .then(data => {
             const authLink = document.getElementById('auth-link');
+            const altRegisterLink = document.getElementById('altRegisterLink');
+
             if (data.loggedIn) {
                 authLink.innerHTML = `<a href="profile.html">Account: ${data.username}</a>`;
+                altRegisterLink.style.visibility = "hidden"; // Hides element without affecting layout
+            } else {
+                altRegisterLink.style.visibility = "visible"; // Shows element when logged out
             }
         })
         .catch(error => console.error('Error:', error));
 });
+
 
 
 /*

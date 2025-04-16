@@ -255,12 +255,12 @@
 		/*margin-top: 10px;*/ 	
 		text-align: center;	
 		display: flex;
-		width: 60%;		
+		width: 80%;
 		align-self: center;
 		min-height: 40vh;
 		flex: 1;
 		justify-content: center; /* Centers items */
-    	
+    	overflow: hidden; /* Prevents clipping */
 	}
 
 	/* Edits the User Library Buttons */
@@ -270,7 +270,8 @@
 		border-color: #d8d7d7;
 		border-width: 2px;
 		border-style: solid;
-		padding: 1rem;
+		padding-top: 1rem;
+		padding-bottom: 1rem;
 		color: rgb(40, 40, 40);
 		text-decoration: none;
 		background-color: rgb(245, 245, 245);
@@ -279,8 +280,8 @@
 		text-align: center;
 		white-space: nowrap; /* Prevents unwanted text wrapping */
 		max-width: 100%; /* Ensures it doesn’t exceed the parent */
-		
-		
+		overflow: hidden; /* Prevents any text or border from spilling out */
+		align-self: center;
 	}
 	
 
