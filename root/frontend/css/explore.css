@@ -1,29 +1,35 @@
-@media only screen and (min-width:600px){ 
+@media only screen and (min-width: 600px) { 
 
+    /* --------------------------------- SUBHEADER STYLING --------------------------------- */
     .subheader {
-        margin:auto;
+        margin: auto;
         margin-top: 6vh;
         background-color: rgb(218, 41, 28);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
         border: none;
+        text-align: center; /* Centering text within subheader */
     }
 
-    .subheader h1{
-		color:white;
-		padding: 10px;
-	}
+    .subheader h1 {
+        color: white;
+        padding: 10px;
+        font-size: 24px; /* Specified font size for consistency */
+        margin: 0; /* Remove default margin to prevent overflow */
+    }
+    /* --------------------------------- HEADER STYLING --------------------------------- */
 
+
+    /* --------------------------------- FOOTER STYLING --------------------------------- */
     footer {
-        background-color: #c2c2c2;		
+        background-color: #c2c2c2;
         text-align: center;
-        position:static;
-        margin-top: 5%;
-        margin-bottom: 0%;
-        height: 450px;
+        position: static;
+        margin: 5% 0 0;
+        height: 450px; /* Fixed height - consider using min-height for responsiveness */
         width: 100%;
     }
 
-/* --------------------------------- SEARCH TOOLS STYLING --------------------------------- */
+    /* --------------------------------- SEARCH TOOLS STYLING --------------------------------- */
     #exploreSearchbar {
         display: block;
         width: 80%;
@@ -32,111 +38,169 @@
         font-size: 16px;
         border: 1px solid #c2c2c2;
         border-radius: 5px;
+        outline: none; /* Remove default outline */
+        transition: border-color 0.3s; /* Smooth border transition */
     }
-    
+
+    #exploreSearchbar:focus {
+        border-color: rgb(218, 41, 28); /* Highlight border on focus */
+    }
+
     #searchResult {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        grid-auto-flow: row;
         width: 80%;
-        align-self: center;
-        justify-content: center;
-        background-color: #fff;
+        margin: 0 auto; /* Center the search results */
         padding: 20px;
+        background-color: #fff;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         border-radius: 5px;
-        display: grid;
-        grid-auto-flow: row;
-        grid-template-columns: repeat(5, 1fr)
     }
-
-/* --------------------------------- SEARCH TOOLS STYLING --------------------------------- */
-
+    /* --------------------------------- SEARCH TOOLS STYLING --------------------------------- */
 
 
-
-/* --------------------------------- FILTER STYLING --------------------------------- */
-
-    /* Example css for the category search options */
-    #popupOverlay {
+      /* --------------------------------- FILTER STYLING --------------------------------- */
+      #popupOverlay {
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100%;
+        height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
         display: flex;
         justify-content: center;
         align-items: center;
         z-index: 1000;
     }
-    
+
     #popupMenu {
         background: white;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        width: 300px;
-        text-align: center;
+        padding: 20px; /* Padding inside the filter menu */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+        width: 90%; /* Width for smaller screens */
+        max-width: 500px; /* Maximum width for larger screens */
+        text-align: left; /* Align text to the left */
     }
-    
+
+    .filter-header {
+        font-size: 24px; /* Larger font for the header */
+        font-weight: bold; /* Bold text for emphasis */
+        margin-bottom: 15px; /* Spacing below the header */
+        color: rgb(40, 40, 40); /* Dark gray color */
+    }
+
     #categories {
         display: flex;
-        flex-direction: column;
-        gap: 10px;
-        margin-bottom: 15px;
+        flex-direction: column; /* Organizing categories vertically */
+        gap: 10px; /* Spacing between filters */
+        margin-bottom: 20px; /* Space below the categories */
     }
-    
+
+    .filter-item {
+        display: flex; /* Flex layout for items */
+        align-items: center; /* Center vertically */
+        justify-content: space-between; /* Space out label and checkbox */
+        padding: 10px; /* Padding for each filter item */
+        border-radius: 8px; /* Rounded corners */
+        transition: background-color 0.3s; /* Smooth background transition */
+    }
+
+    .filter-item:hover {
+        background-color: rgba(218, 41, 28, 0.1); /* Subtle hover effect */
+    }
+
+    .filter-label {
+        font-size: 18px; /* Font size for filter labels */
+        color: #333; /* Dark grey for readability */
+    }
+
+    .filter-checkbox {
+        width: 20px; /* Checkbox size */
+        height: 20px; /* Checkbox size */
+        cursor: pointer; /* Pointer on hover */
+        margin-left: 10px; /* Spacing between label and checkbox */
+    }
+
     #openPopupBtn {
-        margin: 5px auto;
-        padding: 10px;
-        width: 20%;
-        border: solid 1px;
-        border-radius: 5px;
-        border-color: #c2c2c2;
-        cursor: pointer;
-        background: rgb(245, 245, 245);
-        color:rgb(40, 40, 40);
-        font-size: 18px;
-        transition: 0.3s;
+        background: rgb(218, 41, 28); /* Button background color */
+        color: white; /* Button text color */
+        border: none; /* No border */
+        border-radius: 5px; /* Rounded corners */
+        padding: 10px; /* Internal padding */
+        cursor: pointer; /* Pointer cursor */
+        text-align: center; /* Center button text */
+        font-size: 16px; /* Font size for button */
+        transition: background-color 0.3s; /* Smooth transitions for button */
     }
-    
+
     #openPopupBtn:hover {
-		color: white;
-		background-color: rgb(218, 41, 28);
-		border-color: rgb(218, 41, 28);
+        background-color: rgb(218, 41, 28, 0.8); /* Darker background on hover */
     }
-    
-/* --------------------------------- FILTER STYLING --------------------------------- */
+    /* --------------------------------- FILTER STYLING --------------------------------- */
 
+    /* --------------------------------- RESULT STYLING --------------------------------- */
+    .result-container {
+        display: grid; /* Using grid for responsive layout */
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* A responsive grid layout */
+        gap: 20px; /* Increased gap between items for better separation */
+        padding: 20px; /* Add padding around the grid */
+    }
 
-
-
-/* --------------------------------- RESULT STYLING --------------------------------- */
-
-    /* Edit the dynamic results of a given search */
     .result-item {
-        border: solid 1px;
-        border-color:#c2c2c2;
-        border-radius: 5px;
-        margin: auto;
-        margin-top: 10px;
-        padding: 15px;
-        transition: 0.3s;
+        background: white; /* White background for a clean look */
+        border: 1px solid #e0e0e0; /* Light gray border for subtle division */
+        border-radius: 10px; /* Rounded corners for a modern look */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for elevation */
+        padding: 15px; /* Internal padding */
+        transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effects */
+        text-align: center; /* Center align text */
     }
 
-    /* Edit the appearance of results when hovering over them. */
     .result-item:hover {
-        color: white;
-		background-color: #003d77;
-		border-color: #003d77;
-        transform: scale(1.05);
+        transform: translateY(-5px); /* Lift effect on hover */
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Deeper shadow when hovered */
     }
 
     .result-item h3 {
-        text-decoration: underline;
-        text-underline-offset: 8px;
-        margin-bottom: 6px;
-        font-size: 26px;
+        margin: 0; /* Remove default margin */
+        font-size: 20px; /* Moderate font size for titles */
+        color: #333; /* Dark color for good contrast */
     }
 
-/* --------------------------------- RESULT STYLING --------------------------------- */
-    
+    .result-item p {
+        margin: 10px 0; /* Margin for spacing between elements */
+        font-size: 16px; /* Slightly larger size for readability */
+        color: #555; /* Lighter gray for the description */
+    }
+
+    .result-item .tag {
+        display: inline-block; /* Tag layout */
+        background: rgb(218, 41, 28); /* Tag background color */
+        color: white; /* Tag text color */
+        border-radius: 12px; /* Rounded tag corners */
+        padding: 5px 10px; /* Padding for tags */
+        font-size: 14px; /* Smaller font for tags */
+        margin-right: 5px; /* Margin between tags */
+        margin-top: 10px; /* Spacing above tags */
+    }
+
+    /* Adding a button in the result-item */
+    .result-item .button {
+        margin-top: 15px;
+        padding: 8px 12px; /* Padding for buttons */
+        font-size: 16px; /* Button text size */
+        color: white; /* Button text color */
+        background-color: rgb(40, 40, 40); /* Button background */
+        border: none;
+        border-radius: 5px; /* Rounded corners */
+        cursor: pointer; /* Pointer cursor for buttons */
+        transition: background-color 0.3s; /* Smooth button transition */
+    }
+
+    .result-item .button:hover {
+        background-color: rgb(218, 41, 28); /* Hover effect for button */
+    }
+    /* --------------------------------- RESULT STYLING --------------------------------- */
 }
