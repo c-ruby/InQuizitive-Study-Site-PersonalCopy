@@ -5,7 +5,7 @@
 	/* RESPONSIVE LOGIN WEBPAGE STYLING */
 	/************************************/
 
-    nav #login_signup, #user-info {
+    #login_signup, #user-info {
         display: none;
     }
 

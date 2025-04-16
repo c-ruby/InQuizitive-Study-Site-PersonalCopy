@@ -99,49 +99,54 @@
 		background-color: rgb(173, 36, 36);
 		height: auto;
 		transform: scale(1.1);
+		display: block;
 	}	
 	
 	/*This is for the login/signup button*/
-	nav #login_signup{
-		color: white;		
-		text-decoration: none;
-		margin-right: 30px;
-		font-size: 18px;	
-		padding: 20px;
-		display: block;
-		transition: 0.3s;
+	nav #auth-link{
+		
+		margin-left: 15px;
+		list-style-type: none;
+		display:flex;
+		align-items: center;
 	}
 
-	/* Account Details/User Info styles */
-    nav #user-info {
-		color: white;		
-		text-decoration: none;
-		margin-right: 30px;
-		font-size: 18px;	
-		padding: 20px;
+	#auth-link a hover {
+		background-color: rgb(173, 36, 36);
+		height: auto;
+		transform: scale(1.1);
 		display: block;
+	}	
+	
+
+    nav #auth-link a {
+		color: white;
+		text-decoration: none;
+		font-size: 18px;
+		
+		display: flex;
 		transition: 0.3s;
 	}
+	
 
-    nav #user-info a {
-		color: white;		
-		text-decoration: none;
-    }
-
+	
 	/*this is for the div that contains the searchbar*/
 	nav #searcharea {
 		background-color: white; 
 		width: 40%;				
 		padding: 5px;			
 		border-radius: 15px;	
+		justify-content: center;
+    	align-items: center;
 		display: flex;			
 	}
 	
 	/* Edits the part of the searchbar you type into */
 	nav #searchbar{
 		background-color: white;
-		width: 50%;				
-		padding: 10px;			
+		width: 80%;				
+		padding: 10px;		
+		text-align: left; /* Centers the text inside */	
 		border-radius: 15px;	
 		outline: none;
 	}
@@ -254,20 +259,30 @@
 		align-self: center;
 		min-height: 40vh;
 		flex: 1;
+		justify-content: center; /* Centers items */
+    	
 	}
 
 	/* Edits the User Library Buttons */
 	.homeSetContainer a {
+		display: inline-block;
 		border-radius: 10px;
 		border-color: #d8d7d7;
 		border-width: 2px;
 		border-style: solid;
-		padding: 10px;
+		padding: 1rem;
 		color: rgb(40, 40, 40);
 		text-decoration: none;
 		background-color: rgb(245, 245, 245);
 		transition: 0.3s;
+		margin: 10px;
+		text-align: center;
+		white-space: nowrap; /* Prevents unwanted text wrapping */
+		max-width: 100%; /* Ensures it doesn’t exceed the parent */
+		
+		
 	}
+	
 
 	.homeSetContainer a:hover {
 		color: white;
