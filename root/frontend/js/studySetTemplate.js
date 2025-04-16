@@ -175,19 +175,7 @@ function fetchCurrentUser() {
 
 
 // ------------ STUDY SET TABLE ------------ //
-/*
-This is simply to clone the rows on the study set template page
-Will update when DB is set up to auto set rows for how many questions are in the set
-for now just clones the table row
-*/
-function cloneRow() {
-	var term = 'question' + count;
-	var definition = 'definition' + count;
-	var termId = count;
-	addTermToTable(term, definition, termId)
-	
-	count++;
-}
+
 
 // ------------ STUDY SET UTILITIES ------------ //
 
@@ -373,7 +361,6 @@ function enableSSaction(){
 	document.getElementById('mconlybtn').disabled = false;
 	document.getElementById('oeonlybtn').disabled = false;
 	document.getElementById('tfonlybtn').disabled = false;
-    document.getElementById('addrowbtn').disabled = false;
 }
 
 function disableSSaction(){
@@ -388,7 +375,6 @@ function disableSSaction(){
 	document.getElementById('mconlybtn').disabled = true;
 	document.getElementById('oeonlybtn').disabled = true;
 	document.getElementById('tfonlybtn').disabled = true;
-	document.getElementById('addrowbtn').disabled = true;
 }
 
 
