@@ -95,6 +95,26 @@
 		border-color: rgb(218, 41, 28);
     }
     
+    
+    /* Edits each individual search result item */
+    .result-item {
+        border: 1px solid #e0e0e0;
+        border-radius: 10px; 
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+        margin-right: 5px;
+        margin-bottom: 15px;
+        padding: 15px; 
+        transition: transform 0.3s ease, box-shadow 0.3s ease, border-inline 0.3s ease;
+        text-align: left; 
+    }
+    .result-item:hover {
+        transform: translateY(-5px); /* Lift effect on hover */
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2); /* Deeper shadow when hovered */
+        border-inline: solid 5px #003d77;
+        cursor: pointer;
+    }
+
+
 /* --------------------------------- FILTER STYLING --------------------------------- */
 
 
