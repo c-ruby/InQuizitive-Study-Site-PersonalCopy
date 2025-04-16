@@ -51,15 +51,15 @@
 	nav #login_signup {
 		background-color: rgb(218, 41, 28);
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-		width: 50%;
+		width: 180px;
 		border-radius: 10px;
 		justify-self: center;
 		position: relative;
-		height: 8vh;
-		margin-top: 175px;
-		display: inline-grid;
-		align-items: center;
-		justify-content: center;
+		height: 60px;
+		margin-top: 180px;
+		text-align: center;
+		align-content: center;
+		display: block;
 		text-decoration: none;
 		color: white;		
 		font-size: 18px;	
@@ -68,15 +68,15 @@
 	nav #user-info {
 		background-color: rgb(218, 41, 28);
 		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-		width: 50%;
+		width: 180px;
 		border-radius: 10px;
 		justify-self: center;
 		position: relative;
-		height: 8vh;
-		margin-top: 25vh;
-		display: inline-grid;
-		align-items: center;
-		justify-content: center;
+		height: 60px;
+		margin-top: 180px;
+		text-align: center;
+		align-content: center;
+		display: block;
 		text-decoration: none;
 		color: white;		
 		font-size: 18px;	
@@ -90,7 +90,7 @@
 	
 	/* Edits unordered list items*/
 	nav ul li {
-		margin: 0 2vh;			/* Creates spaces on the side of each link*/
+		margin: 0 20px;
 	}
 
 	/* Edits text of the link buttons*/
@@ -147,7 +147,7 @@
 	
 	/*this edits the attributes of the content div*/
 	.homeSetContainer {
-		margin-top: 10vh; 	
+		margin-top: 90px; 	
 		text-align: center;	
 		display: flex;
 		flex-direction: column;
@@ -157,14 +157,24 @@
 		min-height: 50vh;
 		flex: 1;
 	}
-
 	.homeSetContainer a {
-		margin-top: 20px;
-		padding: 3px 8px;
-		border-radius: 3px;
-		color: white;
-		background-color: rgb(185, 185, 185);
+		border-radius: 10px;
+		border-color: #d8d7d7;
+		border-width: 2px;
+		border-style: solid;
+		padding: 10px;
+		color: rgb(40, 40, 40);
+		text-decoration: none;
+		background-color: rgb(245, 245, 245);
+		transition: 0.3s;
 	}
+	.homeSetContainer a:hover {
+		color: white;
+		background-color: rgb(218, 41, 28);
+		border-color: rgb(218, 41, 28);
+		transition: 0.3s;
+	}
+	
 	
 	/*This edits all paragraph attributes if they are in the content class*/
 	.content p{
@@ -178,16 +188,71 @@
 
 	/*This edits the two divs of userSets and viewedSets inside of the content div*/
 	#userSets, #viewedSets{
-		width: 100%;		
+		min-width: 350px;			
 		padding: 10px;		
-		margin: 2vh;	
-		background: #e3e3e3;
-		border-radius: 10px;
-		color: black;		
+		margin: 25px;		
+		background: rgb(245, 245, 245);
+		color:rgb(40, 40, 40);
 		grid-column: auto;
-		border-color:#c2c2c2;
+		border-radius: 10px;
+		border-color:#d8d7d7;
 		border-style: solid;
-		min-height: 40vh;
+		border-width: 2px;
+		max-height: 300px;
+		min-height: 250px;
+	}
+
+	/* Edit the headers in the "Your Library" and "Recently Viewed Sets" */
+	#userSets h2, #viewedSets h2{
+		width: 70%;			
+		padding: 5px;		
+		margin: auto;
+		margin-bottom: 10px;
+		color:rgb(40, 40, 40);
+		grid-column: auto;
+	}
+	/* Edit the links in the "Recently Viewed Sets" */
+	#viewedSets ul #visitHistory {
+		text-decoration: none;
+		padding: 10px;
+		border-radius: 10px;
+		color: white;
+		text-decoration: none;
+		background-color: rgb(218, 41, 28);
+	}
+
+	/*edits the visit history list*/
+	.styled-list-item {
+		list-style-type: none; 				 /* Removes bullets */
+		border-bottom: 1px solid #ccc; 	/* Adds a thin line between items */
+		padding: 10px 0; 					 /* Adds spacing for better readability */
+	}
+
+	/*make visit history a scrollable field */
+	#viewedSets {
+		max-height: 300px; 							 /* Define the maximum height for the container */
+		overflow-y: auto; 							 /* Enable vertical scrolling when content exceeds the height */
+		border: 1px solid #ccc; 					/* Optional: Add a border around the container */
+		padding: 10px; 								 /* Optional: Add padding inside the container */
+		background-color: rgb(245, 245, 245); 		/* Optional: Background for better visuals */
+	}
+	
+	#visitHistory {
+		list-style-type: none; 		/* Remove bullets */
+		margin: 0; 					/* Reset default margins */
+		padding: 0; 				/* Reset default padding */
+	}
+	
+	#visitHistory li {
+		border-bottom: 1px solid #ddd; 		/* Add a thin line between list items */
+		padding: 10px 0; 						 /* Add spacing for better readability */
+		transition: 0.3s;
+	}
+
+	#visitHistory li:hover {
+		border-color: #003d77;			/* Change border Color for consistency */
+		background-color: #003d77;		/* Change BG color to indicate what's selcted */
+		color: white;					/* Change text color for readability */
 	}
 
 	.homeBanner {

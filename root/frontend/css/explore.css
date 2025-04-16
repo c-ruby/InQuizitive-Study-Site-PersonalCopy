@@ -131,7 +131,7 @@
     }
 
     .result-item h3 {
-        text-decoration: underline overline;
+        text-decoration: underline;
         text-underline-offset: 8px;
         margin-bottom: 6px;
         font-size: 26px;

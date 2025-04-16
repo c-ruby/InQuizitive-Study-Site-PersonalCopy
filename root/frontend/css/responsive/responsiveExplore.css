@@ -7,7 +7,7 @@
 
     .subheader {
         margin:auto;
-        margin-top: 20vh;
+        margin-top: 180px;
 		display: flex;
 		width: 70%;
 		background: rgb(218, 41, 28);
@@ -44,6 +44,58 @@
         width: 100%;
         bottom: -15vh;
     }
+/* --------------------------------- FILTER STYLING --------------------------------- */
+
+    /* Example css for the category search options */
+    #popupOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+    
+    #popupMenu {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        width: 300px;
+        text-align: left;
+    }
+    
+    #categories {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    #openPopupBtn {
+        margin: 5px auto;
+        padding: 10px;
+        width: 50%;
+        border: solid 1px;
+        border-radius: 5px;
+        border-color: #c2c2c2;
+        cursor: pointer;
+        background: rgb(245, 245, 245);
+        color:rgb(40, 40, 40);
+        font-size: 18px;
+        transition: 0.3s;
+    }
+    #openPopupBtn:hover {
+		color: white;
+		background-color: rgb(218, 41, 28);
+		border-color: rgb(218, 41, 28);
+    }
+    
+/* --------------------------------- FILTER STYLING --------------------------------- */
 
 
 
