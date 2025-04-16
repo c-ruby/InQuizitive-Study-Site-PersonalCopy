@@ -201,3 +201,44 @@ function loadRecentActivity() {
         activityList.appendChild(listItem);
     });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetchAndDisplayUserInfo();
+    loadRecentActivity();
+});
+
+function fetchAndDisplayUserInfo() {
+    const nameEl = document.getElementById('userName');
+    const dateEl = document.getElementById('userJoinDate');
+
+    fetch('/api/user/info', {
+        method: 'GET',
+        credentials: 'include' // for cookie-based authentication
+    })
+    .then(response => {
+        console.log('Response Status:', response.status); // Log status
+        if (!response.ok) {
+            throw new Error('Failed to fetch user info');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Fetched Data:', data); // Log data to check what is returned
+        if (data.name && data.joinDate) {
+            // If data is available, display it
+            nameEl.textContent = data.name;
+            dateEl.textContent = data.joinDate;
+        } else {
+            // If data is missing or incomplete, display fallback values
+            console.warn('Data is incomplete or missing required fields');
+            nameEl.textContent = 'Guest';
+            dateEl.textContent = 'N/A';
+        }
+    })
+    .catch(error => {
+        console.error('Error fetching user info:', error);
+        // Fallback to "Guest" and "N/A" if there's an error or user is not authenticated
+        nameEl.textContent = 'Guest';
+        dateEl.textContent = 'N/A';
+    });
+}
