@@ -1,5 +1,7 @@
 @media only screen and (min-width:600px){ 
 
+
+
 	/* Adds these attributes to the entire webpage*/
 	* {
 		margin: 0;
@@ -20,6 +22,18 @@
 		flex-direction: column;
 		height: auto;
 	}
+	body {
+		cursor: default; /* Standard cursor for the page */
+	}
+	
+	/* Apply only to truly empty/non-editable areas */
+	*:not(input):not(textarea):not([contenteditable="true"]):not(button):not(a) {
+		user-select: none; /* Prevent accidental selection */
+		cursor: default; /* Stops text cursor from appearing */
+	}
+	
+	
+	
 	
 	/* Header attributes */
 	/* header includes subheader */
@@ -375,6 +389,29 @@
 		min-height: 10vh;		
 		bottom: 0px;
 	}
+
+
+
+
+
+
+
+	/*-------class----------*/
+	.disabled-link {
+		pointer-events: none; /* Prevents clicking */
+		user-select: none; /* Prevents text selection */
+		text-decoration: none !important; /* Removes hover effects */
+		color: inherit !important; /* Keeps default text color */
+	}
+	
+	.editing-mode {
+		cursor: text !important; /* Force I-beam cursor */
+		pointer-events: auto; /* Allow interaction */
+		user-select: text; /* Enable text selection */
+	}
+	
+	
+	
 }
 
 /*
