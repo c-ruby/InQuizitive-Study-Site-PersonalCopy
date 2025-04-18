@@ -5,6 +5,10 @@
 	/* RESPONSIVE EXPLORE WEBPAGE STYLING */
 	/**************************************/
 
+    .logoContainer {
+        display: none;
+    }
+
     .subheader {
         margin:auto;
         margin-top: 180px;
@@ -75,24 +79,37 @@
         gap: 10px;
         margin-bottom: 15px;
     }
+
+
+    .filterContainer {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    .filterContainer p {
+        text-align: center;
+        margin-top: 15px;
+    }
     
     #openPopupBtn {
-        margin: 5px auto;
-        padding: 10px;
-        width: 50%;
-        border: solid 1px;
-        border-radius: 5px;
         border-color: #c2c2c2;
+        color: rgb(40, 40, 40);
+        padding: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
         cursor: pointer;
-        background: rgb(245, 245, 245);
-        color:rgb(40, 40, 40);
-        font-size: 18px;
+        border-radius: 5px;
+        transition: 0.3s;
+        text-align: center; 
+        align-self: center;
+        font-size: 16px;
+        width: fit-content;
         transition: 0.3s;
     }
     #openPopupBtn:hover {
-		color: white;
-		background-color: rgb(218, 41, 28);
-		border-color: rgb(218, 41, 28);
+        background-color: #003d77;
+        border-color: #003d77;
+        color: white;
     }
     
     

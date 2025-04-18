@@ -1,0 +1,509 @@
+@media only screen and (max-width:600px){
+
+	/***************************************/
+	/* RESPONSIVE STUDYSET WEBPAGE STYLING */
+	/***************************************/
+
+    /*Start of Template Page CSS*/
+    .hidden {
+        display: none;
+    }
+
+    .logoContainer {
+        display: none;
+    }
+
+/* ------------------------ HEADER ------------------------ */
+
+    #SSheader, #SScontent, #SSfooter{
+        opacity: 1;
+        transition: opacity 2s;
+    }
+    #SSheader {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        padding: 10px;
+        background-color: #f4f4f4;
+    }
+    #SSheader h1 {
+        font-size: 25px;
+        color: rgb(40, 40, 40);
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+    
+    
+    .horizontal-bar {
+        width: 100%;                       
+        height: 2px;                       
+        background-color: #33333367;      
+        margin-top: 10px;                  
+    }
+    
+
+    .button-container {
+        display: flex;
+        flex-direction: column;         /* Arrange buttons vertically */
+        gap: 1px;                       /* Space between buttons */
+        margin-top: 0;                  /* Remove any unwanted spacing */
+        align-self: flex-start;         /* Align the buttons to the top of the header */
+        margin-top: 40px;
+        height: 100%;
+        justify-content: center;        /* Align buttons vertically within the container */
+        height: auto;                   /* Automatically stretch to match the height of the subheader */
+        align-self: stretch;
+    }
+    .button-container.hidden {
+        display: none !important;
+    }
+    
+
+    .header-btn{
+        border-color: #c2c2c2;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 1px;
+        transition: 0.3s;
+        cursor: pointer;
+        font-size: 14px; 
+        flex-grow: 1;           
+        display: flex;
+        align-items: center;    
+        justify-content: center;
+    }
+    .header-btn:hover{
+        background-color: #003e77;
+        border-color: #003d77;
+        color: white;
+    }
+
+    /* DO NOT DELETE -- We have a weird bug... */
+    nav #user-info a {
+		color: white;		
+		text-decoration: none;
+		font-size: 18px;	
+		padding: 20px;
+		display: block;
+		transition: 0.3s;
+    }
+
+    /* Covers both #studySetName and subheader */
+    .subheader {
+        align-items: center;
+        border: none;
+        background-color: rgba(255, 0, 0, 0);
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    /* Header details, i.e., date, creator, etc. */
+    .details-section {
+        font-size: 14px;
+        background-color: #f4f4f4;
+        color: #555; 
+        margin-top: 5px;
+        border: 1px solid #ddd; 
+        border-radius: 5px;
+        padding: 15px;
+    }
+
+    .footer {
+        position: absolute;
+        margin-bottom: 50px;
+    }
+/* ------------------------ HEADER ------------------------ */
+
+
+
+/* ------------------------ RESOURCES ------------------------ */
+
+    /* Div containing buttons and headers for study resources */
+    .StudySetOptions {
+        align-self: center;
+        justify-self: center;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        background: rgb(245, 245, 245);
+        color: rgb(40, 40, 40);
+        padding: 10px;
+        height: 10%;
+        display: grid;
+        list-style-type: none;
+        border-radius: 10px;
+    }
+    .StudySetOptions button {
+        border-color: #c2c2c2;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 5px;
+        transition: 0.3s;
+    }
+    .StudySetOptions button:hover {
+        background-color: #003d77;
+        border-color: #003d77;
+        color: white;
+    }
+
+    /* Learning Options Button/Header Div */
+    .learnOptions {
+        margin: auto;
+    }
+    .learnOptionsButtons {
+        display: flex;
+    }
+
+
+    /* Test Options Button/Header Div */
+    .testOptions {
+        margin: auto;
+    }
+    .testOptionsButtons {
+        display: flex;
+        justify-content: center;
+    }
+	
+		
+    /* Control Options Button/Header Div */
+    .controls {
+        margin: auto;
+    }
+    .controlButtons {
+        display: flex;
+    }
+    /* Edits control buttons specifically */
+    .controls #selectAllButton, #selectNoneButton {
+        border-color: #c2c2c2;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 5px;
+        transition: 0.3s;
+    }
+    .controls #selectAllButton:hover, #selectNoneButton:hover {
+        background-color: #003d77;
+        border-color: #003d77;
+        color: white;
+    }
+
+/* ------------------------ RESOURCES ------------------------ */
+
+
+
+
+/* ------------------------ STUDY SET TABLE / FORM ------------------------ */
+
+.StudySet-Container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+}
+#termForm, #myTable {
+    text-align: center;
+    max-width: 100%;
+    min-width: 100%;
+    box-sizing: border-box;
+    color: rgb(40, 40, 40);
+    background-color: rgb(245, 245, 245);
+    margin: auto;
+    padding: 10px;
+}
+#termForm {
+    position: relative;
+    margin-top: 20px;
+}
+/* Edits individual entries in a table */
+td {
+    padding: 5px;
+    border-top: 1px solid #ddd; 
+}
+
+/* Edits the input bars for set creator/editor */
+#termForm input {
+    flex: 1;                    /* Input will take up the available space */
+    padding: 5px;
+    border-radius: 5px;
+    width: 100%;
+    align-items: center;
+    box-sizing: border-box;     /* Include padding and border in the element's total width and height */
+}
+
+/* Edits the "Add Term" button */
+#termForm button {
+    border-color: #c2c2c2;
+    border-style: solid;
+    margin-top: -15px;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 10px;
+    transition: 0.3s;
+}
+#termForm button:hover {
+    background-color: #003d77;
+    border-color: #003d77;
+    color: white;
+}
+
+/* Edits each "Delete" button for a given term/def combo */
+.delete-button {
+    border-color: rgb(218, 41, 28);
+    background-color: rgb(218, 41, 28);
+    color: white;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-right: 10px;
+    transition: 0.3s;
+}
+.delete-button:hover {
+    border-color: rgb(173, 36, 36);
+    background-color: rgb(173, 36, 36);
+}
+
+/* Edits each "Edit" button for a given term/def combo */
+.edit-button {
+    border-color: #c2c2c2;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 10px;
+    transition: 0.3s;
+}
+.edit-button:hover {
+    background-color: #003d77;
+    border-color: #003d77;
+    color: white;
+}
+
+.save-button {
+    border-color: #c2c2c2;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 10px;
+    transition: 0.3s;
+}
+.save-button:hover {
+    background-color: #003d77;
+    border-color: #003d77;
+    color: white;
+}
+
+/* Edits the Checkboxes */
+.row-checkbox {
+    width: 20px;
+    height: 20px;
+    background: #FFF;
+}
+
+/* Learning Status Column Styles */
+.learning-status {
+    display: inline-block;
+    padding: 5px 10px;
+    margin: 5px;                /* Adds a small margin around the box */
+    border-radius: 10px;        /* Rounds the corners */
+    color: white;
+    font-size: 12px;
+    text-align: center;
+}
+.known {
+    background-color: green;
+    padding: 5px 10px;          /* Adds spacing inside the bubble */
+    margin: 5px;                /* Adds a small margin around the text */
+    border-radius: 10px;        /* Rounds the corners around the text */
+    color: white;             /* Text color */
+    display: inline-block;      /* Keeps the styling contained to the text */
+    font-size: 12px;
+    text-align: center;
+}
+.unknown {
+    background-color: red;
+    padding: 5px 10px;          /* Adds spacing inside the bubble */
+    margin: 5px;                /* Adds a small margin around the text */
+    border-radius: 10px;        /* Rounds the corners around the text */
+    color: white;             /* Text color */
+    display: inline-block;      /* Keeps the styling contained to the text */
+    font-size: 12px;
+    text-align: center;
+}
+.toggle-button {
+    border-color: #c2c2c2;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    padding: 10px;
+    transition: 0.3s;
+}
+
+/* ------------------------ STUDY SET TABLE / FORM ------------------------ */
+
+
+
+/* ------------------------ QUIZZES ------------------------ */
+    
+#Quiz, #settings{
+    width: 90%;
+    height: auto;
+    position: absolute;
+    margin-top: 170px;
+    gap: 15%;
+    align-self: center;
+    text-align: center;
+    opacity: 0;
+    background-color: #333;
+    color: white;
+    transition: opacity 2s;
+    border-radius: 10px;
+    opacity: 1;
+}
+#Quiz .details-section {
+    background-color: #333;
+    border: none;
+    color: white;
+}
+
+#quiz-QA-selector {
+    padding: 10px;
+    text-align: left;
+    
+}
+
+/* ------------------------ QUIZZES ------------------------ */
+
+
+
+
+/* ------------------------ FLASHCARDS ------------------------ */
+
+#Flashcards{
+    width: 90%;
+    height: 50%;
+    background-color: #333;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 30%;
+    margin-inline: auto;
+    opacity: 0;
+    color: white;
+    transition: opacity 2s;
+    text-align: center;
+    border-radius: 15px;
+}
+
+#flashcardText{
+    color: white;
+}
+
+/*the color that the card will change when you click it */
+
+.clicked {
+    background-color: #535353; 
+}
+
+#exitButton{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 5px;
+    border-radius: 0px 15px 0px 0px;
+    color: white;
+    background: #333;
+    border: none;
+}
+
+
+#nextButton, #backButton{
+    padding: 5px;
+    margin: 5px;
+    background: #333;
+    color: white;
+
+}
+
+#flashCardTextHolder{
+    width: 100%;
+    height: 90%;
+}
+
+#flashcardText{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+/* ------------------------ FLASHCARDS ------------------------ */
+
+
+
+
+/* ------------------------ OTHER BUTTONS ------------------------ */
+
+#submitbtn{
+    border-color: #c2c2c2;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 10px;
+    margin: auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    transition: 0.3s;
+}
+
+/* ------------------------ OTHER BUTTONS ------------------------ */
+
+
+
+/* ------------------------ LEARNING TOOLS ----------------------- */
+
+#learningTool{
+    width: 90%;
+    height: 50%;
+    background-color: #333;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 30%;
+    margin-inline: auto;
+    opacity: 0;
+    color: white;
+    transition: opacity 2s;
+    text-align: center;
+    border-radius: 15px;
+}
+
+#question-container{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 80%;
+}
+
+#learning-tool-options{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 20%;
+}
+
+#submitbutton, #nextbutton, #exitbutton{
+border-color: #c2c2c2;
+border-style: solid;
+border-width: 2px;
+margin: auto;
+padding: 10px;
+}
+/* ------------------------ LEARNING TOOLS ----------------------- */
+
+}

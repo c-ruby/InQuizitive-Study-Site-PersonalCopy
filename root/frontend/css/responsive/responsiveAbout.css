@@ -6,7 +6,7 @@
 	/************************************/
 
 	.subheader{
-		margin-top: 2vh;
+		margin-top: -80px;
 		margin-bottom: -1vh;
 		display: flex;
 		width: 70%;
@@ -72,5 +72,51 @@
 	.content li a:hover {
 		background-color: rgb(173, 36, 36);
 	}
+
+
+	/* --------------- PROJECT TUTORIALS --------------- */
+	.tutorialContainer {
+		display: flex;
+        flex-direction: column;
+		margin: auto;
+		margin-top: 10px;
+        width: 90%;
+        padding: 30px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 5px;
+		min-height: 700px;
+	}
+	.tutorialContainer h3{
+		text-decoration: underline;
+	}
+	.tutorialContainer h2{
+		text-decoration: underline;
+	}
+	.generalSetTutorial {
+		margin-bottom: 10px;
+		padding: 10px;
+	}
+	.flashcardTutorial {
+		margin-bottom: 10px;
+		padding: 10px;
+	}
+	.multipleChoiceTutorial {
+		margin-bottom: 10px;
+		padding: 10px;
+	}
+	.FITBTutorial {
+		margin-bottom: 10px;
+		padding: 10px;
+	}
+	.booleanTutorial {
+		margin-bottom: 10px;
+		padding: 10px;
+	}
+	.quizTutorial {
+		margin-bottom: 10px;
+		padding: 10px;
+	}
+	/* --------------- PROJECT TUTORIALS --------------- */
 
 }

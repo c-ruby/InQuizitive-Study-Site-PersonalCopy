@@ -3,8 +3,7 @@
     /* --------------------------------- SUBHEADER STYLING --------------------------------- */
     .subheader {
         margin: auto;
-        margin-top: 6vh;
-        margin-bottom: 5rem;
+        margin-top: 50px;
         background-color: rgb(218, 41, 28);
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
         border: none;
@@ -52,8 +51,8 @@
     /* --------------------------------- SEARCH TOOLS STYLING --------------------------------- */
 
 
-      /* --------------------------------- FILTER STYLING --------------------------------- */
-      #popupOverlay {
+    /* --------------------------------- FILTER STYLING --------------------------------- */
+    #popupOverlay {
         position: fixed;
         top: 0;
         left: 0;
@@ -122,34 +121,36 @@
         align-self: center;
         flex-direction: column; /* Stacks elements vertically */
         align-items: center; /* Centers them horizontally */
-        
         width: 80%;
     }
     
     
-
+    .filterContainer {
+        width: 100%;
+        display: flex;
+    }
+    .filterContainer p {
+        align-self: center;
+        text-align: center;
+        margin-left: 20px;
+    }
 
     #openPopupBtn {
         border-color: #c2c2c2;
         color: rgb(40, 40, 40);
-        
         padding: 10px;
         padding-top: 5px;
         padding-bottom: 5px;
         cursor: pointer;
         border-radius: 5px;
         transition: 0.3s;
-        
         text-align: center; 
         align-self: flex-start;
-        
         font-size: 16px;
         width: fit-content;
         transition: 0.3s;
     }
-
     #openPopupBtn:hover {
-    
         background-color: #003d77;
         border-color: #003d77;
         color: white;

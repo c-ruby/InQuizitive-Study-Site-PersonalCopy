@@ -188,7 +188,6 @@
 
 	/*This edits the two divs of userSets and viewedSets inside of the content div*/
 	#userSets, #viewedSets{
-		min-width: 350px;			
 		padding: 10px;		
 		margin: 25px;		
 		background: rgb(245, 245, 245);
@@ -200,6 +199,7 @@
 		border-width: 2px;
 		max-height: 300px;
 		min-height: 250px;
+		min-width: 350px;	
 	}
 
 	/* Edit the headers in the "Your Library" and "Recently Viewed Sets" */
