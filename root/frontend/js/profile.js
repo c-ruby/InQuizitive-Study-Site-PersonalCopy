@@ -1,31 +1,31 @@
 //script to handle logging out 
-document.addEventListener('DOMContentLoaded', (event) => {
-    const deleteAccountBtn = document.getElementById('logoutBtn');
+document.addEventListener('DOMContentLoaded', () => {
+    const logoutBtn = document.getElementById('logoutBtn');
 
-    deleteAccountBtn.addEventListener('click', () => {
-        const userConfirmed = confirm('Are you sure you want to log out?');
-            //displays a confirmation window to the user 
+    
+    logoutBtn?.removeEventListener('click', handleLogout);
+    logoutBtn?.addEventListener('click', handleLogout, { once: true });
+});
 
-        if (userConfirmed) {
-            fetch('/logout', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
+function handleLogout() {
+    const userConfirmed = confirm('Are you sure you want to log out?');
+
+    if (userConfirmed) {
+        console.log("Logging out...");
+
+        fetch('/logout', { method: 'POST' })
             .then(response => response.text())
             .then(message => {
                 alert(message);
-                // Optionally, redirect the user to a different page after logout
                 window.location.href = '../html/login.html'; 
             })
             .catch(error => {
                 console.error('Error during logout:', error);
                 alert('An error occurred during logout. Please try again.');
             });
-        }
-    });
-});
+    }
+}
+
 
 
 document.addEventListener('DOMContentLoaded', function() {
