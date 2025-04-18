@@ -38,6 +38,31 @@ module.exports = function(app, db)
 });
 
 
+//get user info
+  app.get('/api/user/info', (req, res) => {
+      if (!req.session.user) {
+          return res.status(401).json({ error: 'Unauthorized' });
+      }
+
+      const username = req.session.user.username;
+      const query = 'SELECT username, created_at FROM user_credentials WHERE username = ?';
+
+      db.query(query, [username], (err, results) => {
+          if (err) {
+              console.error('Error fetching user info:', err);
+              return res.status(500).json({ error: 'Database error' });
+          }
+
+          if (results.length === 0) {
+              return res.status(404).json({ error: 'User not found' });
+          }
+
+          res.json(results[0]);
+      });
+  });
+
+
+
   // Route to check for the presence of a user account in the database
   app.post('/check-username', async (req, res) => {
     const { username } = req.body;

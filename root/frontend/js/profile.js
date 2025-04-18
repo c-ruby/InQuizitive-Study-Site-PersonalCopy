@@ -157,22 +157,23 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
 
-async function fetchUserInfo() {
+  async function fetchUserInfo() {
     try {
-        const response = await fetch('/api/user/info'); // Replace with your backend endpoint
+        const response = await fetch('/api/user/info'); 
         if (!response.ok) throw new Error('Failed to fetch user info');
+
         const userInfo = await response.json();
 
-        // Populate user info
-        document.getElementById('userName').textContent = userInfo.name;
-        document.getElementById('userJoinDate').textContent = userInfo.joinDate;
+        // Populate user info in the frontend
+        document.getElementById('userName').textContent = userInfo.username;
+        document.getElementById('userJoinDate').textContent = new Date(userInfo.created_at).toLocaleDateString();
     } catch (error) {
         console.error('Error fetching user info:', error);
     }
 }
-document.addEventListener("DOMContentLoaded", function(){
-    loadRecentActivity();
-});
+
+document.addEventListener("DOMContentLoaded", fetchUserInfo);
+
 
 function loadRecentActivity() {
     const activityList = document.getElementById("activityList");
