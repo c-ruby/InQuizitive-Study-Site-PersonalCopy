@@ -141,99 +141,44 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
-//calls the history fetch function when the document loads, if the user is logged in 
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('/check-auth')
-      .then(response => response.json())
-      .then(data => {
-        if (data.loggedIn) {
-          fetchRecentStudySets();
-        } else {
-          console.log('User is not logged in');
-        }
-      })
-      .catch(error => {
-        console.error('Error checking authentication:', error);
-      });
-  });
-
-  async function fetchUserInfo() {
-    try {
-        const response = await fetch('/api/user/info'); 
-        if (!response.ok) throw new Error('Failed to fetch user info');
-
-        const userInfo = await response.json();
-
-        // Populate user info in the frontend
-        document.getElementById('userName').textContent = userInfo.username;
-        document.getElementById('userJoinDate').textContent = new Date(userInfo.created_at).toLocaleDateString();
-    } catch (error) {
-        console.error('Error fetching user info:', error);
-    }
-}
-
-document.addEventListener("DOMContentLoaded", fetchUserInfo);
 
 
-function loadRecentActivity() {
-    const activityList = document.getElementById("activityList");
+//section which fetches and updates user info 
+var userData = null; //variable to store the fetched user info
 
-    // Example: Fetch recent activity from an API or local storage
-    const recentActivities = [
-        "Completed Quiz: JavaScript Basics",
-        "Started Quiz: HTML Fundamentals",
-        "Achieved High Score in CSS Quiz",
-        "Reviewed Notes: React Components"
-    ];
-
-    // Clear existing items
-    activityList.innerHTML = "";
-
-    // Populate the list with recent activities
-    recentActivities.forEach(activity => {
-        const listItem = document.createElement("li");
-        listItem.textContent = activity;
-        activityList.appendChild(listItem);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    fetchAndDisplayUserInfo();
-    loadRecentActivity();
+document.addEventListener('DOMContentLoaded', async function () {
+    await fetchUserInfo();
+    updateUserInfo(); 
 });
 
-function fetchAndDisplayUserInfo() {
-    const nameEl = document.getElementById('userName');
-    const dateEl = document.getElementById('userJoinDate');
+async function fetchUserInfo() {
+    try {
+        const response = await fetch('/api/user/info', {
+            method: 'GET',
+            credentials: 'include'
+        });
 
-    fetch('/api/user/info', {
-        method: 'GET',
-        credentials: 'include' // for cookie-based authentication
-    })
-    .then(response => {
-        console.log('Response Status:', response.status); // Log status
         if (!response.ok) {
             throw new Error('Failed to fetch user info');
         }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Fetched Data:', data); // Log data to check what is returned
-        if (data.name && data.joinDate) {
-            // If data is available, display it
-            nameEl.textContent = data.name;
-            dateEl.textContent = data.joinDate;
-        } else {
-            // If data is missing or incomplete, display fallback values
-            console.warn('Data is incomplete or missing required fields');
-            nameEl.textContent = 'Guest';
-            dateEl.textContent = 'N/A';
-        }
-    })
-    .catch(error => {
+
+        userData = await response.json(); 
+        console.log('Fetched Data:', userData);
+    } catch (error) {
         console.error('Error fetching user info:', error);
-        // Fallback to "Guest" and "N/A" if there's an error or user is not authenticated
-        nameEl.textContent = 'Guest';
-        dateEl.textContent = 'N/A';
-    });
+        userData = { name: 'Guest', joinDate: 'N/A' }; // Fallback values
+    }
 }
+function updateUserInfo() {
+    const nameEl = document.getElementById('userName');
+    const dateEl = document.getElementById('userJoinDate');
+
+    if (nameEl && dateEl && userData) {
+        nameEl.textContent = userData.username; 
+        dateEl.textContent = new Date(userData.created_at).toLocaleDateString(); 
+    }
+}
+
+
+
+
