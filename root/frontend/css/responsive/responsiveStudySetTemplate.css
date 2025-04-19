@@ -127,22 +127,28 @@
         width: 100%;
         background: rgb(245, 245, 245);
         color: rgb(40, 40, 40);
-        padding: 15px;
-        margin: 10px 0;
+        padding: 20px;
+        margin: 15px 0;
         display: flex;
         flex-direction: column;
-        gap: 15px;
-        border-radius: 10px;
+        gap: 20px;
+        border-radius: 12px;
         box-sizing: border-box;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
     .StudySetOptions button {
         border-color: #c2c2c2;
         border-style: solid;
         border-width: 2px;
-        border-radius: 10px;
-        padding: 15px;
-        margin: 5px;
+        border-radius: 12px;
+        padding: 16px;
+        margin: 8px;
         transition: 0.3s;
+        min-height: 48px;
+        font-size: 16px;
+        width: calc(100% - 16px);
+        background-color: white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     .StudySetOptions button:hover {
         background-color: #003d77;
@@ -156,35 +162,49 @@
     }
     .learnOptionsButtons {
         display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
     }
-
 
     /* Test Options Button/Header Div */
     .testOptions {
-        margin: auto;
+        margin: 15px auto;
+        width: 100%;
     }
     .testOptionsButtons {
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
     }
 	
 		
     /* Control Options Button/Header Div */
     .controls {
-        margin: auto;
+        margin: 15px auto;
+        width: 100%;
     }
     .controlButtons {
         display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
     }
     /* Edits control buttons specifically */
     .controls #selectAllButton, #selectNoneButton {
         border-color: #c2c2c2;
         border-style: solid;
         border-width: 2px;
-        border-radius: 10px;
-        padding: 15px;
-        margin: 5px;
+        border-radius: 12px;
+        padding: 16px;
+        margin: 8px;
         transition: 0.3s;
+        min-height: 48px;
+        font-size: 16px;
+        width: calc(100% - 16px);
+        background-color: white;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
     }
     .controls #selectAllButton:hover, #selectNoneButton:hover {
         background-color: #003d77;
@@ -203,37 +223,56 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 15px;
-    padding: 0 15px;
+    gap: 25px;
+    padding: 0 12px;
     box-sizing: border-box;
+    margin-bottom: 35px;
 }
 #termForm, #myTable {
-    text-align: center;
+    text-align: left;
     width: 100%;
     box-sizing: border-box;
     color: rgb(40, 40, 40);
     background-color: rgb(245, 245, 245);
     margin: 0;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 20px 15px;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
-#termForm {
-    margin-top: 15px;
+#myTable {
+    border-collapse: separate;
+    border-spacing: 0 15px;
 }
 td {
-    padding: 8px;
-    border-top: 1px solid #ddd;
+    padding: 16px 12px;
+    border-top: 1px solid #e0e0e0;
     word-break: break-word;
+    font-size: 16px;
+    line-height: 1.5;
+    vertical-align: middle;
+    background-color: white;
+    border-radius: 8px;
+}
+.row-checkbox {
+    width: 28px;
+    height: 28px;
+    margin: 8px;
+    cursor: pointer;
+}
+#termForm {
+    margin-top: 20px;
 }
 #termForm input {
     flex: 1;
-    padding: 12px;
-    border-radius: 8px;
+    padding: 18px;
+    border-radius: 12px;
     width: 100%;
     align-items: center;
     box-sizing: border-box;
-    border: 1px solid #ddd;
+    border: 2px solid #ddd;
     font-size: 16px;
+    margin-bottom: 15px;
+    background-color: white;
 }
 #termForm button {
     border-color: #c2c2c2;
@@ -257,10 +296,13 @@ td {
     color: white;
     border-style: solid;
     border-width: 2px;
-    border-radius: 10px;
-    padding: 10px;
-    margin-right: 10px;
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin: 8px;
     transition: 0.3s;
+    min-height: 44px;
+    font-size: 16px;
+    width: calc(100% - 16px);
 }
 .delete-button:hover {
     border-color: rgb(173, 36, 36);
@@ -272,9 +314,14 @@ td {
     border-color: #c2c2c2;
     border-style: solid;
     border-width: 2px;
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 12px;
+    padding: 12px 16px;
     transition: 0.3s;
+    min-height: 44px;
+    font-size: 16px;
+    width: calc(100% - 16px);
+    margin: 8px;
+    background-color: white;
 }
 .edit-button:hover {
     background-color: #003d77;

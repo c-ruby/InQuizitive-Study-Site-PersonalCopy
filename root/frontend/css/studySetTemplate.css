@@ -98,8 +98,16 @@
     }
 
     .footer {
-        position: absolute;
-        margin-bottom: 50px;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 20px;
+        margin: 0;
+        text-align: center;
+        background-color: #f4f4f4;
+        border-top: 1px solid #ddd;
+        z-index: 100;
     }
 
 /* ------------------------ HEADER ------------------------ */
