@@ -124,9 +124,10 @@
 /* ------------------------ RESOURCES ------------------------ */
 
     /* Div containing buttons and headers for study resources */
-    .StudySetOptions {
+      /* Div containing buttons and headers for study resources */
+      .StudySetOptions {
         align-self: center;
-        justify-content: center;
+        justify-content: space-evenly;
         text-align: center;
         width: 70%;
         background: rgb(245, 245, 245);
@@ -136,8 +137,11 @@
         display: flex;
         list-style-type: none;
         border-radius: 10px;
+        gap: 10px;
     }
     .StudySetOptions button {
+        flex: 1;
+        max-width: 200px;
         border: none;
         border-radius: 8px;
         padding: 15px 25px;
