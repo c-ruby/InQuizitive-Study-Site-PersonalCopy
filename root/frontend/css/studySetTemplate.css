@@ -47,24 +47,30 @@
     
 
     .header-btn{
-        border-color: #c2c2c2;
-        border-style: solid;
-        border-width: 2px;
-        border-radius: 10px;
-        padding: 15px;
-        margin: 1px;
-        transition: 0.3s;
+        border: none;
+        border-radius: 8px;
+        padding: 15px 25px;
+        margin: 4px;
+        transition: all 0.3s ease;
         cursor: pointer;
-        font-size: 14px; 
-        flex-grow: 1; /* Make each button grow to fill available space */
+        font-size: 14px;
+        flex-grow: 1;
         display: flex;
-        align-items: center; /* Center the button content vertically */
-        justify-content: center; /* Center the button content horizontally */
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
+        color: #333;
     }
     .header-btn:hover{
-        background-color: #003e77;
-        border-color: #003d77;
+        background: linear-gradient(145deg, #004a8c, #003e77);
         color: white;
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px #d1d1d1, -6px -6px 12px #ffffff;
+    }
+    .header-btn:active{
+        transform: translateY(1px);
+        box-shadow: 3px 3px 6px #d9d9d9, -3px -3px 6px #ffffff;
     }
 
     /* DO NOT DELETE -- We have a weird bug... */
@@ -132,13 +138,25 @@
         border-radius: 10px;
     }
     .StudySetOptions button {
-        border-color: #c2c2c2;
-        border-style: solid;
-        border-width: 2px;
-        border-radius: 10px;
-        padding: 15px;
-        margin: 5px;
-        transition: 0.3s;
+        border: none;
+        border-radius: 8px;
+        padding: 15px 25px;
+        margin: 8px;
+        transition: all 0.3s ease;
+        background: linear-gradient(145deg, #ffffff, #f0f0f0);
+        box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
+        color: #333;
+        cursor: pointer;
+    }
+    .StudySetOptions button:hover {
+        background: linear-gradient(145deg, #004a8c, #003e77);
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 6px 6px 12px #d1d1d1, -6px -6px 12px #ffffff;
+    }
+    .StudySetOptions button:active {
+        transform: translateY(1px);
+        box-shadow: 3px 3px 6px #d9d9d9, -3px -3px 6px #ffffff;
     }
     .StudySetOptions button:hover {
         background-color: #003d77;
