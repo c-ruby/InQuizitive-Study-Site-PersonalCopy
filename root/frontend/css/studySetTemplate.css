@@ -47,30 +47,24 @@
     
 
     .header-btn{
-        border: none;
-        border-radius: 8px;
-        padding: 15px 25px;
-        margin: 4px;
-        transition: all 0.3s ease;
+        border-color: #c2c2c2;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 1px;
+        transition: 0.3s;
         cursor: pointer;
-        font-size: 14px;
-        flex-grow: 1;
+        font-size: 14px; 
+        flex-grow: 1; /* Make each button grow to fill available space */
         display: flex;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(145deg, #ffffff, #f0f0f0);
-        box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
-        color: #333;
+        align-items: center; /* Center the button content vertically */
+        justify-content: center; /* Center the button content horizontally */
     }
     .header-btn:hover{
-        background: linear-gradient(145deg, #004a8c, #003e77);
+        background-color: #003e77;
+        border-color: #003d77;
         color: white;
-        transform: translateY(-2px);
-        box-shadow: 6px 6px 12px #d1d1d1, -6px -6px 12px #ffffff;
-    }
-    .header-btn:active{
-        transform: translateY(1px);
-        box-shadow: 3px 3px 6px #d9d9d9, -3px -3px 6px #ffffff;
     }
 
     /* DO NOT DELETE -- We have a weird bug... */
@@ -124,50 +118,50 @@
 /* ------------------------ RESOURCES ------------------------ */
 
     /* Div containing buttons and headers for study resources */
-      /* Div containing buttons and headers for study resources */
-      .StudySetOptions {
+    .StudySetOptions {
+        display: flex;
+        list-style-type: none;
+        border-radius: 10px;
         align-self: center;
-        justify-content: space-evenly;
+        justify-content: center;
         text-align: center;
         width: 70%;
         background: rgb(245, 245, 245);
         color: rgb(40, 40, 40);
         padding: 10px;
         height: 10%;
-        display: flex;
-        list-style-type: none;
-        border-radius: 10px;
         gap: 10px;
     }
+    
     .StudySetOptions button {
-        flex: 1;
-        max-width: 200px;
-        border: none;
-        border-radius: 8px;
-        padding: 15px 25px;
-        margin: 8px;
+        border-color: #c2c2c2;
+        border-style: solid;
+        border-width: 2px;
+        border-radius: 10px;
+        padding: 15px;
+        margin: 5px;
         transition: all 0.3s ease;
-        background: linear-gradient(145deg, #ffffff, #f0f0f0);
-        box-shadow: 5px 5px 10px #d9d9d9, -5px -5px 10px #ffffff;
-        color: #333;
+        background: rgb(245, 245, 245); /* Matches the container background */
+        box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.1), -5px -5px 10px rgba(255, 255, 255, 0.7);
+        color: rgb(40, 40, 40);
         cursor: pointer;
     }
-    .StudySetOptions button:hover {
-        background: linear-gradient(145deg, #004a8c, #003e77);
-        color: white;
-        transform: translateY(-2px);
-        box-shadow: 6px 6px 12px #d1d1d1, -6px -6px 12px #ffffff;
-    }
-    .StudySetOptions button:active {
-        transform: translateY(1px);
-        box-shadow: 3px 3px 6px #d9d9d9, -3px -3px 6px #ffffff;
-    }
+    
     .StudySetOptions button:hover {
         background-color: #003d77;
         border-color: #003d77;
         color: white;
+        box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.2), -6px -6px 12px rgba(255, 255, 255, 0.6);
+        transform: translateY(-2px); /* Adds depth on hover */
     }
-
+    
+    .StudySetOptions button:active {
+        background-color: #002a52;
+        border-color: #002a52;
+        color: white;
+        box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.2), inset -4px -4px 8px rgba(255, 255, 255, 0.6);
+        transform: translateY(2px); /* Simulates button press */
+    }
     /* Learning Options Button/Header Div */
     .learnOptions {
         margin: auto;
