@@ -364,10 +364,10 @@ function enableSSaction(){
 }
 
 function disableSSaction(){
-	//These set the opacity of the elements on the page to low
-	document.getElementById('SSheader').style.opacity = '.1';
-	document.getElementById('SScontent').style.opacity = '.1';
-	document.getElementById('SSfooter').style.opacity = '.1';
+	//These set the opacity of the elements on the page to be invisible
+	document.getElementById('SSheader').style.opacity = '0';
+	document.getElementById('SScontent').style.opacity = '0';
+	document.getElementById('SSfooter').style.opacity = '0';
 	
 	//These disable all of the buttons on the side when the quiz is generated
 	document.getElementById('flashcardbtn').disabled = true;

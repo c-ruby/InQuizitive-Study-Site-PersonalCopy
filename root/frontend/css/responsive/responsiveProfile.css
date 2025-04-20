@@ -1,0 +1,148 @@
+@media only screen and (max-width:600px){
+
+	/**************************************/
+	/* RESPONSIVE PROFILE WEBPAGE STYLING */
+	/**************************************/
+
+    .subheader {
+        margin:auto;
+        margin-top: 80px;
+        background-color: rgb(218, 41, 28);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        border: none;
+        padding: 20px;
+        width: 80%;
+        border-radius: 15px;
+    }
+    .subheader h1{
+        color:white;
+        padding: 10px;
+    }
+
+    .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px;
+    }
+
+    #Actions {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    #Actions button {
+        padding: 12px 24px;
+        border-radius: 8px;
+        border: none;
+        background: #d32f2f;
+        color: white;
+        cursor: pointer;
+        font-size: 18px;
+        transition: all 0.3s ease-in-out;
+    }
+    #Actions button:hover {
+        background: #b71c1c;
+        transform: scale(1.1);
+    }
+
+    #passwordChangeContainer {
+        background: #333;
+        color: white;
+        padding: 25px;
+        border-radius: 12px;
+        width: 90%;
+        text-align: center;
+        margin-top: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #passwordChangeContainer form {
+       display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    #passwordChangeContainer input {
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #bbb;
+        font-size: 16px;
+    }
+
+    #passwordChangeContainer input:focus {
+        outline: none;
+        border-color: #d32f2f;
+    }
+
+/* User Info Section */
+#userInfo {
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 80%; /* Align width with other boxes */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center-align content */
+}
+
+#userInfo h2 {
+    margin: 0;
+    font-size: 1.8em;
+    color: #333;
+}
+
+#userInfo p {
+    margin: 10px 0 0;
+    font-size: 1.2em;
+    color: #555;
+}
+
+/* Recent Activity Section */
+#recentActivity {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 80%; /* Align width with other boxes */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    text-align: left; /* Left-align content */
+}
+
+#recentActivity h2 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+#activityList {
+    list-style-type: none;
+    padding: 0;
+}
+
+#activityList li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    font-size: 1.1em;
+    color: #555;
+}
+
+#activityList li:last-child {
+    border-bottom: none;
+}
+
+/* General Box Alignment */
+.content > div {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+}
