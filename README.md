@@ -1,4 +1,5 @@
 # InQuizitive Study Site
+## Live at: https://inquisitive-ss.com/
 
 An **interactive web-based study platform** that allows users to create, manage, and learn from 'study sets', similar in format to sites like Quizlet.  
 Built with a full-stack JavaScript architecture using **Node.js**, **Express**, and **MySQL**, the site features cloud-stored study materials that the user can interact with via flashcards, fill-in-the-blank, multiple choice, and true-or-false tools.
